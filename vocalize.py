@@ -7,13 +7,15 @@ import os.path
 
 class Vocalize:
     _engine = None
+    _grammar_dir = None
 
-    def __init__(self, engine):
+    def __init__(self, engine, grammar_dir="grammar"):
         self._engine = engine
+        self._grammar_dir = grammar_dir
 
     def _load_grammar(self):
         dirname = os.path.dirname(__file__)
-        path = os.path.join(dirname, 'grammar')
+        path = os.path.join(dirname, self._grammar_dir)
         directory = CommandModuleDirectory(path)
         directory.load()
 
