@@ -35,7 +35,7 @@ Voice control for your computer with a Vim mindset.
 
         python vocalize.py
 
-## Stopping the project
+## Deactivating the Virtual Environment
 
 1.  Deactivate the virtual environment
 
