@@ -27,16 +27,14 @@ Voice control for your computer with a Vim mindset.
 
 ## Getting Started
 
-1.  Activate the virtual environment (if you have not done so already)
+1.  Activate the virtual environment (if you haven't done so already)
 
         source venv/bin/activate
 
-2.  Run the demo
+2.  Run vocalize
 
         python vocalize.py
 
 ## Deactivating the Virtual Environment
 
-1.  Deactivate the virtual environment
-
-        deactivate
+    deactivate
