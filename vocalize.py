@@ -5,11 +5,6 @@ from dragonfly.log import setup_log
 import os.path
 
 
-"""
-Main Application Class
-"""
-
-
 class Vocalize:
     _engine = None
 

@@ -1,9 +1,5 @@
 from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, get_engine
 
-"""
-Sleep Wake Grammar
-"""
-
 
 class SleepWake:
     _grammar_name = "sleep wake"

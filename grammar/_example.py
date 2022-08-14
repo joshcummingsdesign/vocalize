@@ -1,9 +1,5 @@
 from dragonfly import Grammar, CompoundRule
 
-"""
-Example grammar
-"""
-
 
 class ExampleRule(CompoundRule):
     spec = "do something computer"
