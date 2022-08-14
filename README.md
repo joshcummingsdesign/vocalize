@@ -5,7 +5,7 @@ Voice control for your computer with a Vim mindset.
 ## Requirements
 
 - python ^3.10.0
-- pipenv ^2021.5.0
+- virtualenv ^20.16.0
 
 ## Getting Started
 
@@ -13,14 +13,18 @@ Voice control for your computer with a Vim mindset.
 
         ./scripts/download-model.sh
 
-2.  Install the project dependencies
+2.  Create a virtual environment
 
-        pipenv install
+        python -m virtualenv venv
 
 3.  Activate the virtual environment
 
-        pipenv shell
+        source venv/bin/activate
 
-4.  Run the demo
+4.  Install the project dependencies
+
+        pip install -r requirements.txt
+
+5.  Run the demo
 
         python demo.py
