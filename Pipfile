@@ -4,8 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-
-[requires]
-python_version = "2.7"
+dragonfly2 = {version = "~=0.35", extras = ["kaldi"]}
 
 [dev-packages]
+
+[requires]
+python_version = "3.10"
