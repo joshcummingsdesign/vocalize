@@ -9,7 +9,7 @@ class Vocalize:
     _engine = None
     _grammar_dir = None
 
-    def __init__(self, engine, grammar_dir="grammar"):
+    def __init__(self, engine, grammar_dir='grammar'):
         self._engine = engine
         self._grammar_dir = grammar_dir
 
@@ -20,14 +20,14 @@ class Vocalize:
         directory.load()
 
     def _on_begin(self):
-        print("Speech start detected.")
+        print('Speech start detected.')
 
     def _on_recognition(self, words):
-        message = u"Recognized: %s" % u" ".join(words)
+        message = u'Recognized: %s' % u' '.join(words)
         print(message)
 
     def _on_failure(self):
-        print("Sorry, what was that?")
+        print('Sorry, what was that?')
 
     def listen(self):
         setup_log()
@@ -36,13 +36,13 @@ class Vocalize:
         self._load_grammar()
 
         try:
-            print("Listening...")
+            print('Listening...')
             self._engine.do_recognition(
                 self._on_begin, self._on_recognition, self._on_failure)
         except KeyboardInterrupt:
             pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     vocalize = Vocalize(get_engine('kaldi'))
     vocalize.listen()
