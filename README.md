@@ -7,7 +7,7 @@ Voice control for your computer with a Vim mindset.
 - python ^3.10.0
 - virtualenv ^20.16.0
 
-## Getting Started
+## Installation
 
 1.  Download the Kaldi model
 
@@ -25,6 +25,18 @@ Voice control for your computer with a Vim mindset.
 
         pip install -r requirements.txt
 
-5.  Run the demo
+## Getting Started
 
-        python demo.py
+1.  Activate the virtual environment (if you have not done so already)
+
+        source venv/bin/activate
+
+2.  Run the demo
+
+        python vocalize.py
+
+## Stopping the project
+
+1.  Deactivate the virtual environment
+
+        deactivate
