@@ -17,7 +17,7 @@ Voice control for your computer with a Vim mindset.
 
         pipenv install
 
-3.  Actiate the virtual environment
+3.  Activate the virtual environment
 
         pipenv shell
 
