@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text
+from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation
 
 
 class Vim:
@@ -26,12 +26,14 @@ class Vim:
                 '[<n>] up': Key('k:%(n)d') + Function(lambda n: print(f'{n}k'), extra={'n'}),
                 '[<n>] down': Key('j:%(n)d') + Function(lambda n: print(f'{n}j'), extra={'n'}),
                 'line <n>': Key('colon') + Text('%(n)d') + Key('enter') + Function(lambda n: print(f':{n} enter'), extra={'n'}),
+                'search <text>': Key('slash') + Text('%(text)s') + Key('enter') + Function(lambda text: print(f'/ {text} enter')),
             },
             extras=[
-                IntegerRef("n", 1, 1000),
+                IntegerRef('n', 1, 1000),
+                Dictation('text'),
             ],
             defaults={
-                "n": 1,
+                'n': 1,
             }
         )
 
