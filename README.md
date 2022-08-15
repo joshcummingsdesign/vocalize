@@ -1,6 +1,6 @@
 # Vocalize
 
-Voice control for your computer with a Vim mindset.
+Voice control for macOS with a Vim mindset.
 
 ## Requirements
 
@@ -38,3 +38,9 @@ Voice control for your computer with a Vim mindset.
 ## Deactivating the Virtual Environment
 
     deactivate
+
+## Keybindings
+
+This project assumes you have the following keybindings configured:
+
+- Dictation: Control + Shift + D

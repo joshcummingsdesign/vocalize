@@ -1,5 +1,6 @@
 .DS_Store
 .tool-versions
+__pycache__
 kaldi_model
 kaldi_model_daanzu_20211030-biglm.zip
 venv

@@ -23,7 +23,7 @@ class SleepWake:
             name='sleep_wake_rule',
             mapping={
                 'wake up': Function(self._wake) + Function(lambda: get_engine().start_saving_adaptation_state()),
-                'go to sleep': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
+                'snooze': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
             }
         )
 
