@@ -32,7 +32,7 @@ class SleepWake:
             name='sleeping_rule',
             mapping={'<text>': Function(lambda text: False and print(text))},
             extras=[Dictation('text')],
-            context=FuncContext(lambda: self._sleeping),
+            context=FuncContext(lambda: self._sleeping)
         )
 
     def load(self):
