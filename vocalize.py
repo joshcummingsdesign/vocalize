@@ -18,10 +18,6 @@ class Vocalize:
         directory = CommandModuleDirectory(path)
         directory.load()
 
-    def _on_recognition(self, words):
-        message = u'%s' % u' '.join(words)
-        print(message)
-
     def listen(self):
         setup_log()
         self._engine.connect()
