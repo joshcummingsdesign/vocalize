@@ -1,4 +1,3 @@
-from __future__ import print_function
 from dragonfly import get_engine
 from dragonfly.loader import CommandModuleDirectory
 from dragonfly.log import setup_log
@@ -19,15 +18,9 @@ class Vocalize:
         directory = CommandModuleDirectory(path)
         directory.load()
 
-    def _on_begin(self):
-        print('Speech start detected.')
-
     def _on_recognition(self, words):
-        message = u'Recognized: %s' % u' '.join(words)
+        message = u'%s' % u' '.join(words)
         print(message)
-
-    def _on_failure(self):
-        print('Sorry, what was that?')
 
     def listen(self):
         setup_log()
@@ -37,8 +30,7 @@ class Vocalize:
 
         try:
             print('Listening...')
-            self._engine.do_recognition(
-                self._on_begin, self._on_recognition, self._on_failure)
+            self._engine.do_recognition()
         except KeyboardInterrupt:
             pass
 

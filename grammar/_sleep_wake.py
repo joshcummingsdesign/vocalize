@@ -22,15 +22,15 @@ class SleepWake:
         return MappingRule(
             name='sleep_wake_rule',
             mapping={
-                'wake': Function(self._wake) + Function(lambda: get_engine().start_saving_adaptation_state()),
-                'sleep': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
+                'wake up': Function(self._wake) + Function(lambda: get_engine().start_saving_adaptation_state()),
+                'go to sleep': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
             }
         )
 
     def _make_sleeping_rule(self):
         return MappingRule(
             name='sleeping_rule',
-            mapping={'<text>': Function(lambda text: False and print(text))},
+            mapping={'<text>': Function(lambda: False)},
             extras=[Dictation('text')],
             context=FuncContext(lambda: self._sleeping)
         )
