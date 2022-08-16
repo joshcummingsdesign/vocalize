@@ -1,7 +1,7 @@
 from dragonfly import Choice
 
 
-def chars(name: str) -> Choice:
+def characters(name: str) -> Choice:
     """
     The character extras.
 

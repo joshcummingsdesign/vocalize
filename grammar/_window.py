@@ -24,6 +24,7 @@ class Window:
         return MappingRule(
             name='window_rule',
             mapping={
+                'new tab': Key('w-t') + Function(lambda: print('w-t')),
                 'reopen': Key('ws-t') + Function(lambda: print('ws-t')),
                 '[<n>] swap': Key('win:down,tab:%(n)d,win:up') + Function(lambda n: print(f'{n}w-tab')),
                 '[<n>] switch': Key('w-`:%(n)d') + Function(lambda n: print(f'{n}w-`')),

@@ -1,5 +1,5 @@
 from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation
-from extras import chars
+from extras import characters
 from typing import Any, Callable
 
 
@@ -317,7 +317,7 @@ class Vim:
                 'space': Key('i') + Text(' ') + Key('escape') + Function(lambda: print("i ' ' escape")),
                 'app': Key('A') + Function(lambda: print('a')),
                 'prep': Key('I') + Function(lambda: print('I')),
-                '[<n>] star': Key('*:%(n)s') + Function(lambda n: print(f'{n}*')),
+                '[<n>] star': Key('*:%(n)d') + Function(lambda n: print(f'{n}*')),
                 'see ghee next': Key('c,g,n') + Function(lambda: print('cgn')),
                 'fuzzy <text>': Key('c-p') + Text('%(text)s') + Function(lambda text: print(f'c-p {text}')),
                 'comment': Key('g,c') + Function(lambda: print('gc')),
@@ -339,7 +339,7 @@ class Vim:
                 'zed top': Key('z,t') + Function(lambda: print('zt')),
                 'zed bottom': Key('z,b') + Function(lambda: print('zb')),
                 '[<n>] pup': Key('c-u:%(n)d') + Function(lambda n: print(f'{n}c-u')),
-                '[<n>] pea down': Key('c-d:%(n)d') + Function(lambda n: print(f'{n}c-d')),
+                '[<n>] page': Key('c-d:%(n)d') + Function(lambda n: print(f'{n}c-d')),
                 'line <n>': Key('colon') + Text('%(n)d') + Key('enter') + Function(lambda n: print(f':{n} enter')),
                 'start': Key('0') + Function(lambda: print('0')),
                 'end': Key('$') + Function(lambda: print('$')),
@@ -349,8 +349,8 @@ class Vim:
             extras=[
                 IntegerRef('n', 1, 1000),
                 Dictation('text'),
-                chars('object'),
-                chars('char'),
+                characters('object'),
+                characters('char'),
             ],
             defaults={
                 'n': 1,
