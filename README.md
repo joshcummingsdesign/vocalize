@@ -44,3 +44,12 @@ Voice control for macOS with a Vim mindset.
 This project assumes you have the following keybindings configured:
 
 - Dictation: Control + Shift + D
+- Spotlight: Control + Space
+- Password Manager: Command + Option + \
+- Terminal Show/Hide: Command + Space
+
+In addition, the following dotfiles are assumed:
+
+- [.vimrc](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles/.vimrc)
+
+- [.ideavimrc](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles/.ideavimrc)
