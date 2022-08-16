@@ -33,6 +33,9 @@ class Vimium:
                 'jump': Key('f') + Function(lambda: print('f')),
                 'close window': Key('x') + Function(lambda: print('x')),
                 'switch user': Key('ws-m') + Function(lambda: print('ws-m')),
+                'nav back': Key('H') + Function(lambda: print('H')),
+                'nav forward': Key('L') + Function(lambda: print('L')),
+                'dev tools': Key('f12') + Function(lambda: print('f12')),
             },
             extras=[
                 IntegerRef('n', 1, 10),

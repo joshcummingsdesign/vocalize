@@ -1,4 +1,6 @@
 from dragonfly import Grammar, MappingRule, Key, Function, Dictation, Text, IntegerRef
+from extras import characters
+from actions import repeatable
 
 
 class Window:
@@ -35,10 +37,25 @@ class Window:
                 'close window': Key('w-w') + Function(lambda: print('w-w')),
                 'new window': Key('w-n') + Function(lambda: print('w-n')),
                 'new big window': Key('ws-n') + Function(lambda: print('ws-n')),
+                'tile main': Key('as-enter') + Function(lambda: print('as-enter')),
+                '[<n>] tile up': Key('as-k/20:%(n)d') + Function(lambda n: print(f'{n}as-k')),
+                '[<n>] tile down': Key('as-j/20:%(n)d') + Function(lambda n: print(f'{n}as-j')),
+                '[<n>] tile left': Key('as-h/20:%(n)d') + Function(lambda n: print(f'{n}as-h')),
+                '[<n>] tile right': Key('as-l/20:%(n)d') + Function(lambda n: print(f'{n}as-l')),
+                'tile hop': Key('cas-h') + Function(lambda: print('cas-h')),
+                'tile swap': Key('cas-l') + Function(lambda: print('cas-l')),
+                'tile flip': Key('cas-k') + Function(lambda: print('cas-k')),
+                'tile flop': Key('cas-j') + Function(lambda: print('cas-j')),
+                'see dee': Key('c,d,space') + Function(lambda: print('cd space')),
+                'see dee back': Key('c,d,space,dot,dot,enter') + Function(lambda: print('cd ..')),
+                'list': Key('l,enter') + Function(lambda: print('l enter')),
+                'vim it': Key('v,i,m,space,dot,enter') + Function(lambda: print('vim . enter')),
+                'vim': Key('v,i,m,space') + Function(lambda: print('vim space')),
             },
             extras=[
                 IntegerRef('n', 1, 10),
                 Dictation('text'),
+                characters('char'),
             ],
             defaults={
                 'n': 1,

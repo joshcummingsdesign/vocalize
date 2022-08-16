@@ -263,6 +263,8 @@ class Vim:
                 # Motion
                 '[<n>] word': Key('w:%(n)d') + Function(lambda n: print(f'{n}w')),
                 '[<n>] big word': Key('W:%(n)d') + Function(lambda n: print(f'{n}W')),
+                '[<n>] back word': Key('b:%(n)d') + Function(lambda n: print(f'{n}b')),
+                '[<n>] back big word': Key('B:%(n)d') + Function(lambda n: print(f'{n}B')),
                 'find <char>': Function(self._find),
                 'back find <char>': Function(self._back_find),
                 'till <char>': Function(self._till),
@@ -325,7 +327,7 @@ class Vim:
                 '[<n>] slice': Key('x:%(n)d') + Function(lambda n: print(f'{n}x')),
                 '[<n>] next': Key('n:%(n)d') + Function(lambda n: print(f'{n}n')),
                 'space': Key('i') + Text(' ') + Key('escape') + Function(lambda: print("i ' ' escape")),
-                'app': Key('A') + Function(lambda: print('a')),
+                'append': Key('A') + Function(lambda: print('a')),
                 'prep': Key('I') + Function(lambda: print('I')),
                 '[<n>] star': Key('*:%(n)d') + Function(lambda n: print(f'{n}*')),
                 'see ghee next': Key('c,g,n') + Function(lambda: print('cgn')),
@@ -335,6 +337,9 @@ class Vim:
                 '[<n>] tab left': Key('%(n)d,<') + Function(lambda n: print(f'{n}<')),
                 'tab start': Key('colon') + Text('left') + Key('enter') + Function(lambda: print(':left enter')),
                 'replace <char>': Key('r,%(char)s') + Function(lambda char: print(f'r {char}')),
+                'go uppercase': Key('g,U') + Function(lambda: print('gU')),
+                'go lowercase': Key('g,u') + Function(lambda: print('gu')),
+                'ghee queue': Key('g,q') + Function(lambda: print('gq')),
 
                 # File
                 'save': Key('colon,w,enter') + Function(lambda: print(':w enter')),

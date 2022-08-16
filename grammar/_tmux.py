@@ -24,7 +24,7 @@ class Tmux:
         @unreleased
         """
         Key('c-k,h').execute()
-        print(f'c-k h')
+        print('c-k h')
 
     def _term_win_right(self) -> None:
         """
@@ -33,7 +33,7 @@ class Tmux:
         @unreleased
         """
         Key('c-k,l').execute()
-        print(f'c-k l')
+        print('c-k l')
 
     def _make_tmux_rule(self) -> MappingRule:
         """

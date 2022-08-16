@@ -28,8 +28,18 @@ This project assumes you have the following keybindings configured:
 - Spotlight: Control + Space
 - Password Manager: Command + Option + \
 - Terminal Show/Hide: Command + Space
-- Window Manager: Control + Shift + Space
+
+And the following apps installed:
+
+- Amethyst
 
 In addition, the following dotfiles are assumed:
 
 - [dotfiles](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles)
+
+See the exact dev environment:
+
+- [mac-dev-env](https://github.com/joshcummingsdesign/mac-dev-env)
+
+Although the project is configured in this specific way, it can be forked and
+configured to your liking.
