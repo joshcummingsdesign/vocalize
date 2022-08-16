@@ -332,7 +332,7 @@ class Vim:
                 'buff': Key('space,b,p') + Function(lambda: print('space,b,p')),
                 'next buff': Key('space,b,n') + Function(lambda: print('space,b,n')),
 
-                # # Navigation
+                # Navigation
                 'top': Key('g,g') + Function(lambda: print('gg')),
                 'bottom': Key('G') + Function(lambda: print('G')),
                 'zed zed': Key('z,z') + Function(lambda: print('zz')),
