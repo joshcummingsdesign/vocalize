@@ -4,40 +4,21 @@ Voice control for macOS with a Vim mindset.
 
 ## Requirements
 
-- python ^3.10.0
-- virtualenv ^20.16.0
-
-## Installation
-
-1.  Download the Kaldi model
-
-        ./scripts/download-model.sh
-
-2.  Create a virtual environment
-
-        python -m virtualenv venv
-
-3.  Activate the virtual environment
-
-        source venv/bin/activate
-
-4.  Install the project dependencies
-
-        pip install -r requirements.txt
+- Python 3.6+ w/ virtualenv
 
 ## Getting Started
 
-1.  Activate the virtual environment (if you haven't done so already)
+Install Vocalize
 
-        source venv/bin/activate
+```sh
+./scripts/install.sh
+```
 
-2.  Run vocalize
+Run vocalize (use an alias to make this easier)
 
-        python vocalize.py
-
-## Deactivating the Virtual Environment
-
-    deactivate
+```sh
+./scripts/start.sh
+```
 
 ## Keybindings
 
