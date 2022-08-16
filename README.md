@@ -28,9 +28,8 @@ This project assumes you have the following keybindings configured:
 - Spotlight: Control + Space
 - Password Manager: Command + Option + \
 - Terminal Show/Hide: Command + Space
+- Window Manager: Control + Shift + Space
 
 In addition, the following dotfiles are assumed:
 
-- [.vimrc](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles/.vimrc)
-
-- [.ideavimrc](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles/.ideavimrc)
+- [dotfiles](https://github.com/joshcummingsdesign/mac-dev-env/blob/master/dotfiles)

@@ -32,8 +32,6 @@ class Keyboard:
                 'out': Key('escape') + Function(lambda: print('escape')),
                 'type in <text>': Text('%(text)s') + Function(lambda text: print(text)),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
-                '[<n>] you': Key('u:%(n)d') + Function(lambda n: print(f'{n}u')),
-                '[<n>] dee': Key('d:%(n)d') + Function(lambda n: print(f'{n}d')),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
@@ -77,7 +75,7 @@ class Keyboard:
                 'uniform': Key('u') + Function(lambda: print('u')),
                 'victor': Key('v') + Function(lambda: print('v')),
                 'whiskey': Key('w') + Function(lambda: print('w')),
-                'xray': Key('x') + Function(lambda: print('x')),
+                'x ray': Key('x') + Function(lambda: print('x')),
                 'yankee': Key('y') + Function(lambda: print('y')),
                 'zulu': Key('z') + Function(lambda: print('z')),
             }

@@ -11,4 +11,9 @@ def modifiers(name: str) -> Choice:
     """
     return Choice(name, {
         'tab': 'tab',
+        'space': 'space',
+        'up': 'up',
+        'down': 'down',
+        'left': 'left',
+        'right': 'right',
     })

@@ -295,7 +295,7 @@ class Vim:
 
                 # Surround
                 'surround with <char>': Key('S,%(char)s') + Function(lambda char: print(f'S{char}')),
-                'surround [in] word <char>': Key('y,s,i,w,%(char)s') + Function(lambda char: print(f'ysiw{char}')),
+                'surround [in] [word] <char>': Key('y,s,i,w,%(char)s') + Function(lambda char: print(f'ysiw{char}')),
                 'surround [in] big word <char>': Key('y,s,i,W,%(char)s') + Function(lambda char: print(f'ysiW{char}')),
                 'surround out word <char>': Key('y,s,a,w,%(char)s') + Function(lambda char: print(f'ysaw{char}')),
                 'surround out big word <char>': Key('y,s,a,W,%(char)s') + Function(lambda char: print(f'ysaW{char}')),
@@ -303,6 +303,16 @@ class Vim:
                 'surround line <char>': Key('y,s,s,%(char)s') + Function(lambda char: print(f'yss{char}')),
                 'surround change <object> [to] <char>': Key('c,s,%(object)s,%(char)s') + Function(lambda object, char: print(f'cs{object}{char}')),
                 'surround delete <char>': Key('d,s,%(char)s') + Function(lambda char: print(f'ds{char}')),
+
+                # Abolish
+                'mixed case': Key('c,r,m') + Function(lambda: print('crm')),
+                'camel case': Key('c,r,c') + Function(lambda: print('crc')),
+                'snake case': Key('c,r,s') + Function(lambda: print('crs')),
+                'upper case': Key('c,r,u') + Function(lambda: print('cru')),
+                'dash case': Key('c,r,minus') + Function(lambda: print('cr-')),
+                'dot case': Key('c,r,.') + Function(lambda: print('cr.')),
+                'space case': Key('c,r,space') + Function(lambda: print('cr space')),
+                'title case': Key('c,r,t') + Function(lambda: print('crt')),
 
                 # Command
                 '[<n>] paste': Key('p:%(n)d') + Function(lambda n: print(f'{n}p')),
@@ -319,18 +329,24 @@ class Vim:
                 'prep': Key('I') + Function(lambda: print('I')),
                 '[<n>] star': Key('*:%(n)d') + Function(lambda n: print(f'{n}*')),
                 'see ghee next': Key('c,g,n') + Function(lambda: print('cgn')),
-                'fuzzy <text>': Key('c-p') + Text('%(text)s') + Function(lambda text: print(f'c-p {text}')),
                 'comment': Key('g,c') + Function(lambda: print('gc')),
                 'comment line': Key('g,c,c') + Function(lambda: print('gcc')),
                 '[<n>] tab': Key('%(n)d,>') + Function(lambda n: print(f'{n}>')),
                 '[<n>] tab left': Key('%(n)d,<') + Function(lambda n: print(f'{n}<')),
                 'tab start': Key('colon') + Text('left') + Key('enter') + Function(lambda: print(':left enter')),
+                'replace <char>': Key('r,%(char)s') + Function(lambda char: print(f'r {char}')),
 
                 # File
                 'save': Key('colon,w,enter') + Function(lambda: print(':w enter')),
                 'quit': Key('colon,q,enter') + Function(lambda: print(':q enter')),
+                'write out': Key('colon,w,q,enter') + Function(lambda: print(':wq enter')),
+                'bail': Key('colon,q,!,enter') + Function(lambda: print(':wq! enter')),
                 'buff': Key('space,b,p') + Function(lambda: print('space,b,p')),
                 'next buff': Key('space,b,n') + Function(lambda: print('space,b,n')),
+                'fuzzy <text>': Key('c-p') + Text('%(text)s') + Function(lambda text: print(f'c-p {text}')),
+                'tree': Key('c-backslash') + Function(lambda: print('c-\\')),
+                '[<n>] choose': Key('c-j:%(n)d') + Function(lambda n: print(f'{n}c-j')),
+                '[<n>] back choose': Key('c-k:%(n)d') + Function(lambda n: print(f'{n}c-k')),
 
                 # Navigation
                 'top': Key('g,g') + Function(lambda: print('gg')),
@@ -345,6 +361,9 @@ class Vim:
                 'end': Key('$') + Function(lambda: print('$')),
                 'run in': Key('c-i') + Function(lambda: print('c-i')),
                 'run out': Key('c-o') + Function(lambda: print('c-o')),
+
+                # Typing
+                'funk': Text('()') + Function(lambda: print('()')),
             },
             extras=[
                 IntegerRef('n', 1, 1000),

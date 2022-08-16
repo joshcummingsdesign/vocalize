@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef, AppContext
+from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef, AppContext, Dictation, Text
 
 
 class Vimium:
@@ -24,19 +24,23 @@ class Vimium:
         return MappingRule(
             name='vimium_rule',
             mapping={
-                'book': Key('b') + Function(lambda: print('b')),
-                'new book': Key('B') + Function(lambda: print('B')),
-                'open': Key('o') + Function(lambda: print('o')),
-                'open new': Key('O') + Function(lambda: print('O')),
-                '[<n>] choose': Key('c-j:%(n)d') + Function(lambda n: print(f'{n}c-j')),
-                '[<n>] back choose': Key('c-k:%(n)d') + Function(lambda n: print(f'{n}c-k')),
+                'book [<text>]': Key('b') + Text('%(text)s') + Function(lambda text: print(f'b {text}')),
+                'book new [<text>]': Key('B') + Text('%(text)s') + Function(lambda text: print(f'B {text}')),
+                'open [<text>]': Key('o') + Text('%(text)s') + Function(lambda text: print(f'o {text}')),
+                'open new [<text>]': Key('O') + Text('%(text)s') + Function(lambda text: print(f'O {text}')),
+                '[<n>] you': Key('u:%(n)d') + Function(lambda n: print(f'{n}u')),
+                '[<n>] dee': Key('d:%(n)d') + Function(lambda n: print(f'{n}d')),
                 'jump': Key('f') + Function(lambda: print('f')),
+                'close window': Key('x') + Function(lambda: print('x')),
+                'switch user': Key('ws-m') + Function(lambda: print('ws-m')),
             },
             extras=[
                 IntegerRef('n', 1, 10),
+                Dictation('text'),
             ],
             defaults={
                 'n': 1,
+                'text': '',
             }
         )
 
