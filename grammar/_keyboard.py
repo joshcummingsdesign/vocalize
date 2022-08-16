@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef
+from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef, Text, Dictation
 
 
 class Keyboard:
@@ -28,9 +28,11 @@ class Keyboard:
                 '[<n>] whack': Key('backspace:%(n)d') + Function(lambda n: print(f'{n} backspace')),
                 'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
                 'out': Key('escape') + Function(lambda: print('escape')),
+                'type in <text>': Text('%(text)s') + Function(lambda text: print(text)),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
+                Dictation('text'),
             ],
             defaults={
                 'n': 1,
