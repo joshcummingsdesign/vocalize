@@ -1,8 +1,16 @@
 from dragonfly import Choice
 
 
-def special_chars():
-    return Choice('char', {
+def chars(name: str) -> Choice:
+    """
+    The character extras.
+
+    @unreleased
+
+    @param name: str - The name of this element.
+    """
+    return Choice(name, {
+        # Phonetic Alphabet
         'alpha': 'a',
         'bravo': 'b',
         'charlie': 'c',
@@ -12,7 +20,7 @@ def special_chars():
         'golf': 'g',
         'hotel': 'h',
         'india': 'i',
-        'jay': 'j',
+        'juliet': 'j',
         'kilo': 'k',
         'lima': 'l',
         'mike': 'm',
@@ -29,32 +37,41 @@ def special_chars():
         'xray': 'x',
         'yankee': 'y',
         'zulu': 'z',
-        'comma': ',',
-        'colon': ':',
-        'quotes': "'",
-        'double quotes': '"',
+
+        # Special Characters
+        'tick': '`',
+        'tilde': '~',
         'bang': '!',
         'at': '@',
         'hash': '#',
         'dollar': '$',
         'percent': '%',
         'up carrot': '^',
-        'carrot up': '^',
-        'ampersand': '&',
+        'amp': '&',
         'star': '*',
-        'left pea': '(',
-        'right pea': '(',
-        'peas': '(',
+        'left print': '(',
+        'right print': '(',
+        'prints': '(',
+        'minus': '-',
+        'equals': '=',
+        'plus': '+',
         'left bracket': '[',
         'right bracket': ']',
         'brackets': '[',
         'left brace': '{',
         'right brace': '}',
         'braces': '{',
-        'minus': '-',
-        'plus': '+',
-        'equals': '=',
+        'backslash': '\\',
+        'pipe': '|',
+        'semicolon': ';',
+        'colon': ':',
+        'quote': "'",
+        'double quote': '"',
+        'comma': ',',
+        'dot': '.',
         'left angle': '<',
         'right angle': '>',
         'angles': '<',
+        'slash': '/',
+        'question': '?',
     })

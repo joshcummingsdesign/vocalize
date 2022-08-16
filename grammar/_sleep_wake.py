@@ -2,23 +2,54 @@ from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, ge
 
 
 class SleepWake:
-    _grammar_name = 'sleep wake'
-    _grammar = None
-    _sleeping = False
+    """
+    The sleep / wake grammar class.
 
-    def _wake(self, force=False):
-        if self._sleeping or force:
+    @unreleased
+    """
+
+    _grammar: Grammar = None
+    """
+    The Grammar class instance.
+
+    @unreleased
+    """
+
+    _sleeping: bool = False
+    """
+    Whether the app is sleeping.
+
+    @unreleased
+    """
+
+    def _wake(self) -> None:
+        """
+        Continue listening for commands.
+
+        @unreleased
+        """
+        if self._sleeping:
             self._sleeping = False
             self._grammar.set_exclusiveness(False)
         print('Awake...')
 
-    def _sleep(self, force=False):
-        if not self._sleeping or force:
+    def _sleep(self) -> None:
+        """
+        Stop listening for commands.
+
+        @unreleased
+        """
+        if not self._sleeping:
             self._sleeping = True
             self._grammar.set_exclusiveness(True)
         print('Sleeping...')
 
-    def _make_sleep_wake_rule(self):
+    def _make_sleep_wake_rule(self) -> MappingRule:
+        """
+        Sleep / wake rule factory.
+
+        @unreleased
+        """
         return MappingRule(
             name='sleep_wake_rule',
             mapping={
@@ -27,7 +58,14 @@ class SleepWake:
             }
         )
 
-    def _make_sleeping_rule(self):
+    def _make_sleeping_rule(self) -> None:
+        """
+        Sleeping rule factory.
+
+        When the app is sleeping, simply return false for all commands.
+
+        @unreleased
+        """
         return MappingRule(
             name='sleeping_rule',
             mapping={'<text>': Function(lambda: False)},
@@ -35,12 +73,17 @@ class SleepWake:
             context=FuncContext(lambda: self._sleeping)
         )
 
-    def load(self):
-        self._grammar = Grammar(self._grammar_name)
+    def load(self) -> None:
+        """
+        Load the grammar.
+
+        @unreleased
+        """
+        self._grammar = Grammar('sleep_wake')
         self._grammar.add_rule(self._make_sleep_wake_rule())
         self._grammar.add_rule(self._make_sleeping_rule())
         self._grammar.load()
-        self._wake(force=True)
+        self._wake()
 
 
 sleep_wake = SleepWake()
