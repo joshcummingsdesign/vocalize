@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, Function
+from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef
 
 
 class Keyboard:
@@ -25,10 +25,16 @@ class Keyboard:
             name='keyboard_rule',
             mapping={
                 'go': Key('enter') + Function(lambda: print('enter')),
-                'whack': Key('backspace') + Function(lambda: print('backspace')),
+                '[<n>] whack': Key('backspace:%(n)d') + Function(lambda n: print(f'{n} backspace')),
                 'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
                 'out': Key('escape') + Function(lambda: print('escape')),
             },
+            extras=[
+                IntegerRef('n', 1, 1000),
+            ],
+            defaults={
+                'n': 1,
+            }
         )
 
     def load(self) -> None:

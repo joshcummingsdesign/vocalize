@@ -331,7 +331,6 @@ class Vim:
                 'quit': Key('colon,q,enter') + Function(lambda: print(':q enter')),
                 'buff': Key('space,b,p') + Function(lambda: print('space,b,p')),
                 'next buff': Key('space,b,n') + Function(lambda: print('space,b,n')),
-                'reopen': Key('ws-t') + Function(lambda: print('ws-t')),
 
                 # # Navigation
                 'top': Key('g,g') + Function(lambda: print('gg')),
