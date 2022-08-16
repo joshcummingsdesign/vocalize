@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation, FuncContext
+from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation
 from extras import chars
 from typing import Any, Callable
 
