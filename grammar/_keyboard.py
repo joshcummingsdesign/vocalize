@@ -32,6 +32,7 @@ class Keyboard:
                 'out': Key('escape') + Function(lambda: print('escape')),
                 'type in <text>': Text('%(text)s') + Function(lambda text: print(text)),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
+                'highlight': Key('w-a') + Function(lambda: print('w-a')),
             },
             extras=[
                 IntegerRef('n', 1, 1000),

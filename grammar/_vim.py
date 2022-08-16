@@ -340,6 +340,7 @@ class Vim:
                 'go uppercase': Key('g,U') + Function(lambda: print('gU')),
                 'go lowercase': Key('g,u') + Function(lambda: print('gu')),
                 'ghee queue': Key('g,q') + Function(lambda: print('gq')),
+                'git changes': Key('ws-g') + Function(lambda: print('ws-g')),
 
                 # File
                 'save': Key('colon,w,enter') + Function(lambda: print(':w enter')),
