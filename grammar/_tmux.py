@@ -57,6 +57,9 @@ class Tmux:
                 'term win even': Key('c-k,enter') + Function(lambda: print('c-k enter')),
                 'git add all': Text('gaa') + Key('enter') + Function(lambda: print('gaa enter')),
                 'git commit': Text('gca') + Key('enter') + Function(lambda: print('gca enter')),
+                'git push': Text('gp') + Key('enter') + Function(lambda: print('gp enter')),
+                'git status': Text('gst') + Key('enter') + Function(lambda: print('gst enter')),
+                'git diff': Text('git diff') + Key('enter') + Function(lambda: print('git diff enter')),
             },
             extras=[
                 IntegerRef('n', 1, 10),
