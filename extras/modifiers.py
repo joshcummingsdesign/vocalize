@@ -16,4 +16,5 @@ def modifiers(name: str) -> Choice:
         'down': 'down',
         'left': 'left',
         'right': 'right',
+        'enter': 'enter',
     })

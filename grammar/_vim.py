@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation
+from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation, ShortIntegerRef
 from extras import characters
 from inflection import camelize, underscore, dasherize, titleize
 from typing import Any, Callable
@@ -89,6 +89,24 @@ class Vim:
         """
         Key('a,W').execute()
         print('aW')
+
+    def _in_paragraph(self) -> None:
+        """
+        The inside paragraph text object.
+
+        @unreleased
+        """
+        Key('i,p').execute()
+        print('ip')
+
+    def _around_paragraph(self) -> None:
+        """
+        The around paragraph text object.
+
+        @unreleased
+        """
+        Key('a,p').execute()
+        print('ap')
 
     def _in_char(self, char: str) -> None:
         """
@@ -217,6 +235,77 @@ class Vim:
         Key('enter').execute()
         print(f'? {text} enter')
 
+    def _mixed_case(self, text: str) -> None:
+        """
+        Type text in mixed case.
+
+        @unreleased
+        """
+        word = ''.join(x for x in text.title() if not x.isspace())
+        Text(word, True).execute()
+        print(word)
+
+    def _camel_case(self, text: str) -> None:
+        """
+        Type text in camel case.
+
+        @unreleased
+        """
+        word = ''.join(x for x in text.title() if not x.isspace())
+        word = word[:1].lower() + word[1:] if word else ''
+        Text(word, True).execute()
+        print(word)
+
+    def _snake_case(self, text: str) -> None:
+        """
+        Type text in snake case.
+
+        @unreleased
+        """
+        word = text.replace(' ', '_')
+        Text(word, True).execute()
+        print(word)
+
+    def _upper_case(self, text: str) -> None:
+        """
+        Type text in upper case.
+
+        @unreleased
+        """
+        word = text.replace(' ', '_').upper()
+        Text(word, True).execute()
+        print(word)
+
+    def _dash_case(self, text: str) -> None:
+        """
+        Type text in dash case.
+
+        @unreleased
+        """
+        word = text.replace(' ', '-')
+        Text(word, True).execute()
+        print(word)
+
+    def _dot_case(self, text: str) -> None:
+        """
+        Type text in dot case.
+
+        @unreleased
+        """
+        word = text.replace(' ', '.')
+        Text(word, True).execute()
+        print(word)
+
+    def _title_case(self, text: str) -> None:
+        """
+        Type text in title case.
+
+        @unreleased
+        """
+        word = text.title()
+        Text(word, True).execute()
+        print(word)
+
     def _make_operator(self, name: str, fn: Callable[..., None]) -> dict[str, Any]:
         """
         Make an operator for text objects with its motions.
@@ -232,6 +321,8 @@ class Vim:
             f'{name} [in] big word': Function(fn) + Function(self._in_big_word),
             f'{name} out word': Function(fn) + Function(self._around_word),
             f'{name} out big word': Function(fn) + Function(self._around_big_word),
+            f'{name} [in] paragraph': Function(fn) + Function(self._in_paragraph),
+            f'{name} out paragraph': Function(fn) + Function(self._around_paragraph),
             f'{name} in <char>': Function(fn) + Function(self._in_char),
             f'{name} out <char>': Function(fn) + Function(self._around_char),
             f'{name} find <char>': Function(fn) + Function(self._find),
@@ -310,13 +401,22 @@ class Vim:
 
                 # Abolish
                 'mixed case': Key('c,r,m') + Function(lambda: print('crm')),
+                'mixed case <text>': Function(self._mixed_case),
                 'camel case': Key('c,r,c') + Function(lambda: print('crc')),
+                'camel case <text>': Function(self._camel_case),
+                'private camel case <text>': Key('_') + Function(self._camel_case),
                 'snake case': Key('c,r,s') + Function(lambda: print('crs')),
+                'snake case <text>': Function(self._snake_case),
+                'private snake case <text>': Key('_') + Function(self._snake_case),
                 'upper case': Key('c,r,u') + Function(lambda: print('cru')),
+                'upper case <text>': Function(self._upper_case),
                 'dash case': Key('c,r,minus') + Function(lambda: print('cr-')),
+                'dash case <text>': Function(self._dash_case),
                 'dot case': Key('c,r,.') + Function(lambda: print('cr.')),
+                'dot case <text>': Function(self._dot_case),
                 'space case': Key('c,r,space') + Function(lambda: print('cr space')),
                 'title case': Key('c,r,t') + Function(lambda: print('crt')),
+                'title case <text>': Function(self._title_case),
 
                 # Command
                 '[<n>] paste': Key('p:%(n)d') + Function(lambda n: print(f'{n}p')),
@@ -366,7 +466,7 @@ class Vim:
                 'zed bottom': Key('z,b') + Function(lambda: print('zb')),
                 '[<n>] pup': Key('c-u:%(n)d') + Function(lambda n: print(f'{n}c-u')),
                 '[<n>] page': Key('c-d:%(n)d') + Function(lambda n: print(f'{n}c-d')),
-                'line <n>': Key('colon') + Text('%(n)d') + Key('enter') + Function(lambda n: print(f':{n} enter')),
+                'line <line>': Key('colon') + Text('%(line)d') + Key('enter') + Function(lambda line: print(f':{line} enter')),
                 'start': Key('0') + Function(lambda: print('0')),
                 'end': Key('$') + Function(lambda: print('$')),
                 'run in': Key('c-i') + Function(lambda: print('c-i')),
@@ -377,6 +477,7 @@ class Vim:
             },
             extras=[
                 IntegerRef('n', 1, 1000),
+                ShortIntegerRef('line', 1, 1000),
                 Dictation('text'),
                 characters('object'),
                 characters('char'),
