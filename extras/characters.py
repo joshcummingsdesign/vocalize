@@ -51,6 +51,7 @@ def characters(name: str) -> Choice:
         'zulu': 'z',
 
         # Special Characters
+        'space': ' ',
         'tick': '`',
         'tilde': '~',
         'bang': '!',
@@ -82,7 +83,6 @@ def characters(name: str) -> Choice:
         'double quote': '"',
         'com': ',',
         'dot': '.',
-        'tags': '<',
         'left tag': '<',
         'tag': '>',
         'slash': '/',
