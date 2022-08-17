@@ -5,9 +5,11 @@ from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case,
 from rules import SeriesMappingRule
 
 
-class InsertMode:
+class Keyboard:
     """
-    The InsertMode grammar class
+    The Keyboard grammar class
+
+    Represents keyboard actions that can be performed anywhere
 
     @unreleased
     """
@@ -19,14 +21,14 @@ class InsertMode:
     @unreleased
     """
 
-    def _make_insert_mode_rule(self) -> SeriesMappingRule:
+    def _make_keyboard_rule(self) -> SeriesMappingRule:
         """
-        The insert mode rule factory
+        The keyboard rule factory
 
         @unreleased
         """
         return SeriesMappingRule(
-            name='insert_mode_rule',
+            name='keyboard',
             mapping={
                 # Modifiers
                 'out': Key('escape'),
@@ -75,14 +77,14 @@ class InsertMode:
 
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """
-        self._grammar = Grammar('insert_mode')
-        self._grammar.add_rule(self._make_insert_mode_rule())
+        self._grammar = Grammar('keyboard')
+        self._grammar.add_rule(self._make_keyboard_rule())
         self._grammar.load()
 
 
-insertMode = InsertMode()
-insertMode.load()
+keyboard = Keyboard()
+keyboard.load()
