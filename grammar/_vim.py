@@ -1,5 +1,6 @@
 from dragonfly import Grammar, MappingRule, Key, IntegerRef, Function, Text, Dictation
 from extras import characters
+from inflection import camelize, underscore, dasherize, titleize
 from typing import Any, Callable
 
 
@@ -284,6 +285,7 @@ class Vim:
 
                 # Change
                 **self._make_operator('change', self._change),
+                'big change': Key('C') + Function(lambda: print('C')),
 
                 # Delete
                 **self._make_operator('delete', self._delete),
@@ -341,6 +343,8 @@ class Vim:
                 'go lowercase': Key('g,u') + Function(lambda: print('gu')),
                 'ghee queue': Key('g,q') + Function(lambda: print('gq')),
                 'git changes': Key('ws-g') + Function(lambda: print('ws-g')),
+                'inspect': Key('g,h') + Function(lambda: print('gh')),
+                'define': Key('g,d') + Function(lambda: print('gd')),
 
                 # File
                 'save': Key('colon,w,enter') + Function(lambda: print(':w enter')),

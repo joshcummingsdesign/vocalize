@@ -43,9 +43,9 @@ class Dictate:
 
         @unreleased
         """
-        if not self._enabled and not self._mac_enabled:
-            self._enabled = True
-            self._grammar.set_exclusiveness(True)
+        self._disable()
+        self._enabled = True
+        self._grammar.set_exclusiveness(True)
         print('Dictation enabled...')
 
     def _mac_enable(self) -> None:
@@ -54,9 +54,9 @@ class Dictate:
 
         @unreleased
         """
-        if not self._enabled and not self._mac_enabled:
-            self._mac_enabled = True
-            self._grammar.set_exclusiveness(True)
+        self._disable()
+        self._mac_enabled = True
+        self._grammar.set_exclusiveness(True)
         print('Mac dictation enabled...')
 
     def _char_enable(self) -> None:
@@ -65,9 +65,9 @@ class Dictate:
 
         @unreleased
         """
-        if not self._enabled and not self._mac_enabled and not self._char_enabled:
-            self._char_enabled = True
-            self._grammar.set_exclusiveness(True)
+        self._disable()
+        self._char_enabled = True
+        self._grammar.set_exclusiveness(True)
         print('Character dictation enabled...')
 
     def _disable(self) -> None:
@@ -108,6 +108,7 @@ class Dictate:
             mapping={
                 '<text>': Text('%(text)s') + Function(lambda text: print(text)),
                 'shush': Function(self._disable),
+                'shush out': Key('escape') + Function(self._disable),
             },
             extras=[Dictation('text')],
             context=FuncContext(lambda: self._enabled)
@@ -140,6 +141,7 @@ class Dictate:
             mapping={
                 '<char>': Text('%(char)s') + Function(lambda char: print(char)),
                 'shush': Function(self._disable),
+                'shush out': Key('escape') + Function(self._disable),
             },
             extras=[characters('char')],
             context=FuncContext(lambda: self._char_enabled)

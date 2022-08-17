@@ -1,5 +1,5 @@
 from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef, Text, Dictation
-from extras import modifiers
+from extras import modifiers, characters
 from rules import SeriesMappingRule
 
 
@@ -31,12 +31,15 @@ class Keyboard:
                 'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
                 'out': Key('escape') + Function(lambda: print('escape')),
                 'type in <text>': Text('%(text)s') + Function(lambda text: print(text)),
+                'char type <char>': Text('%(char)s') + Function(lambda char: print(char)),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
                 'highlight': Key('w-a') + Function(lambda: print('w-a')),
+                'spock': Key('space') + Function(lambda: print('space')),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
                 Dictation('text'),
+                characters('char'),
                 modifiers('mod'),
             ],
             defaults={
