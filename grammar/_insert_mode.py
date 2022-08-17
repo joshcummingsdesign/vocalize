@@ -1,7 +1,8 @@
+from actions import repeatable_text
 from dragonfly import Grammar, Text, Key, IntegerRef, Function, Dictation
 from extras import characters
-from rules import SeriesMappingRule
 from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case, uc_first
+from rules import SeriesMappingRule
 
 
 class InsertMode:
@@ -17,15 +18,6 @@ class InsertMode:
 
     @unreleased
     """
-
-    def _repeatable_text(self, n: int, text: str) -> None:
-        """
-        Repeat text n times
-
-        @unreleased
-        """
-        word = ''.join(text * n)
-        Text(word, True).execute()
 
     def _make_insert_mode_rule(self) -> SeriesMappingRule:
         """
@@ -45,20 +37,10 @@ class InsertMode:
                 '[<n>] del': Key('backspace:%(n)d'),
                 '[<n>] slice': Key('right:%(n)d,backspace:%(n)d'),
 
-                # Typing
-                '[<n>] <char>': Function(lambda n, char: self._repeatable_text(n, char)),
-                'tags': Key('<,>,left'),
-                'key <text>': Text('%(text)s '),
+                # Special Characters
+                '[<n>] <char>': Function(lambda n, char: repeatable_text(n, char)),
                 'pad <char>': Text(' %(char)s '),
-                'snake <text>': Function(lambda text: Text(to_snake(text), True).execute()),
-                'camel <text>': Function(lambda text: Text(to_camel(text), True).execute()),
-                'pascal <text>': Function(lambda text: Text(to_pascal(text), True).execute()),
-                'kebab <text>': Function(lambda text: Text(to_kebab(text), True).execute()),
-                'dot word <text>': Function(lambda text: Text(to_dot_case(text), True).execute()),
-                'upper <text>': Function(lambda text: Text(to_snake(text).upper(), True).execute()),
-                'sentence <text>': Function(lambda text: Text(uc_first(text), True).execute()),
-                'title <text>': Function(lambda text: Text(text.title(), True).execute()),
-                'type <text>': Text('%(text)s'),
+                'tags': Key('<,>,left'),
                 'spread': Text('...'),
                 'arrow': Text('->'),
                 'lambda': Text('=>'),
@@ -68,6 +50,18 @@ class InsertMode:
                 'not equals': Text(' !== '),
                 'greater equals': Text(' >= '),
                 'less equals': Text(' <= '),
+
+                # Typing
+                'type <text>': Text('%(text)s'),
+                'key <text>': Text('%(text)s '),
+                'snake <text>': Function(lambda text: Text(to_snake(text), True).execute()),
+                'camel <text>': Function(lambda text: Text(to_camel(text), True).execute()),
+                'pascal <text>': Function(lambda text: Text(to_pascal(text), True).execute()),
+                'kebab <text>': Function(lambda text: Text(to_kebab(text), True).execute()),
+                'dot word <text>': Function(lambda text: Text(to_dot_case(text), True).execute()),
+                'upper <text>': Function(lambda text: Text(to_snake(text).upper(), True).execute()),
+                'sentence <text>': Function(lambda text: Text(uc_first(text), True).execute()),
+                'title <text>': Function(lambda text: Text(text.title(), True).execute()),
             },
             extras=[
                 IntegerRef('n', 1, 100),
