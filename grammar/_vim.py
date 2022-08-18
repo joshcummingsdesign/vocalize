@@ -64,6 +64,7 @@ class Vim:
                 'big word': Key('W'),
                 'back': Key('b'),
                 'big back': Key('B'),
+                'paragraph': Key('p'),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
