@@ -24,6 +24,7 @@ class Ide:
         return MappingRule(
             name='ide_rule',
             mapping={
+                'find all': Key('ws-f'),
                 'reveal': Key('wa-f11'),
             }
         )

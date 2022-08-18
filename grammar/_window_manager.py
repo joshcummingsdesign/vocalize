@@ -33,6 +33,8 @@ class WindowManager:
                 'tile swap': Key('cas-l'),
                 'tile flip': Key('cas-k'),
                 'tile flop': Key('cas-j'),
+                'title full': Key('as-d'),
+                'title tall': Key('as-a'),
             },
             extras=[
                 IntegerRef('n', 1, 10),

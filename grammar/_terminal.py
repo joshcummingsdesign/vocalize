@@ -27,10 +27,10 @@ class Terminal:
             mapping={
                 # Window
                 'term': Key('w-space'),
-                'new term': Key('c-k,c'),
+                'term new': Key('c-k,c'),
                 'term name <text>': Key('c-k,r') + Text('%(text)s') + Key('enter'),
-                'switch term <n>': Key('c-k,%(n)d'),
-                'split': Key('c-k,v'),
+                'term switch <n>': Key('c-k,%(n)d'),
+                'term split': Key('c-k,v'),
                 '[<n>] term win left': Function(lambda n: repeat_key(n, 'c-k,h')),
                 '[<n>] term win right': Function(lambda n: repeat_key(n, 'c-k,l')),
                 'term win even': Key('c-k,enter'),

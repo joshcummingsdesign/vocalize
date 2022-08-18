@@ -31,7 +31,7 @@ class Keyboard:
             name='keyboard',
             mapping={
                 # Modifiers
-                '[<n>] out': Key('escape:%(n)d'),
+                '[<n>] zap': Key('escape:%(n)d'),
                 '[<n>] slap': Key('enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
@@ -39,10 +39,21 @@ class Keyboard:
 
                 # Editing
                 '[<n>] snip': Key('backspace:%(n)d'),
-                'strike': Key('w-backspace'),
-                'highlight': Key('w-a'),
+                '[<n>] strike': Key('w-backspace:%(n)d'),
+                'light all': Key('w-a'),
+                'light up': Key('ws-up'),
+                'light down': Key('ws-down'),
+                'light left': Key('ws-left'),
+                'light right': Key('ws-right'),
+                'big up': Key('w-up'),
+                'big down': Key('w-down'),
+                'big left': Key('w-left'),
+                'big right': Key('w-right'),
                 'copy': Key('w-c'),
                 'pasta': Key('w-v'),
+                'begin': Key('w-left'),
+                '[<n>] undo': Key('w-z:%(n)d'),
+                '[<n>] never mind': Key('ws-z:%(n)d'),
 
                 # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),

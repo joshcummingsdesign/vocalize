@@ -1,4 +1,5 @@
 from dragonfly import Grammar, MappingRule, Key, Text, IntegerRef, Dictation
+from extras import character
 
 
 class Browser:
@@ -31,6 +32,7 @@ class Browser:
                 '[<n>] scroll up': Key('u:%(n)d'),
                 '[<n>] scroll down': Key('d:%(n)d'),
                 'jump': Key('f'),
+                'browser search [<object>] [<text>] [<char>]': Key('slash/20') + Text('%(object)s%(text)s%(char)s') + Key('enter'),
                 'close tab': Key('x'),
                 'switch user': Key('ws-m'),
                 'nav back': Key('H'),
@@ -40,10 +42,14 @@ class Browser:
             extras=[
                 IntegerRef('n', 1, 10),
                 Dictation('text'),
+                character('char'),
+                character('object'),
             ],
             defaults={
                 'n': 1,
                 'text': '',
+                'char': '',
+                'object': '',
             }
         )
 

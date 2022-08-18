@@ -30,6 +30,7 @@ class Window:
                 'new big window': Key('ws-n'),
                 'new tab': Key('w-t'),
                 'reopen': Key('ws-t'),
+                'hide': Key('w-h'),
                 'spotlight [<text>]': Key('c-space') + Text('%(text)s'),
                 '[<n>] swap': Key('win:down,tab:%(n)d,win:up'),
                 '[<n>] switch': Key('w-`:%(n)d'),

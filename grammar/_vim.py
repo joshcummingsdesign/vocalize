@@ -28,7 +28,7 @@ class Vim:
             mapping={
                 # Operators
                 'select': Key('escape,v'),
-                'select [<n>] (line | lines)': Key('escape') + Function(lambda n: Text(f'V,{n - 1}j', True).execute()),
+                'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
                 'change': Key('c'),
                 'big change': Key('C'),
                 'delete': Key('d'),
@@ -50,8 +50,8 @@ class Vim:
                 '[<n>] back find <char>': Function(lambda n, char: Text(f'{n}F{char}', True).execute()),
                 '[<n>] till <char>': Function(lambda n, char: Text(f'{n}t{char}', True).execute()),
                 '[<n>] back till <char>': Function(lambda n, char: Text(f'{n}T{char}', True).execute()),
-                'top': Key('g,g'),
-                'bottom': Key('G'),
+                'head': Key('g,g'),
+                'foot': Key('G'),
                 'snap': Text('^'),
                 'start': Key('0'),
                 'end': Key('$'),
@@ -85,14 +85,15 @@ class Vim:
             name='vim_rule',
             mapping={
                 # Modes
-                'insert': Key('escape,i'),
+                'zip': Key('escape,l,i'),
+                'blip': Key('escape,i'),
                 'block': Key('escape,c-v'),
 
                 # Editing
-                '[<n>] undo': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
-                '[<n>] redo': Key('escape') + Function(lambda n: Text(n, True).execute()) + Key('c-r'),
+                '[<n>] scratch': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
+                '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
                 'wipe': Key('escape,d,d'),
-                'scratch': Key('escape,c,c'),
+                'change line': Key('escape,c,c'),
                 '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
                 '[<n>] splice': Function(lambda n: Text(f'{n}X', True).execute()),
                 '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
@@ -119,6 +120,8 @@ class Vim:
                 'bail': Key('colon,q,!,enter'),
                 'buff': Key('space,b,p'),
                 'next buff': Key('space,b,n'),
+                'close buff': Key('colon,b,d,enter'),
+                'kill buff': Key('colon,b,w,enter'),
                 'fuzzy [<text>]': Key('c-p') + Text('%(text)s'),
                 'tree': Key('c-backslash'),
                 '[<n>] choose': Key('c-j:%(n)d'),
@@ -130,13 +133,14 @@ class Vim:
                 '[<n>] back search [<object>] [<text>] [<char>]': Text('%(n)d?%(object)s%(text)s%(char)s') + Key('enter'),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
-                '[<n>] pup': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-u'),
-                '[<n>] page': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-d'),
+                'change go next': Key('c,g,n'),
                 'zed zed': Key('escape,z,z'),
                 'zed top': Key('escape,z,t'),
                 'zed bottom': Key('escape,z,b'),
                 'run in': Key('escape,c-i'),
                 'run out': Key('escape,c-o'),
+                'win right': Key('escape,space,w,l'),
+                'win left': Key('escape,space,w,h'),
 
                 # Surround
                 'select inner <char>': Key('escape,v,i,%(char)s'),
