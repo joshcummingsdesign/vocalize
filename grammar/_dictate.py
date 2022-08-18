@@ -3,35 +3,35 @@ from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, Te
 
 class Dictate:
     """
-    The dictate grammar class.
+    The dictate grammar class
 
     @unreleased
     """
 
     _grammar: Grammar = None
     """
-    The Grammar class instance.
+    The Grammar class instance
 
     @unreleased
     """
 
     _enabled: bool = False
     """
-    Whether dictation is enabled.
+    Whether dictation is enabled
 
     @unreleased
     """
 
     _mac_enabled: bool = False
     """
-    Whether macOS dictation is enabled.
+    Whether macOS dictation is enabled
 
     @unreleased
     """
 
     def _enable(self) -> None:
         """
-        Enable dictation.
+        Enable dictation
 
         @unreleased
         """
@@ -42,7 +42,7 @@ class Dictate:
 
     def _mac_enable(self) -> None:
         """
-        Enable macOS dictation.
+        Enable macOS dictation
 
         @unreleased
         """
@@ -53,7 +53,7 @@ class Dictate:
 
     def _disable(self) -> None:
         """
-        Disable dictation.
+        Disable dictation
 
         @unreleased
         """
@@ -79,16 +79,15 @@ class Dictate:
 
     def _make_dictation_listening_rule(self) -> MappingRule:
         """
-        Dictation listening rule factory.
+        Dictation listening rule factory
 
         @unreleased
         """
         return MappingRule(
             name='dictation_listening_rule',
             mapping={
-                '<text>': Text('%(text)s') + Function(lambda text: print(text)),
+                '<text>': Text('%(text)s'),
                 'shush': Function(self._disable),
-                'shush out': Key('escape') + Function(self._disable),
             },
             extras=[Dictation('text')],
             context=FuncContext(lambda: self._enabled)
@@ -96,14 +95,16 @@ class Dictate:
 
     def _make_mac_dictation_listening_rule(self) -> MappingRule:
         """
-        The macOS dictation listening rule factory.
+        The macOS dictation listening rule factory
+
+        When macOS dictation is enabled, simply return false for all commands
 
         @unreleased
         """
         return MappingRule(
             name='mac_dictation_listening_rule',
             mapping={
-                '<text>': Function(lambda text: print(text)),
+                '<text>': Function(lambda: False),
                 'shush': Key('escape') + Function(self._disable),
             },
             extras=[Dictation('text')],
@@ -112,7 +113,7 @@ class Dictate:
 
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """

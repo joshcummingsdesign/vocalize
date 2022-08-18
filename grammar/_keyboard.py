@@ -35,12 +35,12 @@ class Keyboard:
                 '[<n>] slap': Key('enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
-                '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
+                '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
 
                 # Editing
                 '[<n>] del': Key('backspace:%(n)d'),
-                'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
-                'highlight': Key('w-a') + Function(lambda: print('w-a')),
+                'scratch': Key('w-backspace'),
+                'highlight': Key('w-a'),
 
                 # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),
