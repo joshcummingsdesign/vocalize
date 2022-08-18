@@ -38,8 +38,8 @@ class Keyboard:
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
 
                 # Editing
-                '[<n>] del': Key('backspace:%(n)d'),
-                'scratch': Key('w-backspace'),
+                '[<n>] snip': Key('backspace:%(n)d'),
+                'strike': Key('w-backspace'),
                 'highlight': Key('w-a'),
 
                 # Special Characters

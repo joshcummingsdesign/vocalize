@@ -91,6 +91,7 @@ class Vim:
                 '[<n>] undo': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
                 '[<n>] redo': Key('escape') + Function(lambda n: Text(n, True).execute()) + Key('c-r'),
                 'wipe': Key('escape,d,d'),
+                'scratch': Key('escape,c,c'),
                 '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
                 '[<n>] splice': Function(lambda n: Text(f'{n}X', True).execute()),
                 '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
