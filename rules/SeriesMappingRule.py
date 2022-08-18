@@ -19,8 +19,8 @@ class SeriesMappingRule(CompoundRule):
             exported=False
         )
         single = RuleRef(rule=mapping_rule)
-        series = Repetition(single, min=1, max=16, name="series")
-        compound_spec = "<series>"
+        series = Repetition(single, min=1, max=16, name='series')
+        compound_spec = '<series>'
         compound_extras = [series]
 
         CompoundRule.__init__(
@@ -31,6 +31,6 @@ class SeriesMappingRule(CompoundRule):
         )
 
     def _process_recognition(self, node, extras):
-        series = extras["series"]
+        series = extras['series']
         for action in series:
             action.execute()

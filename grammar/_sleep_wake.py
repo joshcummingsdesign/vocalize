@@ -3,28 +3,28 @@ from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, ge
 
 class SleepWake:
     """
-    The sleep / wake grammar class.
+    The sleep / wake grammar class
 
     @unreleased
     """
 
     _grammar: Grammar = None
     """
-    The Grammar class instance.
+    The Grammar class instance
 
     @unreleased
     """
 
     _sleeping: bool = False
     """
-    Whether the app is sleeping.
+    Whether the app is sleeping
 
     @unreleased
     """
 
     def _wake(self) -> None:
         """
-        Continue listening for commands.
+        Continue listening for commands
 
         @unreleased
         """
@@ -35,7 +35,7 @@ class SleepWake:
 
     def _sleep(self) -> None:
         """
-        Stop listening for commands.
+        Stop listening for commands
 
         @unreleased
         """
@@ -46,7 +46,7 @@ class SleepWake:
 
     def _make_sleep_wake_rule(self) -> MappingRule:
         """
-        Sleep / wake rule factory.
+        Sleep / wake rule factory
 
         @unreleased
         """
@@ -54,15 +54,15 @@ class SleepWake:
             name='sleep_wake_rule',
             mapping={
                 'wake up': Function(self._wake) + Function(lambda: get_engine().start_saving_adaptation_state()),
-                'snooze': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
+                'sleep': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
             }
         )
 
     def _make_sleeping_rule(self) -> None:
         """
-        Sleeping rule factory.
+        Sleeping rule factory
 
-        When the app is sleeping, simply return false for all commands.
+        When the app is sleeping, simply return false for all commands
 
         @unreleased
         """
@@ -75,7 +75,7 @@ class SleepWake:
 
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """

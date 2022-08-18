@@ -1,45 +1,78 @@
-from dragonfly import Grammar, MappingRule, Key, Function, IntegerRef, Text, Dictation
-from extras import modifiers, characters
+from actions import repeat_text
+from dragonfly import Grammar, Text, Key, IntegerRef, Function, Dictation
+from extras import character, modifiers
+from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case, uc_first
 from rules import SeriesMappingRule
 
 
 class Keyboard:
     """
-    The keyboard grammar class.
+    The Keyboard grammar class
+
+    Represents keyboard actions that can be performed anywhere
 
     @unreleased
     """
 
     _grammar: Grammar = None
     """
-    The Grammar class instance.
+    The Grammar class instance
 
     @unreleased
     """
 
-    def _make_keyboard_rule(self) -> MappingRule:
+    def _make_keyboard_rule(self) -> SeriesMappingRule:
         """
-        Keyboard rule factory.
+        The keyboard rule factory
 
         @unreleased
         """
-        return MappingRule(
-            name='keyboard_rule',
+        return SeriesMappingRule(
+            name='keyboard',
             mapping={
-                'go': Key('enter') + Function(lambda: print('enter')),
-                '[<n>] whack': Key('backspace:%(n)d') + Function(lambda n: print(f'{n} backspace')),
-                'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
-                'out': Key('escape') + Function(lambda: print('escape')),
-                'type in <text>': Text('%(text)s') + Function(lambda text: print(text)),
-                'char type <char>': Text('%(char)s') + Function(lambda char: print(char)),
-                '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
-                'highlight': Key('w-a') + Function(lambda: print('w-a')),
-                'spock': Key('space') + Function(lambda: print('space')),
+                # Modifiers
+                'out': Key('escape'),
+                '[<n>] slap': Key('enter:%(n)d'),
+                '[<n>] clap': Key('enter:%(n)d,tab'),
+                '[<n>] tab': Key('tab:%(n)d'),
+                '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
+
+                # Editing
+                '[<n>] snip': Key('backspace:%(n)d'),
+                'strike': Key('w-backspace'),
+                'highlight': Key('w-a'),
+
+                # Special Characters
+                '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),
+                'pad <char>': Text(' %(char)s '),
+                'tags': Key('<,>,left'),
+                'spread': Text('...'),
+                'arrow': Text('->'),
+                'lambda': Text('=>'),
+                'double equals': Text(' == '),
+                'triple equals': Text(' === '),
+                'loose not equals': Text(' != '),
+                'not equals': Text(' !== '),
+                'greater equals': Text(' >= '),
+                'less equals': Text(' <= '),
+
+                # Typing
+                'type <text>': Text('%(text)s'),
+                'key <text>': Text('%(text)s '),
+                'snake <text>': Function(lambda text: Text(to_snake(text), True).execute()),
+                'camel <text>': Function(lambda text: Text(to_camel(text), True).execute()),
+                'pascal <text>': Function(lambda text: Text(to_pascal(text), True).execute()),
+                'kebab <text>': Function(lambda text: Text(to_kebab(text), True).execute()),
+                'dot case <text>': Function(lambda text: Text(to_dot_case(text), True).execute()),
+                'upper snake <text>': Function(lambda text: Text(to_snake(text).upper(), True).execute()),
+                'upper <text>': Function(lambda text: Text(text.upper(), True).execute()),
+                'sentence <text>': Function(lambda text: Text(uc_first(text), True).execute()),
+                'title <text>': Function(lambda text: Text(text.title(), True).execute()),
             },
             extras=[
-                IntegerRef('n', 1, 1000),
+                IntegerRef('n', 1, 100),
                 Dictation('text'),
-                characters('char'),
+                character('char'),
                 modifiers('mod'),
             ],
             defaults={
@@ -47,53 +80,14 @@ class Keyboard:
             }
         )
 
-    def _make_series_keyboard_rule(self) -> SeriesMappingRule:
-        """
-        Series keyboard rule factory.
-
-        @unreleased
-        """
-        return SeriesMappingRule(
-            name='series_keyboard_rule',
-            mapping={
-                'alpha': Key('a') + Function(lambda: print('a')),
-                'bravo': Key('b') + Function(lambda: print('b')),
-                'charlie': Key('c') + Function(lambda: print('c')),
-                'delta': Key('d') + Function(lambda: print('d')),
-                'echo': Key('e') + Function(lambda: print('e')),
-                'foxtrot': Key('f') + Function(lambda: print('f')),
-                'golf': Key('g') + Function(lambda: print('g')),
-                'hotel': Key('h') + Function(lambda: print('h')),
-                'india': Key('i') + Function(lambda: print('i')),
-                'juliet': Key('j') + Function(lambda: print('j')),
-                'kilo': Key('k') + Function(lambda: print('k')),
-                'lima': Key('l') + Function(lambda: print('l')),
-                'mike': Key('m') + Function(lambda: print('m')),
-                'november': Key('n') + Function(lambda: print('n')),
-                'oscar': Key('o') + Function(lambda: print('o')),
-                'papa': Key('p') + Function(lambda: print('p')),
-                'quebec': Key('q') + Function(lambda: print('q')),
-                'romeo': Key('r') + Function(lambda: print('r')),
-                'sierra': Key('s') + Function(lambda: print('s')),
-                'tango': Key('t') + Function(lambda: print('t')),
-                'uniform': Key('u') + Function(lambda: print('u')),
-                'victor': Key('v') + Function(lambda: print('v')),
-                'whiskey': Key('w') + Function(lambda: print('w')),
-                'x ray': Key('x') + Function(lambda: print('x')),
-                'yankee': Key('y') + Function(lambda: print('y')),
-                'zulu': Key('z') + Function(lambda: print('z')),
-            }
-        )
-
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """
         self._grammar = Grammar('keyboard')
         self._grammar.add_rule(self._make_keyboard_rule())
-        self._grammar.add_rule(self._make_series_keyboard_rule())
         self._grammar.load()
 
 
