@@ -1,7 +1,7 @@
 from dragonfly import Choice
 
 
-def characters(name: str) -> Choice:
+def character(name: str) -> Choice:
     """
     The character extras.
 
@@ -49,6 +49,32 @@ def characters(name: str) -> Choice:
         'x ray': 'x',
         'yankee': 'y',
         'zulu': 'z',
+        'big alpha': 'A',
+        'big bravo': 'B',
+        'big charlie': 'C',
+        'big delta': 'D',
+        'big echo': 'E',
+        'big foxtrot': 'F',
+        'big golf': 'G',
+        'big hotel': 'H',
+        'big india': 'I',
+        'big juliet': 'J',
+        'big kilo': 'K',
+        'big lima': 'L',
+        'big mike': 'M',
+        'big november': 'N',
+        'big oscar': 'O',
+        'big papa': 'P',
+        'big quebec': 'Q',
+        'big romeo': 'R',
+        'big sierra': 'S',
+        'big tango': 'T',
+        'big uniform': 'U',
+        'big victor': 'V',
+        'big whiskey': 'W',
+        'big x ray': 'X',
+        'big yankee': 'Y',
+        'big zulu': 'Z',
 
         # Special Characters
         'space': ' ',

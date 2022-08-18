@@ -1,1 +1,1 @@
-from .repeatable_text import repeatable_text
+from .repeat_text import repeat_text

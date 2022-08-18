@@ -1,6 +1,6 @@
-from actions import repeatable_text
+from actions import repeat_text
 from dragonfly import Grammar, Text, Key, IntegerRef, Function, Dictation
-from extras import characters
+from extras import character, modifiers
 from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case, uc_first
 from rules import SeriesMappingRule
 
@@ -33,14 +33,17 @@ class Keyboard:
                 # Modifiers
                 'out': Key('escape'),
                 '[<n>] slap': Key('enter:%(n)d'),
+                '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
+                '[<n>] press <mod>': Key('%(mod)s:%(n)d') + Function(lambda n, mod: print(f'{n}{mod}')),
 
                 # Editing
                 '[<n>] del': Key('backspace:%(n)d'),
-                '[<n>] slice': Key('right:%(n)d,backspace:%(n)d'),
+                'scratch': Key('w-backspace') + Function(lambda: print('w-backspace')),
+                'highlight': Key('w-a') + Function(lambda: print('w-a')),
 
                 # Special Characters
-                '[<n>] <char>': Function(lambda n, char: repeatable_text(n, char)),
+                '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),
                 'pad <char>': Text(' %(char)s '),
                 'tags': Key('<,>,left'),
                 'spread': Text('...'),
@@ -60,15 +63,17 @@ class Keyboard:
                 'camel <text>': Function(lambda text: Text(to_camel(text), True).execute()),
                 'pascal <text>': Function(lambda text: Text(to_pascal(text), True).execute()),
                 'kebab <text>': Function(lambda text: Text(to_kebab(text), True).execute()),
-                'dot word <text>': Function(lambda text: Text(to_dot_case(text), True).execute()),
-                'upper <text>': Function(lambda text: Text(to_snake(text).upper(), True).execute()),
+                'dot case <text>': Function(lambda text: Text(to_dot_case(text), True).execute()),
+                'upper snake <text>': Function(lambda text: Text(to_snake(text).upper(), True).execute()),
+                'upper <text>': Function(lambda text: Text(text.upper(), True).execute()),
                 'sentence <text>': Function(lambda text: Text(uc_first(text), True).execute()),
                 'title <text>': Function(lambda text: Text(text.title(), True).execute()),
             },
             extras=[
                 IntegerRef('n', 1, 100),
                 Dictation('text'),
-                characters('char'),
+                character('char'),
+                modifiers('mod'),
             ],
             defaults={
                 'n': 1,

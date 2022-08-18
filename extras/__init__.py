@@ -1,1 +1,2 @@
-from .characters import characters
+from .character import character
+from .modifiers import modifiers
