@@ -7,7 +7,7 @@ from rules import SeriesMappingRule
 
 class Keyboard:
     """
-    The Keyboard grammar class
+    The keyboard grammar class
 
     Represents keyboard actions that can be performed anywhere
 
@@ -54,6 +54,7 @@ class Keyboard:
                 'begin': Key('w-left'),
                 '[<n>] undo': Key('w-z:%(n)d'),
                 '[<n>] never mind': Key('ws-z:%(n)d'),
+                'duplicate': Key('w-d'),
 
                 # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),

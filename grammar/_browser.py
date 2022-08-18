@@ -4,7 +4,7 @@ from extras import character
 
 class Browser:
     """
-    The Browser grammar class
+    The browser grammar class
 
     @unreleased
     """

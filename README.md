@@ -4,7 +4,8 @@ Voice control for macOS with a Vim mindset.
 
 ## Requirements
 
-- Python 3.6+ w/ virtualenv
+- Python 3.6+
+- virtualenv
 
 ## Getting Started
 

@@ -132,7 +132,7 @@ pyobjc-framework-Vision==8.5
 pyobjc-framework-WebKit==8.5
 pyparsing==3.0.9
 pyperclip==1.8.2
-regex==2022.7.25
+regex==2022.8.17
 requests==2.28.1
 six==1.16.0
 sounddevice==0.3.15
