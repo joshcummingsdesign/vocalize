@@ -1,4 +1,4 @@
-from dragonfly import Grammar, MappingRule, Key, Function, Dictation, Text, IntegerRef
+from dragonfly import Grammar, MappingRule, Key, Dictation, Text, IntegerRef
 
 
 class Window:
@@ -10,14 +10,14 @@ class Window:
 
     _grammar: Grammar = None
     """
-    The Grammar class instance.
+    The Grammar class instance
 
     @unreleased
     """
 
     def _make_window_rule(self) -> MappingRule:
         """
-        Window rule factory.
+        Window rule factory
 
         @unreleased
         """
@@ -46,7 +46,7 @@ class Window:
 
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """

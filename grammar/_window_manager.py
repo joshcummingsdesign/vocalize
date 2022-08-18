@@ -10,14 +10,14 @@ class WindowManager:
 
     _grammar: Grammar = None
     """
-    The Grammar class instance.
+    The Grammar class instance
 
     @unreleased
     """
 
     def _make_window_manager_rule(self) -> MappingRule:
         """
-        Window manager rule factory.
+        Window manager rule factory
 
         @unreleased
         """
@@ -44,7 +44,7 @@ class WindowManager:
 
     def load(self) -> None:
         """
-        Load the grammar.
+        Load the grammar
 
         @unreleased
         """
