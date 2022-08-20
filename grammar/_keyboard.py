@@ -31,8 +31,8 @@ class Keyboard:
             name='keyboard',
             mapping={
                 # Modifiers
-                '[<n>] zap': Key('escape:%(n)d'),
-                '[<n>] slap': Key('enter:%(n)d'),
+                '[<n>] zap': Key('win:up,escape:%(n)d'),
+                '[<n>] slap': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
@@ -52,7 +52,7 @@ class Keyboard:
                 'copy': Key('w-c'),
                 'pasta': Key('w-v'),
                 'begin': Key('w-left'),
-                '[<n>] undo': Key('w-z:%(n)d'),
+                '[<n>] oops': Key('w-z:%(n)d'),
                 '[<n>] never mind': Key('ws-z:%(n)d'),
                 'duplicate': Key('w-d'),
 

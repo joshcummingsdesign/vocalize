@@ -34,6 +34,8 @@ class Browser:
                 'jump': Key('f'),
                 'browser search [<object>] [<text>] [<char>]': Key('slash/20') + Text('%(object)s%(text)s%(char)s') + Key('enter'),
                 'close tab': Key('x'),
+                'previous tab': Key('s-h'),
+                'next tab': Key('s-h'),
                 'switch user': Key('ws-m'),
                 'nav back': Key('H'),
                 'nav forward': Key('L'),

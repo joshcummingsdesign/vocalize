@@ -90,7 +90,7 @@ class Vim:
                 'block': Key('escape,c-v'),
 
                 # Editing
-                '[<n>] scratch': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
+                '[<n>] (scratch | undo)': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
                 '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
                 'wipe': Key('escape,d,d'),
                 'change line': Key('escape,c,c'),
@@ -114,14 +114,14 @@ class Vim:
                 'define': Key('g,d'),
 
                 # File
-                'save': Key('colon,w,enter'),
-                'quit': Key('colon,q,enter'),
-                'write out': Key('colon,w,q,enter'),
-                'bail': Key('colon,q,!,enter'),
-                'buff': Key('space,b,p'),
-                'next buff': Key('space,b,n'),
-                'close buff': Key('colon,b,d,enter'),
-                'kill buff': Key('colon,b,w,enter'),
+                'save': Key('escape,colon,w,enter'),
+                'quit': Key('escape,colon,q,enter'),
+                'write out': Key('escape,colon,w,q,enter'),
+                'bail': Key('escape,colon,q,!,enter'),
+                'buff': Key('escape,space,b,p'),
+                'next buff': Key('escape,space,b,n'),
+                'close buff': Key('escape,colon,b,d,enter'),
+                'kill buff': Key('escape,colon,b,w,enter'),
                 'fuzzy [<text>]': Key('c-p') + Text('%(text)s'),
                 'tree': Key('c-backslash'),
                 '[<n>] choose': Key('c-j:%(n)d'),

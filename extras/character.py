@@ -92,6 +92,7 @@ def character(name: str) -> Choice:
         'left par': '(',
         'par': ')',
         'minus': '-',
+        'dash': '-',
         'score': '_',
         'equals': '=',
         'plus': '+',

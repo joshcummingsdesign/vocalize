@@ -26,6 +26,7 @@ class Ide:
             mapping={
                 'find all': Key('ws-f'),
                 'reveal': Key('wa-f11'),
+                'git changes': Key('ws-g'),
             }
         )
 
