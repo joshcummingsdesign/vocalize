@@ -39,9 +39,9 @@ class Terminal:
 
                 # Navigation
                 'see dee [<text>]': Text('cd %(text)s'),
-                'see dee back': Text('cd ..') + Key('enter'),
+                '[<n>] see dee back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'list': Key('l,enter'),
-                'guess': Key('tab'),
+                'cat [<text>]': Text('cat %(text)s'),
                 'yup': Key('c-r'),
                 'clear': Key('c-l'),
                 'free': Key('c-k,escape'),

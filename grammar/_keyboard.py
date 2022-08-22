@@ -35,6 +35,7 @@ class Keyboard:
                 '[<n>] slap': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
+                '[<n>] back tab': Key('s-tab:%(n)d'),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
 
                 # Editing
@@ -72,6 +73,7 @@ class Keyboard:
 
                 # Typing
                 'type <text>': Text('%(text)s'),
+                'num <n>': Text('%(n)s'),
                 'key <text>': Text('%(text)s '),
                 'snake <text>': Function(lambda text: Text(to_snake(text), True).execute()),
                 'camel <text>': Function(lambda text: Text(to_camel(text), True).execute()),

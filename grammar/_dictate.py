@@ -1,4 +1,6 @@
 from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, Text, Key
+from extras import character
+from rules import SeriesMappingRule
 
 
 class Dictate:
@@ -29,6 +31,13 @@ class Dictate:
     @unreleased
     """
 
+    _char_enabled: bool = False
+    """
+    Whether character dictation is enabled
+
+    @unreleased
+    """
+
     def _enable(self) -> None:
         """
         Enable dictation
@@ -50,6 +59,17 @@ class Dictate:
         self._mac_enabled = True
         self._grammar.set_exclusiveness(True)
         print('Mac dictation enabled...')
+
+    def _char_enable(self) -> None:
+        """
+        Enable character dictation
+
+        @unreleased
+        """
+        self._disable()
+        self._char_enabled = True
+        self._grammar.set_exclusiveness(True)
+        print('Character dictation enabled...')
 
     def _disable(self) -> None:
         """
@@ -74,6 +94,7 @@ class Dictate:
             mapping={
                 'dictate': Function(self._enable),
                 'mac dictate': Key('cs-d') + Function(self._mac_enable),
+                'char dictate': Function(self._char_enable),
             }
         )
 
@@ -111,6 +132,22 @@ class Dictate:
             context=FuncContext(lambda: self._mac_enabled)
         )
 
+    def _make_char_dictation_listening_rule(self) -> MappingRule:
+        """
+        The character dictation listening rule factory
+
+        @unreleased
+        """
+        return SeriesMappingRule(
+            name='char_dictation_listening_rule',
+            mapping={
+                '<char>': Text('%(char)s'),
+                'shush': Function(self._disable),
+            },
+            extras=[character('char')],
+            context=FuncContext(lambda: self._char_enabled)
+        )
+
     def load(self) -> None:
         """
         Load the grammar
@@ -121,6 +158,7 @@ class Dictate:
         self._grammar.add_rule(self._make_enable_dictation_rule())
         self._grammar.add_rule(self._make_dictation_listening_rule())
         self._grammar.add_rule(self._make_mac_dictation_listening_rule())
+        self._grammar.add_rule(self._make_char_dictation_listening_rule())
         self._grammar.load()
 
 

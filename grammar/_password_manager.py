@@ -25,6 +25,7 @@ class PasswordManager:
             name='password_manager_rule',
             mapping={
                 'vault': Key('wa-backslash'),
+                'login': Key('down/20,enter'),
             }
         )
 

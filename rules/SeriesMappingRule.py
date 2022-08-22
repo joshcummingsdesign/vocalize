@@ -10,13 +10,14 @@ class SeriesMappingRule(CompoundRule):
     @undefined
     """
 
-    def __init__(self, name, mapping, extras=None, defaults=None):
+    def __init__(self, name, mapping, extras=None, defaults=None, context=None):
         mapping_rule = MappingRule(
             name=name,
             mapping=mapping,
             extras=extras,
             defaults=defaults,
-            exported=False
+            exported=False,
+            context=context
         )
         single = RuleRef(rule=mapping_rule)
         series = Repetition(single, min=1, max=16, name='series')
