@@ -1,7 +1,8 @@
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactoryList
-from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation
+from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation, Function
 from extras import character
+from typing import Optional
 
 
 class Browser(Grammar):
@@ -39,8 +40,6 @@ class Browser(Grammar):
                 'jump': Key('f'),
                 'refresh': Key('w-r'),
                 'hard refresh': Key('ws-r'),
-                'browser search [<object>] [<text>] [<char>]': Key('slash/20') + Text('%(object)s%(text)s%(char)s') + Key('enter'),
-                'browser spy': Key('slash'),
                 'earl': Key('w-l'),
                 'unsafe': Text('thisisunsafe'),
                 'close tab': Key('x'),

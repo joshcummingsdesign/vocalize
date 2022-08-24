@@ -30,7 +30,7 @@ class Vim(Grammar):
 
         @unreleased
         """
-        Key('slash').execute()
+        Key('slash/20').execute()
 
         if text:
             Text(text, True).execute() + Key('enter').execute()
@@ -41,7 +41,7 @@ class Vim(Grammar):
 
         @unreleased
         """
-        Key('?').execute()
+        Key('?/20').execute()
 
         if text:
             Text(text, True).execute() + Key('enter').execute()
