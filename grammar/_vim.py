@@ -35,6 +35,8 @@ class Vim:
                 'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
                 'yank': Key('y'),
                 'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
+                'yank line <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
+                'yank <line> [from] <l>': Function(lambda line, l: Text(f':{line},{l}y', True).execute()) + Key('enter'),
                 '[<n>] paste': Key('p:%(n)d'),
                 '[<n>] back paste': Key('P:%(n)d'),
                 '[<n>] repeat': Key('.:%(n)d'),
@@ -50,8 +52,8 @@ class Vim:
                 '[<n>] back find <char>': Function(lambda n, char: Text(f'{n}F{char}', True).execute()),
                 '[<n>] till <char>': Function(lambda n, char: Text(f'{n}t{char}', True).execute()),
                 '[<n>] back till <char>': Function(lambda n, char: Text(f'{n}T{char}', True).execute()),
-                'head': Key('escape,g,g'),
-                'foot': Key('escape,G'),
+                'head': Key('g,g'),
+                'foot': Key('G'),
                 'snap': Text('^'),
                 'start': Key('0'),
                 'end': Key('$'),
@@ -68,6 +70,8 @@ class Vim:
             },
             extras=[
                 IntegerRef('n', 1, 1000),
+                ShortIntegerRef('line', 1, 10000),
+                ShortIntegerRef('l', 1, 10000),
                 character('char'),
             ],
             defaults={

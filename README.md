@@ -29,6 +29,7 @@ This project assumes you have the following keybindings configured:
 - Spotlight: Control + Space
 - Password Manager: Command + Option + \
 - Terminal Show/Hide: Command + Space
+- Clipboard Manager: Command + Shift + Space
 
 And the following apps installed:
 

@@ -110,8 +110,8 @@ def character(name: str) -> Choice:
         'double quote': '"',
         'com': ',',
         'dot': '.',
-        'left tag': '<',
-        'tag': '>',
+        'left angle': '<',
+        'angle': '>',
         'slash': '/',
         'quest': '?',
     })

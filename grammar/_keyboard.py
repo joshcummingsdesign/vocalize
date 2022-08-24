@@ -32,7 +32,7 @@ class Keyboard:
             mapping={
                 # Modifiers
                 '[<n>] zap': Key('win:up,escape:%(n)d'),
-                '[<n>] slap': Key('win:up,enter:%(n)d'),
+                '[<n>] enter': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
                 '[<n>] back tab': Key('s-tab:%(n)d'),
@@ -44,6 +44,7 @@ class Keyboard:
                 'light all': Key('w-a'),
                 'light up': Key('ws-up'),
                 'light down': Key('ws-down'),
+                'light <n> down': Key('shift:down,down:%(n)d,shift:up'),
                 'light left': Key('ws-left'),
                 'light right': Key('ws-right'),
                 'big up': Key('w-up'),
@@ -60,7 +61,7 @@ class Keyboard:
                 # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),
                 'pad <char>': Text(' %(char)s '),
-                'tags': Key('<,>,left'),
+                'angles': Key('<,>,left'),
                 'spread': Text('...'),
                 'arrow': Text('->'),
                 'lambda': Text('=>'),
@@ -73,6 +74,9 @@ class Keyboard:
 
                 # Typing
                 'type <text>': Text('%(text)s'),
+                'sass <text>': Function(lambda text: Text(to_kebab(text), True).execute()) + Key('colon,space,semicolon,left'),
+                'tag <text>': Text('<') + Function(lambda text: Text(to_kebab(text), True).execute()) + Key('>'),
+                'tag dev': Text('<div>'),
                 'num <n>': Text('%(n)s'),
                 'key <text>': Text('%(text)s '),
                 'snake <text>': Function(lambda text: Text(to_snake(text), True).execute()),
