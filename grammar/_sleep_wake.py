@@ -1,19 +1,25 @@
-from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, get_engine
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Dictation, FuncContext, Function, get_engine
 
 
-class SleepWake:
+class SleepWake(Grammar):
     """
-    The sleep / wake grammar class
+    Sleep / wake grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'sleep_wake'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_sleep_wake_rule,
+            self._make_sleeping_rule,
+        ]
 
     _sleeping: bool = False
     """
@@ -44,7 +50,7 @@ class SleepWake:
             self._grammar.set_exclusiveness(True)
         print('Sleeping...')
 
-    def _make_sleep_wake_rule(self) -> MappingRule:
+    def _make_sleep_wake_rule(self) -> Rule:
         """
         Sleep / wake rule factory
 
@@ -58,33 +64,27 @@ class SleepWake:
             }
         )
 
-    def _make_sleeping_rule(self) -> None:
+    def _make_sleeping_rule(self) -> Rule:
         """
         Sleeping rule factory
-
-        When the app is sleeping, simply return false for all commands
 
         @unreleased
         """
         return MappingRule(
             name='sleeping_rule',
-            mapping={'<text>': Function(lambda: False)},
-            extras=[Dictation('text')],
+            mapping={
+                '<text>': Function(lambda: False)
+            },
+            extras=[
+                Dictation('text')
+            ],
             context=FuncContext(lambda: self._sleeping)
         )
-
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('sleep_wake')
-        self._grammar.add_rule(self._make_sleep_wake_rule())
-        self._grammar.add_rule(self._make_sleeping_rule())
-        self._grammar.load()
-        self._wake()
 
 
 sleep_wake = SleepWake()
 sleep_wake.load()
+
+
+def unload() -> None:
+    sleep_wake.unload()

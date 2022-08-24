@@ -1,21 +1,26 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key, IntegerRef
 
 
-class Clipboard:
+class Clipboard(Grammar):
     """
-    The clipboard grammar class
+    Clipboard grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'clipboard'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_clipboard_rule,
+        ]
 
-    def _make_clipboard_rule(self) -> MappingRule:
+    def _make_clipboard_rule(self) -> Rule:
         """
         Clipboard rule factory
 
@@ -32,16 +37,10 @@ class Clipboard:
             ]
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('clipboard')
-        self._grammar.add_rule(self._make_clipboard_rule())
-        self._grammar.load()
-
 
 clipboard = Clipboard()
 clipboard.load()
+
+
+def unload() -> None:
+    clipboard.unload()

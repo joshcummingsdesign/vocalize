@@ -1,22 +1,27 @@
-from dragonfly import Grammar, MappingRule, Key, Text, IntegerRef, Dictation
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation
 from extras import character
 
 
-class Browser:
+class Browser(Grammar):
     """
-    The browser grammar class
+    Browser grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'browser'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_browser_rule,
+        ]
 
-    def _make_browser_rule(self) -> MappingRule:
+    def _make_browser_rule(self) -> Rule:
         """
         Browser rule factory
 
@@ -35,6 +40,7 @@ class Browser:
                 'refresh': Key('w-r'),
                 'hard refresh': Key('ws-r'),
                 'browser search [<object>] [<text>] [<char>]': Key('slash/20') + Text('%(object)s%(text)s%(char)s') + Key('enter'),
+                'browser spy': Key('slash'),
                 'earl': Key('w-l'),
                 'unsafe': Text('thisisunsafe'),
                 'close tab': Key('x'),
@@ -59,16 +65,10 @@ class Browser:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('browser')
-        self._grammar.add_rule(self._make_browser_rule())
-        self._grammar.load()
-
 
 browser = Browser()
 browser.load()
+
+
+def unload() -> None:
+    browser.unload()

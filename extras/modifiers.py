@@ -3,11 +3,11 @@ from dragonfly import Choice
 
 def modifiers(name: str) -> Choice:
     """
-    The modifier extras.
+    The modifier key extras
 
     @unreleased
 
-    @param name: str - The name of this element.
+    @param name: str - The name of this element
     """
     return Choice(name, {
         'up': 'up',

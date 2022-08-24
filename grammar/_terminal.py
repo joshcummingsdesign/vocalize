@@ -1,22 +1,27 @@
-from dragonfly import Grammar, MappingRule, Key, Text, Function, IntegerRef, Dictation
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
 from actions import repeat_key
 
 
-class Terminal:
+class Terminal(Grammar):
     """
-    The terminal grammar class
+    Terminal grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'terminal'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_terminal_rule,
+        ]
 
-    def _make_terminal_rule(self) -> MappingRule:
+    def _make_terminal_rule(self) -> Rule:
         """
         Terminal rule factory
 
@@ -95,16 +100,10 @@ class Terminal:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('terminal')
-        self._grammar.add_rule(self._make_terminal_rule())
-        self._grammar.load()
-
 
 terminal = Terminal()
 terminal.load()
+
+
+def unload() -> None:
+    terminal.unload()

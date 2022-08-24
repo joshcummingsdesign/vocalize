@@ -3,11 +3,11 @@ from dragonfly import Choice
 
 def character(name: str) -> Choice:
     """
-    The character extras.
+    The character extras
 
     @unreleased
 
-    @param name: str - The name of this element.
+    @param name: str - The name of this element
     """
     return Choice(name, {
         # Numbers

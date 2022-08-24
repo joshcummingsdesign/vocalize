@@ -14,4 +14,5 @@ def load_grammar() -> None:
     dirname = Path(__file__).parent.parent.absolute()
     path = os.path.join(dirname, 'grammar')
     directory = CommandModuleDirectory(path)
+    directory.unload()
     directory.load()

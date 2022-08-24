@@ -1,21 +1,26 @@
-from dragonfly import Grammar, MappingRule, Key
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key
 
 
-class PasswordManager:
+class PasswordManager(Grammar):
     """
-    The password manager grammar class
+    Password manager grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'password_manager'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_password_manager_rule,
+        ]
 
-    def _make_password_manager_rule(self) -> MappingRule:
+    def _make_password_manager_rule(self) -> Rule:
         """
         Password manager rule factory
 
@@ -29,16 +34,10 @@ class PasswordManager:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('password_manager')
-        self._grammar.add_rule(self._make_password_manager_rule())
-        self._grammar.load()
-
 
 password_manager = PasswordManager()
 password_manager.load()
+
+
+def unload() -> None:
+    password_manager.unload()

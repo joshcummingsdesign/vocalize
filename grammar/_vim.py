@@ -1,25 +1,54 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef, ShortIntegerRef, Text, Function, Dictation
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key, IntegerRef, ShortIntegerRef, Text, Function, Dictation
 from extras import character
 from rules import SeriesMappingRule
+from typing import Optional
 
 
-class Vim:
+class Vim(Grammar):
     """
-    The Vim grammar class
+    Vim grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'vim'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_vim_series_rule,
+            self._make_vim_rule,
+        ]
 
-    def _make_vim_series_rule(self) -> SeriesMappingRule:
+    def _search(self, text: Optional[str]) -> None:
         """
-        The Vim series rule factory
+        Perform a Vim search
+
+        @unreleased
+        """
+        Key('slash').execute()
+
+        if text:
+            Text(text, True).execute() + Key('enter').execute()
+
+    def _back_search(self, text: Optional[str]) -> None:
+        """
+        Perform a reverse Vim search
+
+        @unreleased
+        """
+        Key('?').execute()
+
+        if text:
+            Text(text, True).execute() + Key('enter').execute()
+
+    def _make_vim_series_rule(self) -> Rule:
+        """
+        Vim series rule factory
 
         @unreleased
         """
@@ -60,7 +89,7 @@ class Vim:
                 'snap': Text('^'),
                 'start': Key('0'),
                 'end': Key('$'),
-                'matching': Key('percent'),
+                'match': Key('percent'),
 
                 # Text Objects
                 'inner': Key('i'),
@@ -82,9 +111,9 @@ class Vim:
             }
         )
 
-    def _make_vim_rule(self) -> MappingRule:
+    def _make_vim_rule(self) -> Rule:
         """
-        The Vim rule factory
+        Vim rule factory
 
         @unreleased
         """
@@ -136,8 +165,8 @@ class Vim:
 
                 # Navigation
                 'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
-                '[<n>] search [<object>] [<text>] [<char>]': Text('%(n)d/%(object)s%(text)s%(char)s') + Key('enter'),
-                '[<n>] back search [<object>] [<text>] [<char>]': Text('%(n)d?%(object)s%(text)s%(char)s') + Key('enter'),
+                'search [<text>]': Function(self._search),
+                'back search [<text>]': Function(self._back_search),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
                 'change go next': Key('c,g,n'),
@@ -196,17 +225,10 @@ class Vim:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('vim')
-        self._grammar.add_rule(self._make_vim_series_rule())
-        self._grammar.add_rule(self._make_vim_rule())
-        self._grammar.load()
-
 
 vim = Vim()
 vim.load()
+
+
+def unload() -> None:
+    vim.unload()

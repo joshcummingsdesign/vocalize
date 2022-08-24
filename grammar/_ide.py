@@ -1,21 +1,26 @@
-from dragonfly import Grammar, MappingRule, Key
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key
 
 
-class Ide:
+class Ide(Grammar):
     """
-    The IDE grammar class
+    IDE grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'ide'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_ide_rule,
+        ]
 
-    def _make_ide_rule(self) -> MappingRule:
+    def _make_ide_rule(self) -> Rule:
         """
         IDE rule factory
 
@@ -31,16 +36,10 @@ class Ide:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('ide')
-        self._grammar.add_rule(self._make_ide_rule())
-        self._grammar.load()
-
 
 ide = Ide()
 ide.load()
+
+
+def unload() -> None:
+    ide.unload()

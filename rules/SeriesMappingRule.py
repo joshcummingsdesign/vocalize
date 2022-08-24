@@ -3,9 +3,7 @@ from dragonfly import CompoundRule, MappingRule, RuleRef, Repetition
 
 class SeriesMappingRule(CompoundRule):
     """
-    Series mapping rule class.
-
-    A mapping rule which allows for commands to be said in a series.
+    A mapping rule which allows for commands to be said in a series
 
     @undefined
     """

@@ -1,29 +1,32 @@
 from actions import repeat_text
-from dragonfly import Grammar, Text, Key, IntegerRef, Function, Dictation
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import Text, Key, IntegerRef, Function, Dictation
 from extras import character, modifiers
 from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case, uc_first
 from rules import SeriesMappingRule
 
 
-class Keyboard:
+class Keyboard(Grammar):
     """
-    The keyboard grammar class
-
-    Represents keyboard actions that can be performed anywhere
+    Keyboard grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'keyboard'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_keyboard_rule,
+        ]
 
-    def _make_keyboard_rule(self) -> SeriesMappingRule:
+    def _make_keyboard_rule(self) -> Rule:
         """
-        The keyboard rule factory
+        Keyboard rule factory
 
         @unreleased
         """
@@ -31,7 +34,7 @@ class Keyboard:
             name='keyboard',
             mapping={
                 # Modifiers
-                '[<n>] zap': Key('win:up,escape:%(n)d'),
+                '[<n>] axe': Key('win:up,escape:%(n)d'),
                 '[<n>] enter': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
@@ -75,6 +78,7 @@ class Keyboard:
                 # Typing
                 'type <text>': Text('%(text)s'),
                 'sass <text>': Function(lambda text: Text(to_kebab(text), True).execute()) + Key('colon,space,semicolon,left'),
+                'php echo': Key('<,?,=,space,?,>,left,left,left,space'),
                 'tag <text>': Text('<') + Function(lambda text: Text(to_kebab(text), True).execute()) + Key('>'),
                 'tag dev': Text('<div>'),
                 'num <n>': Text('%(n)s'),
@@ -100,16 +104,10 @@ class Keyboard:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('keyboard')
-        self._grammar.add_rule(self._make_keyboard_rule())
-        self._grammar.load()
-
 
 keyboard = Keyboard()
 keyboard.load()
+
+
+def unload() -> None:
+    keyboard.unload()

@@ -1,21 +1,29 @@
-from dragonfly import Grammar, MappingRule, Dictation, FuncContext, Function, Text, Key
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Dictation, FuncContext, Function, Text, Key
 from extras import character
 from rules import SeriesMappingRule
 
 
-class Dictate:
+class Dictate(Grammar):
     """
-    The dictate grammar class
+    Dictate grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'dictate'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_enable_dictation_rule,
+            self._make_dictation_listening_rule,
+            self._make_mac_dictation_listening_rule,
+            self._make_char_dictation_listening_rule,
+        ]
 
     _enabled: bool = False
     """
@@ -83,9 +91,9 @@ class Dictate:
         self._grammar.set_exclusiveness(False)
         print('Dictation disabled...')
 
-    def _make_enable_dictation_rule(self) -> MappingRule:
+    def _make_enable_dictation_rule(self) -> Rule:
         """
-        Dictation enable rule factory.
+        Dictation enable rule factory
 
         @unreleased
         """
@@ -98,7 +106,7 @@ class Dictate:
             }
         )
 
-    def _make_dictation_listening_rule(self) -> MappingRule:
+    def _make_dictation_listening_rule(self) -> Rule:
         """
         Dictation listening rule factory
 
@@ -110,15 +118,15 @@ class Dictate:
                 '<text>': Text('%(text)s'),
                 'shush': Function(self._disable),
             },
-            extras=[Dictation('text')],
+            extras=[
+                Dictation('text')
+            ],
             context=FuncContext(lambda: self._enabled)
         )
 
-    def _make_mac_dictation_listening_rule(self) -> MappingRule:
+    def _make_mac_dictation_listening_rule(self) -> Rule:
         """
         The macOS dictation listening rule factory
-
-        When macOS dictation is enabled, simply return false for all commands
 
         @unreleased
         """
@@ -128,13 +136,15 @@ class Dictate:
                 '<text>': Function(lambda: False),
                 'shush': Key('escape') + Function(self._disable),
             },
-            extras=[Dictation('text')],
+            extras=[
+                Dictation('text')
+            ],
             context=FuncContext(lambda: self._mac_enabled)
         )
 
-    def _make_char_dictation_listening_rule(self) -> MappingRule:
+    def _make_char_dictation_listening_rule(self) -> Rule:
         """
-        The character dictation listening rule factory
+        Character dictation listening rule factory
 
         @unreleased
         """
@@ -144,23 +154,16 @@ class Dictate:
                 '<char>': Text('%(char)s'),
                 'shush': Function(self._disable),
             },
-            extras=[character('char')],
+            extras=[
+                character('char')
+            ],
             context=FuncContext(lambda: self._char_enabled)
         )
-
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('dictate')
-        self._grammar.add_rule(self._make_enable_dictation_rule())
-        self._grammar.add_rule(self._make_dictation_listening_rule())
-        self._grammar.add_rule(self._make_mac_dictation_listening_rule())
-        self._grammar.add_rule(self._make_char_dictation_listening_rule())
-        self._grammar.load()
 
 
 dictate = Dictate()
 dictate.load()
+
+
+def unload() -> None:
+    dictate.unload()

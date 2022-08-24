@@ -1,21 +1,26 @@
-from dragonfly import Grammar, MappingRule, Key, IntegerRef
+from contracts import Grammar
+from contracts.rules import Rule, RuleFactoryList
+from dragonfly import MappingRule, Key, IntegerRef
 
 
-class WindowManager:
+class WindowManager(Grammar):
     """
-    The window manager grammar class
+    Window manager grammar
 
     @unreleased
     """
 
-    _grammar: Grammar = None
-    """
-    The Grammar class instance
+    @property
+    def _name(self) -> str:
+        return 'window_manager'
 
-    @unreleased
-    """
+    @property
+    def _rules(self) -> RuleFactoryList:
+        return [
+            self._make_window_manager_rule,
+        ]
 
-    def _make_window_manager_rule(self) -> MappingRule:
+    def _make_window_manager_rule(self) -> Rule:
         """
         Window manager rule factory
 
@@ -47,16 +52,10 @@ class WindowManager:
             }
         )
 
-    def load(self) -> None:
-        """
-        Load the grammar
-
-        @unreleased
-        """
-        self._grammar = Grammar('window_manager')
-        self._grammar.add_rule(self._make_window_manager_rule())
-        self._grammar.load()
-
 
 window_manager = WindowManager()
 window_manager.load()
+
+
+def unload() -> None:
+    window_manager.unload()
