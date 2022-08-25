@@ -72,7 +72,6 @@ class Browser(Grammar):
                 Dictation('text'),
             ],
             defaults={
-                'n': 1,
                 'text': '',
             }
         )

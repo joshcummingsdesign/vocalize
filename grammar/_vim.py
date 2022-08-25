@@ -68,13 +68,12 @@ class Vim(Grammar):
 
                 # Editing
                 'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
-                'big change': Key('C'),
                 'wipe': Key('escape,d,d'),
                 'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
                 'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
                 '[<n>] paste': Key('p:%(n)d'),
                 '[<n>] back paste': Key('P:%(n)d'),
-                '[<n>] repeat': Key('.:%(n)d'),
+                '[<n>] pete': Key('.:%(n)d'),
                 '[<n>] (scratch | undo)': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
                 '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
                 '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
@@ -113,6 +112,7 @@ class Vim(Grammar):
                 'block': Key('escape,c-v'),
 
                 # Editing
+                'big change': Key('C'),
                 'delete line <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
                 'delete line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}d', True).execute()) + Key('enter,c-o'),
                 'move line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}m.', True).execute()) + Key('enter'),
