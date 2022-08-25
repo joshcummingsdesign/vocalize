@@ -1,6 +1,7 @@
+from actions import start_state, stop_state
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactoryList
-from dragonfly import MappingRule, Dictation, FuncContext, Function, get_engine
+from dragonfly import MappingRule, Dictation, FuncContext, Function
 
 
 class SleepWake(Grammar):
@@ -28,17 +29,6 @@ class SleepWake(Grammar):
     @unreleased
     """
 
-    def _wake(self) -> None:
-        """
-        Continue listening for commands
-
-        @unreleased
-        """
-        if self._sleeping:
-            self._sleeping = False
-            self._grammar.set_exclusiveness(False)
-        print('Awake...')
-
     def _sleep(self) -> None:
         """
         Stop listening for commands
@@ -50,6 +40,17 @@ class SleepWake(Grammar):
             self._grammar.set_exclusiveness(True)
         print('Sleeping...')
 
+    def _wake(self) -> None:
+        """
+        Continue listening for commands
+
+        @unreleased
+        """
+        if self._sleeping:
+            self._sleeping = False
+            self._grammar.set_exclusiveness(False)
+        print('Awake...')
+
     def _make_sleep_wake_rule(self) -> Rule:
         """
         Sleep / wake rule factory
@@ -59,8 +60,7 @@ class SleepWake(Grammar):
         return MappingRule(
             name='sleep_wake_rule',
             mapping={
-                'wake up': Function(self._wake) + Function(lambda: get_engine().start_saving_adaptation_state()),
-                'sleep': Function(lambda: get_engine().stop_saving_adaptation_state()) + Function(self._sleep),
+                'sleep': Function(stop_state) + Function(self._sleep),
             }
         )
 
@@ -73,10 +73,11 @@ class SleepWake(Grammar):
         return MappingRule(
             name='sleeping_rule',
             mapping={
-                '<text>': Function(lambda: False)
+                '<text>': Function(lambda: False),
+                'wake up': Function(self._wake) + Function(start_state),
             },
             extras=[
-                Dictation('text')
+                Dictation('text'),
             ],
             context=FuncContext(lambda: self._sleeping)
         )
