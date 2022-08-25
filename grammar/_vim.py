@@ -35,21 +35,9 @@ class Vim(Grammar):
             mapping={
                 # Operators
                 'select': Key('escape,v'),
-                'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
                 'change': Key('c'),
-                'big change': Key('C'),
                 'delete': Key('d'),
-                'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
-                'delete line <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
-                'delete line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}d', True).execute()) + Key('enter,c-o'),
-                'move line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}m.', True).execute()) + Key('enter'),
                 'yank': Key('y'),
-                'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
-                'yank line <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
-                'yank line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}y', True).execute()) + Key('enter'),
-                '[<n>] paste': Key('p:%(n)d'),
-                '[<n>] back paste': Key('P:%(n)d'),
-                '[<n>] repeat': Key('.:%(n)d'),
 
                 # Motions
                 '[<n>] left': Function(lambda n: Text(f'{n}h', True).execute()),
@@ -77,11 +65,32 @@ class Vim(Grammar):
                 'back': Key('b'),
                 'big back': Key('B'),
                 'paragraph': Key('p'),
+
+                # Editing
+                'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
+                'big change': Key('C'),
+                'wipe': Key('escape,d,d'),
+                'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
+                'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
+                '[<n>] paste': Key('p:%(n)d'),
+                '[<n>] back paste': Key('P:%(n)d'),
+                '[<n>] repeat': Key('.:%(n)d'),
+                '[<n>] (scratch | undo)': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
+                '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
+                '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
+                '[<n>] splice': Function(lambda n: Text(f'{n}X', True).execute()),
+                '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
+                '[<n>] nudge': Function(lambda n: Text(f'{n}O', True).execute()),
+                '[<n>] sit': Function(lambda n: Text(f'{n}*', True).execute()),
+
+                # Navigation
+                'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
+                '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
+                '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
                 ShortIntegerRef('line', 1, 10000),
-                ShortIntegerRef('l', 1, 10000),
                 character('char'),
             ],
             defaults={
@@ -104,19 +113,16 @@ class Vim(Grammar):
                 'block': Key('escape,c-v'),
 
                 # Editing
-                '[<n>] (scratch | undo)': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
-                '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
-                'wipe': Key('escape,d,d'),
+                'delete line <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
+                'delete line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}d', True).execute()) + Key('enter,c-o'),
+                'move line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}m.', True).execute()) + Key('enter'),
+                'yank line <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
+                'yank line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}y', True).execute()) + Key('enter'),
                 'change line': Key('escape,c,c'),
-                '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
-                '[<n>] splice': Function(lambda n: Text(f'{n}X', True).execute()),
-                '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
-                '[<n>] nudge': Function(lambda n: Text(f'{n}O', True).execute()),
                 'clip yank': Key('",*,y'),
                 'clip paste': Key('",*,p'),
                 'after': Key('escape,A'),
                 'before': Key('escape,I'),
-                '[<n>] sit': Function(lambda n: Text(f'{n}*', True).execute()),
                 'spock': Key('i,space,escape'),
                 '[<n>] lent': Function(lambda n: Text(f'{n}<', True).execute()),
                 '[<n>] rent': Function(lambda n: Text(f'{n}<', True).execute()),
@@ -143,11 +149,8 @@ class Vim(Grammar):
                 '[<n>] back choose': Key('c-k:%(n)d'),
 
                 # Navigation
-                'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
                 'search [<text>]': Key('slash/20') + Function(enter_optional_text),
                 'back search [<text>]': Key('?') + Function(enter_optional_text),
-                '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
-                '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
                 'zed zed': Key('escape,z,z'),
                 'zed top': Key('escape,z,t'),
                 'zed bottom': Key('escape,z,b'),
@@ -191,6 +194,7 @@ class Vim(Grammar):
             extras=[
                 IntegerRef('n', 1, 1000),
                 ShortIntegerRef('line', 1, 10000),
+                ShortIntegerRef('l', 1, 10000),
                 Dictation('text'),
                 character('char'),
                 character('object'),

@@ -1,7 +1,7 @@
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation
-from extras import character
+from rules import SeriesMappingRule
 
 
 class Browser(Grammar):
@@ -18,8 +18,34 @@ class Browser(Grammar):
     @property
     def _rules(self) -> list[RuleFactory]:
         return [
+            self._make_browser_series_rule,
             self._make_browser_rule,
         ]
+
+    def _make_browser_series_rule(self) -> Rule:
+        """
+        Browser series rule factory
+
+        @unreleased
+        """
+        return SeriesMappingRule(
+            name='browser_series_rule',
+            mapping={
+                '[<n>] scroll up': Key('u:%(n)d'),
+                '[<n>] scroll down': Key('d:%(n)d'),
+                'close tab': Key('x'),
+                '[<n>] previous tab': Key('wa-left:%(n)d'),
+                '[<n>] next tab': Key('wa-right:%(n)d'),
+                'nav back': Key('H'),
+                'nav forward': Key('L'),
+            },
+            extras=[
+                IntegerRef('n', 1, 10),
+            ],
+            defaults={
+                'n': 1,
+            }
+        )
 
     def _make_browser_rule(self) -> Rule:
         """
@@ -34,32 +60,20 @@ class Browser(Grammar):
                 'book new [<text>]': Key('B') + Text('%(text)s'),
                 'open [<text>]': Key('o') + Text('%(text)s'),
                 'open new [<text>]': Key('O') + Text('%(text)s'),
-                '[<n>] scroll up': Key('u:%(n)d'),
-                '[<n>] scroll down': Key('d:%(n)d'),
                 'jump': Key('f'),
                 'refresh': Key('w-r'),
                 'hard refresh': Key('ws-r'),
                 'earl': Key('w-l'),
                 'unsafe': Text('thisisunsafe'),
-                'close tab': Key('x'),
-                '[<n>] previous tab': Key('wa-left:%(n)d'),
-                '[<n>] next tab': Key('wa-right:%(n)d'),
                 'switch user': Key('ws-m'),
-                'nav back': Key('H'),
-                'nav forward': Key('L'),
                 'dev tools': Key('f12'),
             },
             extras=[
-                IntegerRef('n', 1, 10),
                 Dictation('text'),
-                character('char'),
-                character('object'),
             ],
             defaults={
                 'n': 1,
                 'text': '',
-                'char': '',
-                'object': '',
             }
         )
 
