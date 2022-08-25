@@ -113,7 +113,7 @@ class Vim(Grammar):
             name='vim_rule',
             mapping={
                 # Modes
-                'insert': Key('escape,l,i'),
+                'zip': Key('escape,l,i'),
                 'blip': Key('escape,i'),
                 'block': Key('escape,c-v'),
 
