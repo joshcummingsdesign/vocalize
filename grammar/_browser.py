@@ -2,7 +2,6 @@ from contracts import Grammar
 from contracts.rules import Rule, RuleFactoryList
 from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation, Function
 from extras import character
-from typing import Optional
 
 
 class Browser(Grammar):

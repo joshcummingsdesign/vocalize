@@ -1,9 +1,9 @@
+from actions import enter_optional_text
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactoryList
 from dragonfly import MappingRule, Key, IntegerRef, ShortIntegerRef, Text, Function, Dictation
 from extras import character
 from rules import SeriesMappingRule
-from typing import Optional
 
 
 class Vim(Grammar):
@@ -23,28 +23,6 @@ class Vim(Grammar):
             self._make_vim_series_rule,
             self._make_vim_rule,
         ]
-
-    def _search(self, text: Optional[str]) -> None:
-        """
-        Perform a Vim search
-
-        @unreleased
-        """
-        Key('slash/20').execute()
-
-        if text:
-            Text(text, True).execute() + Key('enter').execute()
-
-    def _back_search(self, text: Optional[str]) -> None:
-        """
-        Perform a reverse Vim search
-
-        @unreleased
-        """
-        Key('?/20').execute()
-
-        if text:
-            Text(text, True).execute() + Key('enter').execute()
 
     def _make_vim_series_rule(self) -> Rule:
         """
@@ -121,7 +99,7 @@ class Vim(Grammar):
             name='vim_rule',
             mapping={
                 # Modes
-                'zip': Key('escape,l,i'),
+                'insert': Key('escape,l,i'),
                 'blip': Key('escape,i'),
                 'block': Key('escape,c-v'),
 
@@ -165,8 +143,8 @@ class Vim(Grammar):
 
                 # Navigation
                 'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
-                'search [<text>]': Function(self._search),
-                'back search [<text>]': Function(self._back_search),
+                'search [<text>]': Key('slash/20') + Function(enter_optional_text),
+                'back search [<text>]': Key('?') + Function(enter_optional_text),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
                 'change go next': Key('c,g,n'),

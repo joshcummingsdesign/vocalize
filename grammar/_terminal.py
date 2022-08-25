@@ -1,7 +1,7 @@
+from actions import repeat_key, enter_optional_text
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactoryList
 from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
-from actions import repeat_key
 
 
 class Terminal(Grammar):
@@ -83,7 +83,7 @@ class Terminal(Grammar):
                 'git merge <text>': Text('git merge %(text)s'),
                 'git fetch all': Text('gfa') + Key('enter'),
                 'git push origin': Text('gp -u origin '),
-                'git check out [<text>]': Text('gco %(text)s'),
+                'git check out [<text>]': Text('gco ') + Function(enter_optional_text),
                 'git reset hard [<text>]': Text('git reset --hard origin/%(text)s'),
                 'git stash': Text('git stash') + Key('enter'),
                 'git drop': Text('git stash drop') + Key('enter'),
