@@ -126,6 +126,7 @@ class Vim(Grammar):
                 'go lower': Key('g,u'),
                 'wrap': Key('g,q'),
                 'define': Key('g,d'),
+                'change go next': Key('c,g,n'),
 
                 # File
                 'save': Key('escape,colon,w,enter'),
@@ -147,7 +148,6 @@ class Vim(Grammar):
                 'back search [<text>]': Key('?') + Function(enter_optional_text),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
-                'change go next': Key('c,g,n'),
                 'zed zed': Key('escape,z,z'),
                 'zed top': Key('escape,z,t'),
                 'zed bottom': Key('escape,z,b'),
