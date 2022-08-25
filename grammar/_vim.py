@@ -4,6 +4,7 @@ from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, IntegerRef, ShortIntegerRef, Text, Function, Dictation
 from extras import character
 from rules import SeriesMappingRule
+from typing import Optional
 
 
 class Vim(Grammar):
@@ -23,6 +24,31 @@ class Vim(Grammar):
             self._make_vim_series_rule,
             self._make_vim_rule,
         ]
+
+    def _register(self, char: Optional[str] = None) -> None:
+        """
+        Set the Vim register
+
+        @unreleased
+        """
+        Key('"', True).execute()
+        if char:
+            Text(char, True).execute()
+        else:
+            Text('*', True).execute()
+
+    def _line_in_register(self, command: str, line: int, l: int, char: Optional[str] = None) -> None:
+        """
+        Perform a command on a line with optional register
+
+        @unreleased
+        """
+        Text(f':{l},{line}{command}', True).execute()
+
+        if char:
+            Text(f' {char}', True).execute()
+
+        Key('enter').execute(),
 
     def _make_vim_series_rule(self) -> Rule:
         """
@@ -66,6 +92,9 @@ class Vim(Grammar):
                 'big back': Key('B'),
                 'paragraph': Key('p'),
 
+                # Registers
+                'register [<char>]': Function(self._register),
+
                 # Editing
                 'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
                 'wipe': Key('escape,d,d'),
@@ -100,6 +129,7 @@ class Vim(Grammar):
             ],
             defaults={
                 'n': 1,
+                'char': '',
             }
         )
 
@@ -118,15 +148,14 @@ class Vim(Grammar):
                 'block': Key('escape,c-v'),
 
                 # Editing
+                'delete all': Key('g,g,V,G,d'),
                 'big change': Key('C'),
                 'delete line <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
-                'delete line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}d', True).execute()) + Key('enter,c-o'),
-                'move line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}m.', True).execute()) + Key('enter'),
+                'delete line <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('d', line, l, char)) + Key('c-o'),
+                'move line <line> from <l>': Function(lambda line, l: self._line_in_register('m.', line, l)),
                 'yank line <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
-                'yank line <line> from <l>': Function(lambda line, l: Text(f':{l},{line}y', True).execute()) + Key('enter'),
+                'yank line <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('y', line, l, char)),
                 'change line': Key('escape,c,c'),
-                'clip yank': Key('",*,y'),
-                'clip paste': Key('",*,p'),
                 'after': Key('escape,A'),
                 'before': Key('escape,I'),
                 'spock': Key('i,space,escape'),

@@ -44,6 +44,7 @@ class Keyboard(Grammar):
                 # Editing
                 '[<n>] snip': Key('backspace:%(n)d'),
                 '[<n>] strike': Key('w-backspace:%(n)d'),
+                'strike all': Key('w-up,w-left,ws-down,backspace'),
                 'light all': Key('w-a'),
                 'light up': Key('ws-up'),
                 'light down': Key('ws-down'),
@@ -60,6 +61,7 @@ class Keyboard(Grammar):
                 '[<n>] oops': Key('w-z:%(n)d'),
                 '[<n>] never mind': Key('ws-z:%(n)d'),
                 'duplicate': Key('w-d'),
+                'bold': Key('w-b'),
 
                 # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),

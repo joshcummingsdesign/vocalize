@@ -2,6 +2,7 @@ from actions import repeat_key, enter_optional_text
 from contracts import Grammar
 from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
+from extras import character
 
 
 class Terminal(Grammar):
@@ -38,6 +39,9 @@ class Terminal(Grammar):
                 'term name <text>': Key('c-k,r') + Text('%(text)s') + Key('enter'),
                 'term switch <n>': Key('c-k,%(n)d'),
                 'term split': Key('c-k,v'),
+                'term list': Key('t,l,enter'),
+                'term attach <char>': Text('ta %(char)s') + Key('enter'),
+                'term detach': Key('c-k,d'),
                 '[<n>] term win left': Function(lambda n: repeat_key(n, 'c-k,h')),
                 '[<n>] term win right': Function(lambda n: repeat_key(n, 'c-k,l')),
                 'term win even': Key('c-k,enter'),
@@ -93,6 +97,7 @@ class Terminal(Grammar):
             extras=[
                 IntegerRef('n', 1, 10),
                 Dictation('text'),
+                character('char'),
             ],
             defaults={
                 'n': 1,

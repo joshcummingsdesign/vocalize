@@ -67,6 +67,7 @@ class Browser(Grammar):
                 'unsafe': Text('thisisunsafe'),
                 'switch user': Key('ws-m'),
                 'dev tools': Key('f12'),
+                'fire': Key('w-e'),
             },
             extras=[
                 Dictation('text'),
