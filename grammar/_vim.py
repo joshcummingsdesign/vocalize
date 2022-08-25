@@ -86,6 +86,12 @@ class Vim(Grammar):
                 'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
+
+                # File
+                'buff': Key('escape,space,b,p'),
+                'next buff': Key('escape,space,b,n'),
+                '[<n>] choose': Key('c-j:%(n)d'),
+                '[<n>] back choose': Key('c-k:%(n)d'),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
@@ -139,14 +145,10 @@ class Vim(Grammar):
                 'quit': Key('escape,colon,q,enter'),
                 'write out': Key('escape,colon,w,q,enter'),
                 'bail': Key('escape,colon,q,!,enter'),
-                'buff': Key('escape,space,b,p'),
-                'next buff': Key('escape,space,b,n'),
                 'close buff': Key('escape,colon,b,d,enter'),
                 'kill buff': Key('escape,colon,b,w,enter'),
                 'fuzzy [<text>]': Key('c-p') + Text('%(text)s'),
                 'tree': Key('c-backslash'),
-                '[<n>] choose': Key('c-j:%(n)d'),
-                '[<n>] back choose': Key('c-k:%(n)d'),
 
                 # Navigation
                 'search [<text>]': Key('slash/20') + Function(enter_optional_text),
