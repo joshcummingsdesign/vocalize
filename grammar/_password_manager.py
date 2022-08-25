@@ -31,6 +31,7 @@ class PasswordManager(Grammar):
             mapping={
                 'vault': Key('wa-backslash'),
                 'login': Key('down/20,enter'),
+                'password': Key('right,up:5,down:2,enter'),
             }
         )
 
