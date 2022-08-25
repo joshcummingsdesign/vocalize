@@ -1,5 +1,5 @@
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, FuncContext, Function, Key, Text
 from extras import character
 from rules import SeriesMappingRule
@@ -17,7 +17,7 @@ class CharDictation(Grammar):
         return 'char_dictation'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_char_dictation_rule,
             self._make_char_dictation_listening_rule,

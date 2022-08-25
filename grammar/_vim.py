@@ -1,6 +1,6 @@
 from actions import enter_optional_text
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, IntegerRef, ShortIntegerRef, Text, Function, Dictation
 from extras import character
 from rules import SeriesMappingRule
@@ -18,7 +18,7 @@ class Vim(Grammar):
         return 'vim'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_vim_series_rule,
             self._make_vim_rule,

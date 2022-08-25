@@ -1,5 +1,5 @@
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key
 
 
@@ -15,7 +15,7 @@ class Ide(Grammar):
         return 'ide'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_ide_rule,
         ]

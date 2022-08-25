@@ -1,6 +1,6 @@
 from actions import start_state, stop_state
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Dictation, FuncContext, Function, Key
 
 
@@ -16,7 +16,7 @@ class MacDictation(Grammar):
         return 'mac_dictation'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_mac_dictation_rule,
             self._make_mac_dictation_listening_rule,

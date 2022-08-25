@@ -1,4 +1,5 @@
 from dragonfly import CompoundRule, MappingRule, RuleRef, Repetition
+from typing import Any
 
 
 class SeriesMappingRule(CompoundRule):
@@ -8,7 +9,14 @@ class SeriesMappingRule(CompoundRule):
     @undefined
     """
 
-    def __init__(self, name, mapping, extras=None, defaults=None, context=None):
+    def __init__(
+        self,
+        name: str,
+        mapping: dict[str, Any],
+        extras: list[Any] = None,
+        defaults: dict[str, Any] = None,
+        context: Any = None
+    ) -> None:
         mapping_rule = MappingRule(
             name=name,
             mapping=mapping,
@@ -29,7 +37,7 @@ class SeriesMappingRule(CompoundRule):
             exported=True
         )
 
-    def _process_recognition(self, node, extras):
+    def _process_recognition(self, node: Any, extras: dict[str, Any]) -> None:
         series = extras['series']
         for action in series:
             action.execute()

@@ -1,6 +1,6 @@
 from abc import ABC, abstractproperty
 from dragonfly import Grammar as DragonGrammar
-from contracts.rules import RuleFactoryList
+from contracts.rules import RuleFactory
 
 
 class Grammar(ABC):
@@ -27,7 +27,7 @@ class Grammar(ABC):
         return ''
 
     @abstractproperty
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         """
         A list of rule factories
 

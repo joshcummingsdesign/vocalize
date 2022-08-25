@@ -1,6 +1,6 @@
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
-from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation, Function
+from contracts.rules import Rule, RuleFactory
+from dragonfly import MappingRule, Key, Text, IntegerRef, Dictation
 from extras import character
 
 
@@ -16,7 +16,7 @@ class Browser(Grammar):
         return 'browser'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_browser_rule,
         ]

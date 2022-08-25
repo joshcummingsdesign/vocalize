@@ -1,6 +1,6 @@
 from actions import repeat_key, enter_optional_text
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
 
 
@@ -16,7 +16,7 @@ class Terminal(Grammar):
         return 'terminal'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_terminal_rule,
         ]

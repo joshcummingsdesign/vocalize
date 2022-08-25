@@ -1,6 +1,6 @@
 from actions import start_state, stop_state
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Dictation, FuncContext, Function
 
 
@@ -16,7 +16,7 @@ class SleepWake(Grammar):
         return 'sleep_wake'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_sleep_wake_rule,
             self._make_sleeping_rule,

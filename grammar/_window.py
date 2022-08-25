@@ -1,5 +1,5 @@
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Key, Dictation, Text, IntegerRef
 
 
@@ -15,7 +15,7 @@ class Window(Grammar):
         return 'window'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_window_rule,
         ]

@@ -1,7 +1,17 @@
 from dragonfly import MappingRule
 from rules import SeriesMappingRule
-from typing import Callable, List, TypeAlias, Union
+from typing import Callable, TypeAlias, Union
 
 Rule: TypeAlias = Union[MappingRule, SeriesMappingRule]
+"""
+Rule type alias
+
+@unreleased
+"""
+
 RuleFactory: TypeAlias = Callable[..., Rule]
-RuleFactoryList: TypeAlias = List[RuleFactory]
+"""
+Rule factory type alias
+
+@unreleased
+"""

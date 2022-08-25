@@ -1,6 +1,6 @@
 from actions import repeat_text
 from contracts import Grammar
-from contracts.rules import Rule, RuleFactoryList
+from contracts.rules import Rule, RuleFactory
 from dragonfly import Text, Key, IntegerRef, Function, Dictation
 from extras import character, modifiers
 from helpers.string import to_snake, to_camel, to_pascal, to_kebab, to_dot_case, uc_first
@@ -19,7 +19,7 @@ class Keyboard(Grammar):
         return 'keyboard'
 
     @property
-    def _rules(self) -> RuleFactoryList:
+    def _rules(self) -> list[RuleFactory]:
         return [
             self._make_keyboard_rule,
         ]
