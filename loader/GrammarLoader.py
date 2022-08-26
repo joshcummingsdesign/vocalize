@@ -59,7 +59,7 @@ class GrammarLoader():
         grammar_dir = os.path.join(project_root, self._dirname)
         files = glob(os.path.join(grammar_dir, "*.py"))
 
-        def reduce_names(instances: GrammarDict, file: str) -> GrammarDict:
+        def reduce_files(instances: GrammarDict, file: str) -> GrammarDict:
             """
             Reduce file paths to { module_name: instance }
 
@@ -77,7 +77,7 @@ class GrammarLoader():
             instances[module_name] = grammar.Grammar()
             return instances
 
-        self._instances = reduce(reduce_names, files, {})
+        self._instances = reduce(reduce_files, files, {})
 
         for instance in self._instances:
             self._instances[instance].load()
