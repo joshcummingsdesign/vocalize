@@ -17,6 +17,11 @@ class SeriesMappingRule(CompoundRule):
         defaults: dict[str, Any] = None,
         context: Any = None
     ) -> None:
+        """
+        Instantiate the series mapping rule
+
+        @unreleased
+        """
         mapping_rule = MappingRule(
             name=name,
             mapping=mapping,

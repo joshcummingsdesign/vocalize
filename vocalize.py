@@ -19,6 +19,11 @@ class Vocalize:
     """
 
     def __init__(self, engine: Any) -> None:
+        """
+        Instantiate the main Vocalize application class
+
+        @unreleased
+        """
         self._engine = engine
 
     def listen(self) -> None:

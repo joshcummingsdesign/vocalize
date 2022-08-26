@@ -1,10 +1,10 @@
 from actions import load_grammar
-from contracts import Grammar
+from contracts import BaseGrammar
 from contracts.rules import Rule, RuleFactory
 from dragonfly import MappingRule, Function
 
 
-class Loader(Grammar):
+class Grammar(BaseGrammar):
     """
     Loader grammar
 
@@ -21,6 +21,9 @@ class Loader(Grammar):
             self._make_loader_rule,
         ]
 
+    def _foo(self):
+        print('goodnight')
+
     def _make_loader_rule(self) -> Rule:
         """
         Loader rule factory
@@ -31,13 +34,6 @@ class Loader(Grammar):
             name='loader_rule',
             mapping={
                 'load grammar': Function(load_grammar),
+                'hello': Function(lambda: self._foo()),
             }
         )
-
-
-loader = Loader()
-loader.load()
-
-
-def unload() -> None:
-    loader.unload()

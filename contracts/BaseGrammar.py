@@ -3,9 +3,9 @@ from dragonfly import Grammar as DragonGrammar
 from contracts.rules import RuleFactory
 
 
-class Grammar(ABC):
+class BaseGrammar(ABC):
     """
-    Grammar abstract class
+    Base grammar abstract class
 
     @unreleased
     """
@@ -35,18 +35,25 @@ class Grammar(ABC):
         """
         return []
 
+    def __init__(self):
+        """
+        Instantiate the grammar
+
+        @unreleased
+        """
+        self._grammar = DragonGrammar(self._name)
+
     def load(self) -> None:
         """
         Load the grammar
 
         @unreleased
         """
-        self._grammar = DragonGrammar(self._name)
-
         for rule in self._rules:
             self._grammar.add_rule(rule())
 
         self._grammar.load()
+        print(self._grammar._loaded)
 
     def unload(self) -> None:
         """
@@ -55,3 +62,4 @@ class Grammar(ABC):
         @unreleased
         """
         self._grammar.unload()
+        print(self._grammar._loaded)

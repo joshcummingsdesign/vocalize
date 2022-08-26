@@ -1,1 +1,1 @@
-from .Grammar import Grammar
+from .BaseGrammar import BaseGrammar
