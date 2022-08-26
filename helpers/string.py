@@ -1,3 +1,10 @@
+"""
+String helpers
+
+@unreleased
+"""
+
+
 def uc_first(text: str) -> str:
     """
     Make the first letter uppercase
