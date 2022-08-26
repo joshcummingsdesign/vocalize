@@ -16,9 +16,16 @@ class GrammarLoader():
     @unreleased
     """
 
+    _dirname: str = 'grammar'
+    """
+    The grammar directory relative to project root
+
+    @unreleased
+    """
+
     _instances: Optional[dict[str, Any]] = None
     """
-    The grammar instances as { module_name: instance }
+    The grammar instances as `{ module_name: instance }`
 
     @unreleased
     """
@@ -40,9 +47,8 @@ class GrammarLoader():
 
         @unreleased
         """
-        dirname = 'grammar'
-
-        path = os.path.join(Path(__file__).parent.parent.absolute(), dirname)
+        path = os.path.join(
+            Path(__file__).parent.parent.absolute(), self._dirname)
         files = glob.glob(os.path.join(path, "*.py"))
 
         def reduce_names(acc, val):
@@ -53,7 +59,7 @@ class GrammarLoader():
             """
             if '__' in val:
                 return acc
-            module_name = '.'.join([dirname, os.path.basename(val)[:-3]])
+            module_name = '.'.join([self._dirname, os.path.basename(val)[:-3]])
             spec = importlib.util.spec_from_file_location(module_name, val)
             grammar = importlib.util.module_from_spec(spec)
             sys.modules[module_name] = grammar

@@ -1,4 +1,4 @@
-from actions import reload_grammar
+from actions import load_grammar
 from dragonfly import get_engine
 from dragonfly.log import setup_log
 from typing import Any
@@ -35,7 +35,7 @@ class Vocalize:
         setup_log()
         self._engine.connect()
         self._engine.prepare_for_recognition()
-        reload_grammar()
+        load_grammar()
 
         try:
             print('Listening...')

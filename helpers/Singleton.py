@@ -1,39 +1,60 @@
-class Singleton:
+from typing import TypeVar, Generic
+
+T = TypeVar('T')
+
+
+class Singleton(Generic[T]):
     """
-    A non-thread-safe helper class to ease implementing singletons.
-    This should be used as a decorator -- not a metaclass -- to the
-    class that should be a singleton.
-
-    The decorated class can define one `__init__` function that
-    takes only the `self` argument. Also, the decorated class cannot be
-    inherited from. Other than that, there are no restrictions that apply
-    to the decorated class.
-
-    To get the singleton instance, use the `instance` method. Trying
-    to use `__call__` will result in a `TypeError` being raised.
+    Singleton decorator
 
     @unreleased
     """
 
-    def __init__(self, decorated):
-        self._decorated = decorated
+    _decorated: T = None
+    """
+    The decorated class
 
-    def instance(self):
+    @unreleased
+    """
+
+    _instance: T = None
+    """
+    The one true class instance
+
+    @unreleased
+    """
+
+    def __init__(self, decorated: T) -> None:
         """
-        Returns the singleton instance. Upon its first call, it creates a
-        new instance of the decorated class and calls its `__init__` method.
-        On all subsequent calls, the already created instance is returned.
+        Instantiate the singleton class
 
         @unreleased
         """
-        try:
-            return self._instance
-        except AttributeError:
-            self._instance = self._decorated()
-            return self._instance
+        self._decorated = decorated
 
-    def __call__(self):
-        raise TypeError('Singletons must be accessed through `instance()`.')
+    def instance(self) -> T:
+        """
+        Return the one true class instance
 
-    def __instancecheck__(self, inst):
-        return isinstance(inst, self._decorated)
+        @unreleased
+        """
+        if self._instance:
+            return self._instance
+        self._instance = self._decorated()
+        return self._instance
+
+    def __call__(self) -> None:
+        """
+        Prevent class from being instantiated directly
+
+        @unreleased
+        """
+        raise TypeError('Singletons must be called with instance() method')
+
+    def __instancecheck__(self, instance) -> bool:
+        """
+        Perform instance checks against the decorated class
+
+        @unreleased
+        """
+        return isinstance(instance, self._decorated)
