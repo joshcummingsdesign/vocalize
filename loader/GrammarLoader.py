@@ -1,12 +1,19 @@
 from contracts import BaseGrammar
 from helpers import Singleton
 from pathlib import Path
-from typing import Optional
-import functools
-import glob
+from typing import Optional, TypeAlias
+from functools import reduce
+from glob import glob
 import importlib.util
 import os
 import sys
+
+GrammarDict: TypeAlias = dict[str, BaseGrammar]
+"""
+Grammar dict type alias
+
+@unreleased
+"""
 
 
 @Singleton
@@ -24,7 +31,7 @@ class GrammarLoader():
     @unreleased
     """
 
-    _instances: Optional[dict[str, BaseGrammar]] = None
+    _instances: Optional[GrammarDict] = None
     """
     The grammar instances as { module_name: instance }
 
@@ -48,30 +55,29 @@ class GrammarLoader():
 
         @unreleased
         """
-        path = os.path.join(
-            Path(__file__).parent.parent.absolute(),
-            self._dirname
-        )
+        project_root = Path(__file__).parent.parent.absolute()
+        grammar_dir = os.path.join(project_root, self._dirname)
+        files = glob(os.path.join(grammar_dir, "*.py"))
 
-        files = glob.glob(os.path.join(path, "*.py"))
-
-        def reduce_names(acc, val):
+        def reduce_names(instances: GrammarDict, file: str) -> GrammarDict:
             """
-            Reduce file names to { module_name: instance }
+            Reduce file paths to { module_name: instance }
 
             @unreleased
             """
-            if '__' in val:
-                return acc
-            module_name = '.'.join([self._dirname, os.path.basename(val)[:-3]])
-            spec = importlib.util.spec_from_file_location(module_name, val)
+            if '__' in file:
+                return instances
+
+            basename = os.path.basename(file)[:-3]
+            module_name = '.'.join([self._dirname, basename])
+            spec = importlib.util.spec_from_file_location(module_name, file)
             grammar = importlib.util.module_from_spec(spec)
             sys.modules[module_name] = grammar
             spec.loader.exec_module(grammar)
-            acc[module_name] = grammar.Grammar()
-            return acc
+            instances[module_name] = grammar.Grammar()
+            return instances
 
-        self._instances = functools.reduce(reduce_names, files, {})
+        self._instances = reduce(reduce_names, files, {})
 
         for instance in self._instances:
             self._instances[instance].load()
