@@ -1,35 +1,37 @@
-from actions import reload_grammar
 from contracts import BaseGrammar
 from contracts.rules import Rule, RuleFactory
-from dragonfly import MappingRule, Function
+from dragonfly import MappingRule, Key
 
 
 class Grammar(BaseGrammar):
     """
-    Loader grammar
+    IDE grammar
 
     @unreleased
     """
 
     @property
     def _name(self) -> str:
-        return 'loader'
+        return 'ide'
 
     @property
     def _rules(self) -> list[RuleFactory]:
         return [
-            self._make_loader_rule,
+            self._make_ide_rule,
         ]
 
-    def _make_loader_rule(self) -> Rule:
+    def _make_ide_rule(self) -> Rule:
         """
-        Loader rule factory
+        IDE rule factory
 
         @unreleased
         """
         return MappingRule(
-            name='loader_rule',
+            name='ide_rule',
             mapping={
-                'reload grammar': Function(reload_grammar),
+                'find all': Key('ws-f'),
+                'reveal': Key('wa-f11'),
+                'git changes': Key('ws-g'),
+                'new file': Key('c-n'),
             }
         )

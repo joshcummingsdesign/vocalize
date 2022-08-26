@@ -1,11 +1,11 @@
 from loader import GrammarLoader
 
 
-def load_grammar() -> None:
+def reload_grammar() -> None:
     """
-    Load all grammars in the `grammar` directory
+    Reload all grammars in the `grammar` directory
 
     @unreleased
     """
     loader = GrammarLoader.instance()
-    loader.load()
+    loader.reload()

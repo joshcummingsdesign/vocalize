@@ -1,6 +1,10 @@
 from helpers import Singleton
 from pathlib import Path
+from typing import Optional, Any
+import functools
+import glob
 import importlib.util
+import os
 import sys
 
 
@@ -12,55 +16,62 @@ class GrammarLoader():
     @unreleased
     """
 
-    _instance = None
+    _instances: Optional[dict[str, Any]] = None
     """
-    The grammar instance
+    The grammar instances as { module_name: instance }
 
     @unreleased
     """
 
     def unload(self) -> None:
         """
-        Unload the grammar
+        Unload all grammar instances
 
         @unreleased
         """
-        if self._instance:
-            self._instance.unload()
-            del self._instance
-            self.instance = None
+        if self._instances:
+            for instance in self._instances:
+                self._instances[instance].unload()
+            del self._instances
+            self._instances = None
 
     def load(self) -> None:
         """
-        Load the grammar
+        Load all grammar instances
 
         @unreleased
         """
-        dirname = Path(__file__).parent.parent.absolute()
-        print(dirname)
-        # path = os.path.join(dirname, 'grammar')
-        # filenames = next(os.walk(path), (None, None, []))[2]
-        # filenames = filter(lambda f: '.py' in f and '__' not in f, filenames)
-        # for filename in filenames:
-        #     file_path = os.path.join(path, filename)
-        #     load(file_path)
-        # modules = glob.glob(os.path.join(os.path.dirname(__file__), "*.py"))
-        # foo = [os.path.basename(
-        #     f)[:-3] for f in modules if os.path.isfile(f) and not f.endswith('__init__.py')]
-        # pprint(sys.modules.keys())
+        dirname = 'grammar'
 
-        # directory = CommandModuleDirectory(path)
-        # directory.unload()
-        # directory.load()
+        path = os.path.join(Path(__file__).parent.parent.absolute(), dirname)
+        files = glob.glob(os.path.join(path, "*.py"))
 
-        #####################
-        # self.unload()
+        def reduce_names(acc, val):
+            """
+            Reduce the file names to { module_name: instance }
 
-        # spec = importlib.util.spec_from_file_location(
-        #     'grammar.loader', '/Users/josh/Contrib/vocalize/grammar/loader.py')
-        # grammar = importlib.util.module_from_spec(spec)
-        # sys.modules['grammar.loader'] = grammar
-        # spec.loader.exec_module(grammar)
+            @unreleased
+            """
+            if '__' in val:
+                return acc
+            module_name = '.'.join([dirname, os.path.basename(val)[:-3]])
+            spec = importlib.util.spec_from_file_location(module_name, val)
+            grammar = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = grammar
+            spec.loader.exec_module(grammar)
+            acc[module_name] = grammar.Grammar()
+            return acc
 
-        # self._instance = grammar.Grammar()
-        # self._instance.load()
+        self._instances = functools.reduce(reduce_names, files, {})
+
+        for instance in self._instances:
+            self._instances[instance].load()
+
+    def reload(self) -> None:
+        """
+        Reload all grammar instances
+
+        @unreleased
+        """
+        self.unload()
+        self.load()

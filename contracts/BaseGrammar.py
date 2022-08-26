@@ -53,7 +53,6 @@ class BaseGrammar(ABC):
             self._grammar.add_rule(rule())
 
         self._grammar.load()
-        print(self._grammar._loaded)
 
     def unload(self) -> None:
         """
@@ -62,4 +61,3 @@ class BaseGrammar(ABC):
         @unreleased
         """
         self._grammar.unload()
-        print(self._grammar._loaded)
