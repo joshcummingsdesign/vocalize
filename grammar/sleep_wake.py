@@ -7,7 +7,7 @@ class Grammar(BaseGrammar):
     """
     Sleep / wake grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -25,14 +25,14 @@ class Grammar(BaseGrammar):
     """
     Whether the app is sleeping
 
-    @unreleased
+    @since 0.1.0
     """
 
     def _sleep(self) -> None:
         """
         Stop listening for commands
 
-        @unreleased
+        @since 0.1.0
         """
         if not self._sleeping:
             self._sleeping = True
@@ -43,7 +43,7 @@ class Grammar(BaseGrammar):
         """
         Continue listening for commands
 
-        @unreleased
+        @since 0.1.0
         """
         if self._sleeping:
             self._sleeping = False
@@ -54,7 +54,7 @@ class Grammar(BaseGrammar):
         """
         Sleep / wake rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='sleep_wake_rule',
@@ -67,7 +67,7 @@ class Grammar(BaseGrammar):
         """
         Sleeping rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='sleeping_rule',

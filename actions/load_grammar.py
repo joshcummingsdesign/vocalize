@@ -5,7 +5,7 @@ def load_grammar() -> None:
     """
     Load all grammar instances
 
-    @unreleased
+    @since 0.1.0
     """
     loader = GrammarLoader.instance()
     loader.load()

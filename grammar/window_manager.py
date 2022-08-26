@@ -6,7 +6,7 @@ class Grammar(BaseGrammar):
     """
     Window manager grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -23,7 +23,7 @@ class Grammar(BaseGrammar):
         """
         Window manager rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='window_manager_rule',

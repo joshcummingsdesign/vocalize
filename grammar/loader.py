@@ -7,7 +7,7 @@ class Grammar(BaseGrammar):
     """
     Loader grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -24,7 +24,7 @@ class Grammar(BaseGrammar):
         """
         Loader rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='loader_rule',

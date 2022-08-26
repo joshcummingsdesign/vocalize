@@ -5,6 +5,6 @@ def stop_state() -> None:
     """
     Stop saving adaptation state
 
-    @unreleased
+    @since 0.1.0
     """
     get_engine().stop_saving_adaptation_state()

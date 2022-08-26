@@ -11,7 +11,7 @@ class Grammar(BaseGrammar):
     """
     Vim grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -29,7 +29,7 @@ class Grammar(BaseGrammar):
         """
         Set the Vim register
 
-        @unreleased
+        @since 0.1.0
         """
         Key('"', True).execute()
         if char:
@@ -41,7 +41,7 @@ class Grammar(BaseGrammar):
         """
         Perform a command on a line with optional register
 
-        @unreleased
+        @since 0.1.0
         """
         Text(f':{l},{line}{command}', True).execute()
 
@@ -54,7 +54,7 @@ class Grammar(BaseGrammar):
         """
         Vim series rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return SeriesMappingRule(
             name='vim_series_rule',
@@ -210,7 +210,7 @@ class Grammar(BaseGrammar):
         """
         Vim rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='vim_rule',

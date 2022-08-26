@@ -7,14 +7,14 @@ Rule: TypeAlias = Union[MappingRule, SeriesMappingRule]
 """
 Rule type alias
 
-@unreleased
+@since 0.1.0
 """
 
 RuleFactory: TypeAlias = Callable[..., Rule]
 """
 Rule factory type alias
 
-@unreleased
+@since 0.1.0
 """
 
 
@@ -22,14 +22,14 @@ class BaseGrammar(ABC):
     """
     Base grammar abstract class
 
-    @unreleased
+    @since 0.1.0
     """
 
     _grammar: DragonGrammar = None
     """
     The dragonfly Grammar class instance
 
-    @unreleased
+    @since 0.1.0
     """
 
     @abstractproperty
@@ -37,7 +37,7 @@ class BaseGrammar(ABC):
         """
         The grammar name
 
-        @unreleased
+        @since 0.1.0
         """
         return ''
 
@@ -46,7 +46,7 @@ class BaseGrammar(ABC):
         """
         A list of rule factories
 
-        @unreleased
+        @since 0.1.0
         """
         return []
 
@@ -54,7 +54,7 @@ class BaseGrammar(ABC):
         """
         Instantiate the grammar
 
-        @unreleased
+        @since 0.1.0
         """
         self._grammar = DragonGrammar(self._name)
 
@@ -62,7 +62,7 @@ class BaseGrammar(ABC):
         """
         Load the grammar
 
-        @unreleased
+        @since 0.1.0
         """
         for rule in self._rules:
             self._grammar.add_rule(rule())
@@ -73,6 +73,6 @@ class BaseGrammar(ABC):
         """
         Unload the grammar
 
-        @unreleased
+        @since 0.1.0
         """
         self._grammar.unload()

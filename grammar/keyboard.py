@@ -9,7 +9,7 @@ class Grammar(BaseGrammar):
     """
     Keyboard grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -26,7 +26,7 @@ class Grammar(BaseGrammar):
         """
         Keyboard rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return SeriesMappingRule(
             name='keyboard',

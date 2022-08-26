@@ -7,7 +7,7 @@ class Grammar(BaseGrammar):
     """
     Browser grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -25,7 +25,7 @@ class Grammar(BaseGrammar):
         """
         Browser series rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return SeriesMappingRule(
             name='browser_series_rule',
@@ -50,7 +50,7 @@ class Grammar(BaseGrammar):
         """
         Browser rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='browser_rule',

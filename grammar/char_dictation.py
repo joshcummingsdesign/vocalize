@@ -8,7 +8,7 @@ class Grammar(BaseGrammar):
     """
     Character dictation grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -26,14 +26,14 @@ class Grammar(BaseGrammar):
     """
     Whether character dictation is enabled
 
-    @unreleased
+    @since 0.1.0
     """
 
     def _enable(self) -> None:
         """
         Disable character dictation
 
-        @unreleased
+        @since 0.1.0
         """
         if not self._enabled:
             self._enabled = True
@@ -44,7 +44,7 @@ class Grammar(BaseGrammar):
         """
         Enable character dictation
 
-        @unreleased
+        @since 0.1.0
         """
         if self._enabled:
             self._enabled = False
@@ -55,7 +55,7 @@ class Grammar(BaseGrammar):
         """
         Character dictation rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='char_dictation_rule',
@@ -68,7 +68,7 @@ class Grammar(BaseGrammar):
         """
         Character dictation listening rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return SeriesMappingRule(
             name='char_dictation_listening_rule',

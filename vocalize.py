@@ -8,21 +8,21 @@ class Vocalize:
     """
     The main Vocalize application class
 
-    @unreleased
+    @since 0.1.0
     """
 
     _engine: Any = None
     """
     The speech recognition engine
 
-    @unreleased
+    @since 0.1.0
     """
 
     def __init__(self, engine: Any) -> None:
         """
         Instantiate the main Vocalize application class
 
-        @unreleased
+        @since 0.1.0
         """
         self._engine = engine
 
@@ -30,7 +30,7 @@ class Vocalize:
         """
         Start listening for commands
 
-        @unreleased
+        @since 0.1.0
         """
         setup_log()
         self._engine.connect()

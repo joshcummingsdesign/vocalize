@@ -12,7 +12,7 @@ GrammarDict: TypeAlias = dict[str, BaseGrammar]
 """
 Grammar dict type alias
 
-@unreleased
+@since 0.1.0
 """
 
 
@@ -21,28 +21,28 @@ class GrammarLoader():
     """
     The grammar loader singleton
 
-    @unreleased
+    @since 0.1.0
     """
 
     _dirname: str = 'grammar'
     """
     The grammar directory relative to project root
 
-    @unreleased
+    @since 0.1.0
     """
 
     _instances: Optional[GrammarDict] = None
     """
     The grammar instances as { module_name: instance }
 
-    @unreleased
+    @since 0.1.0
     """
 
     def unload(self) -> None:
         """
         Unload all grammar instances
 
-        @unreleased
+        @since 0.1.0
         """
         if self._instances:
             for instance in self._instances:
@@ -53,7 +53,7 @@ class GrammarLoader():
         """
         Load all grammar instances
 
-        @unreleased
+        @since 0.1.0
         """
         project_root = Path(__file__).parent.parent.absolute()
         grammar_dir = os.path.join(project_root, self._dirname)
@@ -63,7 +63,7 @@ class GrammarLoader():
             """
             Reduce file paths to { module_name: instance }
 
-            @unreleased
+            @since 0.1.0
             """
             if '__' in file:
                 return instances
@@ -86,7 +86,7 @@ class GrammarLoader():
         """
         Reload all grammar instances
 
-        @unreleased
+        @since 0.1.0
         """
         self.unload()
         self.load()

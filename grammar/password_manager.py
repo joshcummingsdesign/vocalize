@@ -6,7 +6,7 @@ class Grammar(BaseGrammar):
     """
     Password manager grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -23,7 +23,7 @@ class Grammar(BaseGrammar):
         """
         Password manager rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='password_manager_rule',

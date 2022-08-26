@@ -20,7 +20,7 @@ class SeriesMappingRule(CompoundRule):
         """
         Instantiate the series mapping rule
 
-        @unreleased
+        @since 0.1.0
         """
         mapping_rule = MappingRule(
             name=name,

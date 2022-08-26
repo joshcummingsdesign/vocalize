@@ -7,28 +7,28 @@ class Singleton(Generic[T]):
     """
     Singleton decorator
 
-    @unreleased
+    @since 0.1.0
     """
 
     _decorated: T = None
     """
     The decorated class
 
-    @unreleased
+    @since 0.1.0
     """
 
     _instance: T = None
     """
     The one true class instance
 
-    @unreleased
+    @since 0.1.0
     """
 
     def __init__(self, decorated: T) -> None:
         """
         Instantiate the singleton class
 
-        @unreleased
+        @since 0.1.0
         """
         self._decorated = decorated
 
@@ -36,7 +36,7 @@ class Singleton(Generic[T]):
         """
         Return the one true class instance
 
-        @unreleased
+        @since 0.1.0
         """
         if self._instance:
             return self._instance
@@ -47,7 +47,7 @@ class Singleton(Generic[T]):
         """
         Prevent class from being instantiated directly
 
-        @unreleased
+        @since 0.1.0
         """
         raise TypeError('Singletons must be called with instance() method')
 
@@ -55,6 +55,6 @@ class Singleton(Generic[T]):
         """
         Perform instance checks against the decorated class
 
-        @unreleased
+        @since 0.1.0
         """
         return isinstance(instance, self._decorated)

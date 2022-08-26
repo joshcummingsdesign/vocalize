@@ -7,7 +7,7 @@ class Grammar(BaseGrammar):
     """
     Mac dictation grammar
 
-    @unreleased
+    @since 0.1.0
     """
 
     @property
@@ -25,14 +25,14 @@ class Grammar(BaseGrammar):
     """
     Whether mac dictation is enabled
 
-    @unreleased
+    @since 0.1.0
     """
 
     def _enable(self) -> None:
         """
         Disable mac dictation
 
-        @unreleased
+        @since 0.1.0
         """
         if not self._enabled:
             self._enabled = True
@@ -43,7 +43,7 @@ class Grammar(BaseGrammar):
         """
         Enable mac dictation
 
-        @unreleased
+        @since 0.1.0
         """
         if self._enabled:
             self._enabled = False
@@ -54,7 +54,7 @@ class Grammar(BaseGrammar):
         """
         Mac dictation rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='mac_dictation_rule',
@@ -67,7 +67,7 @@ class Grammar(BaseGrammar):
         """
         Mac dictation listening rule factory
 
-        @unreleased
+        @since 0.1.0
         """
         return MappingRule(
             name='mac_dictation_listening_rule',
