@@ -32,7 +32,6 @@ class GrammarLoader():
         if self._instances:
             for instance in self._instances:
                 self._instances[instance].unload()
-            del self._instances
             self._instances = None
 
     def load(self) -> None:
