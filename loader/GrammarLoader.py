@@ -1,4 +1,5 @@
 from helpers import Singleton
+from pathlib import Path
 import importlib.util
 import sys
 
@@ -35,7 +36,8 @@ class GrammarLoader():
 
         @unreleased
         """
-        # dirname = Path(__file__).parent.parent.absolute()
+        dirname = Path(__file__).parent.parent.absolute()
+        print(dirname)
         # path = os.path.join(dirname, 'grammar')
         # filenames = next(os.walk(path), (None, None, []))[2]
         # filenames = filter(lambda f: '.py' in f and '__' not in f, filenames)
@@ -50,13 +52,15 @@ class GrammarLoader():
         # directory = CommandModuleDirectory(path)
         # directory.unload()
         # directory.load()
-        self.unload()
 
-        spec = importlib.util.spec_from_file_location(
-            'grammar.loader', '/Users/josh/Contrib/vocalize/grammar/loader.py')
-        grammar = importlib.util.module_from_spec(spec)
-        sys.modules['grammar.loader'] = grammar
-        spec.loader.exec_module(grammar)
+        #####################
+        # self.unload()
 
-        self._instance = grammar.Grammar()
-        self._instance.load()
+        # spec = importlib.util.spec_from_file_location(
+        #     'grammar.loader', '/Users/josh/Contrib/vocalize/grammar/loader.py')
+        # grammar = importlib.util.module_from_spec(spec)
+        # sys.modules['grammar.loader'] = grammar
+        # spec.loader.exec_module(grammar)
+
+        # self._instance = grammar.Grammar()
+        # self._instance.load()
