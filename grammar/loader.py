@@ -1,6 +1,5 @@
 from actions import reload_grammar
-from contracts import BaseGrammar
-from contracts.rules import Rule, RuleFactory
+from contracts import BaseGrammar, Rule, RuleFactory
 from dragonfly import MappingRule, Function
 
 

@@ -1,5 +1,4 @@
-from contracts import BaseGrammar
-from contracts.rules import Rule, RuleFactory
+from contracts import BaseGrammar, Rule, RuleFactory
 from dragonfly import MappingRule, Key, Dictation, Text, IntegerRef
 
 

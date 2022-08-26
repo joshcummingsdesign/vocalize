@@ -1,6 +1,21 @@
 from abc import ABC, abstractproperty
-from dragonfly import Grammar as DragonGrammar
-from contracts.rules import RuleFactory
+from dragonfly import Grammar as DragonGrammar, MappingRule
+from rules import SeriesMappingRule
+from typing import Callable, TypeAlias, Union
+
+Rule: TypeAlias = Union[MappingRule, SeriesMappingRule]
+"""
+Rule type alias
+
+@unreleased
+"""
+
+RuleFactory: TypeAlias = Callable[..., Rule]
+"""
+Rule factory type alias
+
+@unreleased
+"""
 
 
 class BaseGrammar(ABC):

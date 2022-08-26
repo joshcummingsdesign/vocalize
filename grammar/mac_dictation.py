@@ -1,6 +1,5 @@
 from actions import start_state, stop_state
-from contracts import BaseGrammar
-from contracts.rules import Rule, RuleFactory
+from contracts import BaseGrammar, Rule, RuleFactory
 from dragonfly import MappingRule, Dictation, FuncContext, Function, Key
 
 

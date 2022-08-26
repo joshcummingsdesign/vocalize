@@ -1,6 +1,5 @@
 from actions import repeat_key, enter_optional_text
-from contracts import BaseGrammar
-from contracts.rules import Rule, RuleFactory
+from contracts import BaseGrammar, Rule, RuleFactory
 from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
 from extras import character
 
