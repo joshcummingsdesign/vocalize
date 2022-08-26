@@ -1,6 +1,7 @@
+from contracts import BaseGrammar
 from helpers import Singleton
 from pathlib import Path
-from typing import Optional, Any
+from typing import Optional
 import functools
 import glob
 import importlib.util
@@ -23,9 +24,9 @@ class GrammarLoader():
     @unreleased
     """
 
-    _instances: Optional[dict[str, Any]] = None
+    _instances: Optional[dict[str, BaseGrammar]] = None
     """
-    The grammar instances as `{ module_name: instance }`
+    The grammar instances as { module_name: instance }
 
     @unreleased
     """
@@ -48,12 +49,15 @@ class GrammarLoader():
         @unreleased
         """
         path = os.path.join(
-            Path(__file__).parent.parent.absolute(), self._dirname)
+            Path(__file__).parent.parent.absolute(),
+            self._dirname
+        )
+
         files = glob.glob(os.path.join(path, "*.py"))
 
         def reduce_names(acc, val):
             """
-            Reduce the file names to { module_name: instance }
+            Reduce file names to { module_name: instance }
 
             @unreleased
             """
