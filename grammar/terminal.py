@@ -55,6 +55,7 @@ class Grammar(BaseGrammar):
                 'yup': Key('c-r'),
                 'clear': Key('c-l'),
                 'free': Key('c-k,escape'),
+                'open it': Text('open .') + Key('enter'),
 
                 # Vim
                 'vim [<text>]': Text('vim %(text)s'),
@@ -63,7 +64,7 @@ class Grammar(BaseGrammar):
                 'vim it': Text('vim .') + Key('enter'),
 
                 # VS Code
-                'code it': Text('code .'),
+                'code it': Text('code .') + Key('enter'),
 
                 # PHPStorm
                 'storm it': Text('phpstorm .'),
@@ -92,6 +93,13 @@ class Grammar(BaseGrammar):
                 'git drop': Text('git stash drop') + Key('enter'),
                 'git apply': Text('git stash apply') + Key('enter'),
                 'git stash and drop': Text('git stash && git stash drop') + Key('enter'),
+                'git base <text>': Text('git rebase %(text)s'),
+                'git force push': Text('gp -f'),
+                'git force push origin <text>': Text('gp -u -f origin %(text)s'),
+
+                # Lando
+                'lando start': Text('lando start') + Key('enter'),
+                'lando stop': Text('lando stop') + Key('enter'),
             },
             extras=[
                 IntegerRef('n', 1, 10),

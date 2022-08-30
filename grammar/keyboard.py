@@ -1,6 +1,6 @@
 from actions import repeat_text
 from contracts import BaseGrammar, Rule, RuleFactory
-from dragonfly import IntegerRef, Function
+from dragonfly import IntegerRef, Function, Key
 from extras import character
 from rules import SeriesMappingRule
 
@@ -31,8 +31,8 @@ class Grammar(BaseGrammar):
         return SeriesMappingRule(
             name='keyboard',
             mapping={
-                # Special Characters
                 '[<n>] <char>': Function(lambda n, char: repeat_text(n, char)),
+                'emoji': Key('wc-space'),
             },
             extras=[
                 IntegerRef('n', 1, 100),
