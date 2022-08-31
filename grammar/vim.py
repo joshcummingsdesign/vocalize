@@ -225,6 +225,7 @@ class Grammar(BaseGrammar):
             name='vim_rule',
             mapping={
                 # Editing
+                'select all': Key('g,g,V,G'),
                 'select <line>': Text('%(line)dGV'),
                 'select <line> from <l>': Text('%(l)dGV%(line)dG'),
                 'delete all': Key('g,g,V,G,d'),
@@ -232,6 +233,7 @@ class Grammar(BaseGrammar):
                 'delete line <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('d', line, l, char)) + Key('c-o'),
                 'move <line>': Function(lambda line: Text(f':{line}m.', True).execute()) + Key('enter'),
                 'move <line> from <l>': Function(lambda line, l: self._line_in_register('m.', line, l)),
+                'yank all': Key('g,g,V,G,y'),
                 'yank <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
                 'yank <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('y', line, l, char)),
                 'change line': Key('escape,c,c'),

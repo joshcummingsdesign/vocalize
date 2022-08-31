@@ -2,6 +2,7 @@ from actions import repeat_key, enter_optional_text
 from contracts import BaseGrammar, Rule, RuleFactory
 from dragonfly import MappingRule, Key, Text, Function, IntegerRef, Dictation
 from extras import character
+from rules import SeriesMappingRule
 
 
 class Grammar(BaseGrammar):
@@ -18,8 +19,43 @@ class Grammar(BaseGrammar):
     @property
     def _rules(self) -> list[RuleFactory]:
         return [
+            self._make_terminal_series_rule,
             self._make_terminal_rule,
         ]
+
+    def _make_terminal_series_rule(self) -> Rule:
+        """
+        Terminal series rule factory
+
+        @unreleased
+        """
+        return SeriesMappingRule(
+            name='terminal_series_rule',
+            mapping={
+                # Navigation
+                'der [<text>]': Text('cd %(text)s'),
+                '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
+                'home': Text('~/'),
+                'list': Text('ls -lah') + Key('enter'),
+                'yup': Key('c-r'),
+                'clear': Key('c-l'),
+                'free': Key('c-k,escape'),
+                'yarn [<text>]': Text('yarn %(text)s'),
+                'node run [<text>]': Text('npm run %(text)s'),
+
+                # Vim
+                'vim [<text>]': Text('vim %(text)s'),
+            },
+            extras=[
+                IntegerRef('n', 1, 10),
+                Dictation('text'),
+                character('char'),
+            ],
+            defaults={
+                'n': 1,
+                'text': '',
+            }
+        )
 
     def _make_terminal_rule(self) -> Rule:
         """
@@ -48,19 +84,10 @@ class Grammar(BaseGrammar):
                 'abort': Key('c-c'),
 
                 # Navigation
-                'see dee [<text>]': Text('cd %(text)s'),
-                '[<n>] see dee back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
-                'list': Key('l,enter'),
-                'cat [<text>]': Text('cat %(text)s'),
-                'yup': Key('c-r'),
-                'clear': Key('c-l'),
-                'free': Key('c-k,escape'),
+                'print [<text>]': Text('cat %(text)s'),
                 'open it': Text('open .') + Key('enter'),
 
                 # Vim
-                'vim [<text>]': Text('vim %(text)s'),
-                'vim it': Text('vim .') + Key('enter'),
-                'vim [<text>]': Text('vim %(text)s'),
                 'vim it': Text('vim .') + Key('enter'),
 
                 # VS Code
