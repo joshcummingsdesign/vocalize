@@ -34,14 +34,17 @@ class Grammar(BaseGrammar):
             mapping={
                 # Navigation
                 'der [<text>]': Text('cd %(text)s'),
+                'make der [<text>]': Text('mkdir %(text)s'),
                 '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
                 'list': Text('ls -lah') + Key('enter'),
                 'yup': Key('c-r'),
                 'clear': Key('c-l'),
                 'free': Key('c-k,escape'),
-                'yarn [<text>]': Text('yarn %(text)s'),
+
+                # Node
                 'node run [<text>]': Text('npm run %(text)s'),
+                'node install': Text('npm install') + Key('enter'),
 
                 # Vim
                 'vim [<text>]': Text('vim %(text)s'),
@@ -102,6 +105,7 @@ class Grammar(BaseGrammar):
                 'git push': Text('gp') + Key('enter'),
                 'git pull': Text('gl') + Key('enter'),
                 'git status': Text('gst') + Key('enter'),
+                'git log': Text('glg') + Key('enter'),
                 'git diff [<text>]': Text('git diff %(text)s') + Key('enter'),
                 'git new branch': Text('gco -b '),
                 'git branch': Text('gb') + Key('enter'),
@@ -120,9 +124,14 @@ class Grammar(BaseGrammar):
                 'git drop': Text('git stash drop') + Key('enter'),
                 'git apply': Text('git stash apply') + Key('enter'),
                 'git stash and drop': Text('git stash && git stash drop') + Key('enter'),
-                'git base <text>': Text('git rebase %(text)s'),
+                'git base [<text>]': Text('git rebase %(text)s'),
+                'git base continue': Text('git rebase --continue'),
+                'git eye base': Text('git rebase -i '),
                 'git force push': Text('gp -f'),
                 'git force push origin <text>': Text('gp -u -f origin %(text)s'),
+                'git abort merge': Text('git merge --abort') + Key('enter'),
+                'git add origin': Text('git remote add origin '),
+                'git clone': Text('git clone '),
 
                 # Lando
                 'lando start': Text('lando start') + Key('enter'),

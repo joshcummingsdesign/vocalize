@@ -103,6 +103,7 @@ class Grammar(BaseGrammar):
                 # Editing
                 'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
                 'wipe': Key('escape,d,d'),
+                'whip': Key('escape,^,C'),
                 'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
                 'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
                 'dupe': Text('yyp'),
@@ -142,7 +143,7 @@ class Grammar(BaseGrammar):
                 '[<n>] (enter | slap)': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
-                '[<n>] reverse tab': Key('s-tab:%(n)d'),
+                '[<n>] bat': Key('s-tab:%(n)d'),
                 '[<n>] press <mod>': Key('%(mod)s:%(n)d'),
 
                 # Keyboard
@@ -254,7 +255,7 @@ class Grammar(BaseGrammar):
                 'bail': Key('escape,colon,q,!,enter'),
                 'close buff': Key('escape,colon,b,d,enter'),
                 'kill buff': Key('escape,colon,b,w,enter'),
-                'fuzzy [<text>]': Key('c-p') + Text('%(text)s'),
+                'fuzz [<text>]': Key('c-p') + Text('%(text)s'),
                 'tree': Key('c-backslash'),
 
                 # Navigation

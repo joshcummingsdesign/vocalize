@@ -43,7 +43,7 @@ class Grammar(BaseGrammar):
                 '[<n>] swap': Key('win:down,tab:%(n)d,win:up'),
                 '[<n>] switch': Key('w-`:%(n)d'),
                 'running': Key('win:down,tab'),
-
+                'dot files': Key('ws-.'),
             },
             extras=[
                 IntegerRef('n', 1, 10),
