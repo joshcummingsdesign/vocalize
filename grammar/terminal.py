@@ -27,7 +27,7 @@ class Grammar(BaseGrammar):
         """
         Terminal series rule factory
 
-        @unreleased
+        @since 0.2.0
         """
         return SeriesMappingRule(
             name='terminal_series_rule',
