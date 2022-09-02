@@ -31,5 +31,6 @@ class Grammar(BaseGrammar):
                 'vault': Key('wa-backslash'),
                 'login': Key('down/20,enter'),
                 'password': Key('right,up:5,down:2,enter'),
+                'pass it': Key('right,up:5,down:2,enter/50,w-v'),
             }
         )

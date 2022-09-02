@@ -188,6 +188,7 @@ class Grammar(BaseGrammar):
                 # Typing
                 'type <text>': Text('%(text)s'),
                 'sass <text>': Function(lambda text: Text(to_kebab(text), True).execute()) + Key('colon,space,semicolon,left'),
+                'prop <text>': Text('%(text)s: '),
                 'php echo': Key('<,?,=,space,?,>,left,left,left,space'),
                 'tag <text>': Text('<') + Function(lambda text: Text(to_kebab(text), True).execute()) + Key('>'),
                 'tag dev': Text('<div>'),
@@ -231,7 +232,7 @@ class Grammar(BaseGrammar):
                 'select <line> from <l>': Text('%(l)dGV%(line)dG'),
                 'delete all': Key('g,g,V,G,d'),
                 'delete <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
-                'delete line <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('d', line, l, char)) + Key('c-o'),
+                'delete <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('d', line, l, char)) + Key('c-o'),
                 'move <line>': Function(lambda line: Text(f':{line}m.', True).execute()) + Key('enter'),
                 'move <line> from <l>': Function(lambda line, l: self._line_in_register('m.', line, l)),
                 'yank all': Key('g,g,V,G,y'),

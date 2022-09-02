@@ -34,7 +34,6 @@ class Grammar(BaseGrammar):
             mapping={
                 # Navigation
                 'der [<text>]': Text('cd %(text)s'),
-                'make der [<text>]': Text('mkdir %(text)s'),
                 '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
                 'list': Text('ls -lah') + Key('enter'),
@@ -42,9 +41,22 @@ class Grammar(BaseGrammar):
                 'clear': Key('c-l'),
                 'free': Key('c-k,escape'),
 
+                # Editing
+                'remove [<text>]': Text('rm -rf %(text)s'),
+                'der copy [<text>]': Text('cp -R %(text)s'),
+                'make der [<text>]': Text('mkdir %(text)s'),
+                'try again': Key('escape,k'),
+
+                # SSH
+                'sash': Text('ssh '),
+
+                # WordPress
+                'dub': Text('wp '),
+
                 # Node
                 'node run [<text>]': Text('npm run %(text)s'),
                 'node install': Text('npm install') + Key('enter'),
+                'node version': Text('node --version') + Key('enter'),
 
                 # Vim
                 'vim [<text>]': Text('vim %(text)s'),
@@ -136,6 +148,13 @@ class Grammar(BaseGrammar):
                 # Lando
                 'lando start': Text('lando start') + Key('enter'),
                 'lando stop': Text('lando stop') + Key('enter'),
+                'lando [<text>]': Text('lando %(text)s'),
+
+                # Docker
+                'dock running': Text('docker ps') + Key('enter'),
+                'dock volume list': Text('docker volume ls') + Key('enter'),
+                'dock network list': Text('docker network ls') + Key('enter'),
+                'dock kill': Text('docker stop $(docker ps -a)') + Key('enter'),
             },
             extras=[
                 IntegerRef('n', 1, 10),
