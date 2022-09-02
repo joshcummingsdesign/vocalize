@@ -45,6 +45,7 @@ class Grammar(BaseGrammar):
                 'remove [<text>]': Text('rm -rf %(text)s'),
                 'der copy [<text>]': Text('cp -R %(text)s'),
                 'make der [<text>]': Text('mkdir %(text)s'),
+                'into it': Text('$_'),
                 'try again': Key('escape,k'),
 
                 # SSH
