@@ -50,6 +50,7 @@ class Grammar(BaseGrammar):
 
                 # SSH
                 'sash': Text('ssh '),
+                'sync': Text('rsync -aziP '),
 
                 # WordPress
                 'dub': Text('wp '),

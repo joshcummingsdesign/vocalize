@@ -185,6 +185,7 @@ class Grammar(BaseGrammar):
                 'less equals': Text(' <= '),
                 'bullet': Text('- '),
                 'check': Text('✓'),
+                'commercial': Text('.com'),
 
                 # Typing
                 'type <text>': Text('%(text)s'),
