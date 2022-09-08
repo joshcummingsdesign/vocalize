@@ -49,7 +49,7 @@ class Grammar(BaseGrammar):
                 'try again': Key('escape,k'),
 
                 # SSH
-                'sash': Text('ssh '),
+                'swish': Text('ssh '),
                 'sync': Text('rsync -aziP '),
 
                 # WordPress
@@ -121,7 +121,7 @@ class Grammar(BaseGrammar):
                 'git status': Text('gst') + Key('enter'),
                 'git log': Text('glg') + Key('enter'),
                 'git diff [<text>]': Text('git diff %(text)s') + Key('enter'),
-                'git new branch': Text('gco -b '),
+                'git branch new': Text('gco -b '),
                 'git branch': Text('gb') + Key('enter'),
                 'git branch delete': Text('gb --delete '),
                 'git tag': Text('git tag -a '),

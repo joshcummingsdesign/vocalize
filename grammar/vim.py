@@ -173,6 +173,7 @@ class Grammar(BaseGrammar):
                 # Special Characters
                 'pad <char>': Text(' %(char)s '),
                 'tags': Key('<,>,left'),
+                'twig': Key('{,percent'),
                 'spread': Text('...'),
                 'damp': Text(' && '),
                 'arrow': Text('->'),
