@@ -252,7 +252,7 @@ class Grammar(BaseGrammar):
                 'define': Key('g,d'),
                 'change go next': Key('c,g,n'),
                 'record [<char>]': Function(lambda char: Text(f'q{char}' if char else 'qq', True).execute()),
-                'stop': Text('q'),
+                'mac': Text('q'),
                 '[<n>] play [<char>]': Function(lambda n, char: Text(f'{n}@{char}' if char else f'{n}@q', True).execute()),
                 '[<n>] replay': Function(lambda n: Text(f'{n}@@', True).execute()),
 
