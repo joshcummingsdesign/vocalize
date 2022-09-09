@@ -245,12 +245,16 @@ class Grammar(BaseGrammar):
                 '[<n>] lent': Function(lambda n: Text(f'{n}<', True).execute()),
                 '[<n>] rent': Function(lambda n: Text(f'{n}>', True).execute()),
                 'sent': Text(':left') + Key('enter'),
-                'replace <char>': Key('r,%(char)s'),
+                'replace <char>': Text('r%(char)s'),
                 'go upper': Key('g,U'),
                 'go lower': Key('g,u'),
                 'wrap': Key('g,q'),
                 'define': Key('g,d'),
                 'change go next': Key('c,g,n'),
+                'record [<char>]': Function(lambda char: Text(f'q{char}' if char else 'qq', True).execute()),
+                'stop': Text('q'),
+                '[<n>] play [<char>]': Function(lambda n, char: Text(f'{n}@{char}' if char else f'{n}@q', True).execute()),
+                '[<n>] replay': Function(lambda n: Text(f'{n}@@', True).execute()),
 
                 # File
                 'save': Key('escape,colon,w,enter'),

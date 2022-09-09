@@ -33,6 +33,9 @@ class Grammar(BaseGrammar):
             name='terminal_series_rule',
             mapping={
                 # Navigation
+                'der desktop': Text('cd ~/Desktop'),
+                'der projects': Text('cd ~/Projects'),
+                'der contribute': Text('cd ~/Contrib'),
                 'der [<text>]': Text('cd %(text)s'),
                 '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
@@ -116,6 +119,7 @@ class Grammar(BaseGrammar):
                 # Git
                 'git add all': Text('gaa') + Key('enter'),
                 'git commit': Text('gca') + Key('enter'),
+                'git commit message': Text("gcam ''") + Key('left'),
                 'git push': Text('gp') + Key('enter'),
                 'git pull': Text('gl') + Key('enter'),
                 'git status': Text('gst') + Key('enter'),
