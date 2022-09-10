@@ -161,6 +161,13 @@ class Grammar(BaseGrammar):
                 'dock volume list': Text('docker volume ls') + Key('enter'),
                 'dock network list': Text('docker network ls') + Key('enter'),
                 'dock kill': Text('docker stop $(docker ps -a)') + Key('enter'),
+
+                # asdf
+                'machine list all': Text('asdf list') + Key('enter'),
+                'machine list node': Text('asdf list nodejs') + Key('enter'),
+                'machine list [<text>]': Text('asdf list ') + Function(enter_optional_text),
+                'machine install [<text>]': Text('asdf install %(text)s '),
+                'machine global [<text>]': Text('asdf global %(text)s '),
             },
             extras=[
                 IntegerRef('n', 1, 10),
