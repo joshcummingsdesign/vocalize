@@ -60,8 +60,8 @@ class Grammar(BaseGrammar):
             name='vim_series_rule',
             mapping={
                 # Modes
-                'zip': Key('escape,a'),
-                'blip': Key('escape,i'),
+                '[<n>] zip': Key('escape') + Function(lambda n: Text(f'{n}a', True).execute()),
+                '[<n>] blip': Key('escape') + Function(lambda n: Text(f'{n}i', True).execute()),
                 'block': Key('escape,c-v'),
 
                 # Operators
@@ -93,6 +93,9 @@ class Grammar(BaseGrammar):
                 'start': Key('0'),
                 'end': Key('$'),
                 'match': Key('percent'),
+                'middle': Key('M'),
+                'word end': Key('e'),
+                'big end': Key('E'),
 
                 # Text Objects
                 'inner': Key('i'),
@@ -117,10 +120,12 @@ class Grammar(BaseGrammar):
                 'cheap': Key('C'),
                 'sweep': Key('D'),
                 'after': Key('escape,A'),
+                'little after': Key('escape,a'),
                 'before': Key('escape,I'),
                 'spock': Key('i,space,escape'),
                 'sneak': Key('c-o'),
                 'recall': Key('c-r'),
+                'raw': Key('c-v'),
                 'where': Key('c-w'),
                 '[<n>] paste': Key('p:%(n)d'),
                 'clip yank': Text('"*y'),
@@ -145,6 +150,7 @@ class Grammar(BaseGrammar):
 
                 # Navigation
                 'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
+                'column <line>': Key('escape') + Text('%(line)d|'),
                 'go <line>': Text('%(line)dG'),
                 '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
                 '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
@@ -279,6 +285,7 @@ class Grammar(BaseGrammar):
                 'norm': Key('colon') + Text('norm '),
                 'norm all': Key('colon,percent') + Text('norm '),
                 'global': Key('colon') + Text('g/'),
+                'show column': Key('g,c-G'),
 
                 # File
                 'save': Key('escape,colon,w,enter'),
