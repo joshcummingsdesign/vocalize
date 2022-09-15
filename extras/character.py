@@ -107,7 +107,7 @@ def character(name: str) -> Choice:
         'semi': ';',
         'cole': ':',
         'quote': "'",
-        'double quote': '"',
+        'rabbit': '"',
         'com': ',',
         'dot': '.',
         'angles': '<',

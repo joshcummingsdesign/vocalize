@@ -60,8 +60,8 @@ class Grammar(BaseGrammar):
             name='vim_series_rule',
             mapping={
                 # Modes
-                '[<n>] zip': Key('escape') + Function(lambda n: Text(f'{n}a', True).execute()),
-                '[<n>] blip': Key('escape') + Function(lambda n: Text(f'{n}i', True).execute()),
+                '[<n>] zip': Function(lambda n: Text(f'{n}a', True).execute()),
+                '[<n>] blip': Function(lambda n: Text(f'{n}i', True).execute()),
                 'block': Key('escape,c-v'),
 
                 # Operators
@@ -119,12 +119,13 @@ class Grammar(BaseGrammar):
                 'dupe': Text('yyp'),
                 'cheap': Key('C'),
                 'sweep': Key('D'),
-                'after': Key('escape,A'),
-                'little after': Key('escape,a'),
-                'before': Key('escape,I'),
+                'after': Key('A'),
+                'little after': Key('a'),
+                'before': Key('I'),
                 'spock': Key('i,space,escape'),
                 'sneak': Key('c-o'),
                 'recall': Key('c-r'),
+                'recall it': Key('c-r') + Text('"'),
                 'raw': Key('c-v'),
                 'where': Key('c-w'),
                 '[<n>] paste': Key('p:%(n)d'),
@@ -140,6 +141,7 @@ class Grammar(BaseGrammar):
                 '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
                 '[<n>] nudge': Function(lambda n: Text(f'{n}O', True).execute()),
                 '[<n>] sit': Function(lambda n: Text(f'{n}*', True).execute()),
+                '[<n>] bit': Function(lambda n: Text(f'{n}#', True).execute()),
                 '[<n>] sub': Function(lambda n: Text(f'{n}s', True).execute()),
                 'sort': Text(':sort') + Key('enter'),
                 'go increment': Key('g,c-a'),
@@ -147,6 +149,7 @@ class Grammar(BaseGrammar):
                 '[<n>] increment': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-a'),
                 '[<n>] decrement': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-x'),
                 '[<n>] join': Function(lambda n: Text(f'{n}J', True).execute()),
+                '[<n>] go join': Function(lambda n: Text(f'{n}gJ', True).execute()),
 
                 # Navigation
                 'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
@@ -308,6 +311,8 @@ class Grammar(BaseGrammar):
                 'run out': Key('escape,c-o'),
                 'win right': Key('escape,space,w,l'),
                 'win left': Key('escape,space,w,h'),
+                'mark [<char>]': Function(lambda char: Text(f'm{char}' if char else 'mm', True).execute()),
+                'bark [<char>]': Function(lambda char: Text(f'`{char}' if char else '`m', True).execute()),
 
                 # Surround
                 'select inner <char>': Key('escape,v,i,%(char)s'),
