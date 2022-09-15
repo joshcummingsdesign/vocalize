@@ -288,7 +288,7 @@ class Grammar(BaseGrammar):
                 'norm': Key('colon') + Text('norm '),
                 'norm all': Key('colon,percent') + Text('norm '),
                 'global': Key('colon') + Text('g/'),
-                'show column': Key('g,c-G'),
+                'show column': Key('g,c-g'),
 
                 # File
                 'save': Key('escape,colon,w,enter'),
