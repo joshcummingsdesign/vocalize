@@ -25,17 +25,38 @@ class Grammar(BaseGrammar):
             self._make_vim_rule,
         ]
 
-    def _register(self, char: Optional[str] = None) -> None:
+    def _optional_repeat(self, command: str, n: Optional[int] = None) -> None:
         """
-        Set the Vim register
+        Optionally repeat a command n times
 
-        @since 0.1.0
+        @since 0.4.0
         """
-        Key('"', True).execute()
-        if char:
-            Text(char, True).execute()
-        else:
-            Text('*', True).execute()
+        if n > 1:
+            command = f'{n}{command}'
+
+        Text(command, True).execute()
+
+    def _optional_key_repeat(self, key: str, n: Optional[int] = None) -> None:
+        """
+        Optionally repeat a key n times
+
+        @since 0.4.0
+        """
+        if n > 1:
+            Text(f'{n}').execute()
+
+        Key(key, True).execute()
+
+    def _play_macro(self, n: Optional[int] = None, char: Optional[str] = None) -> None:
+        """
+        Play a macro with optional repeat and register
+
+        @since 0.4.0
+        """
+        if n > 1:
+            Text(f'{n}', True).execute()
+
+        Text(f'@{char}', True).execute() if char else Text('@q').execute()
 
     def _line_in_register(self, command: str, line: int, l: int, char: Optional[str] = None) -> None:
         """
@@ -60,103 +81,115 @@ class Grammar(BaseGrammar):
             name='vim_series_rule',
             mapping={
                 # Modes
-                '[<n>] zip': Function(lambda n: Text(f'{n}a', True).execute()),
-                '[<n>] blip': Function(lambda n: Text(f'{n}i', True).execute()),
-                'block': Key('escape,c-v'),
+                '[<n>] zip': Function(lambda n: self._optional_repeat('a', n)),
+                '[<n>] blip': Function(lambda n: self._optional_repeat('i', n)),
+                'block': Key('c-v'),
 
                 # Operators
-                'select': Key('escape,v'),
-                'change': Key('c'),
-                'delete': Key('d'),
-                'yank': Key('y'),
+                'select': Text('v'),
+                'change': Text('c'),
+                'delete': Text('d'),
+                'yank': Text('y'),
 
                 # Motions
-                '[<n>] left': Function(lambda n: Text(f'{n}h', True).execute()),
-                '[<n>] right': Function(lambda n: Text(f'{n}l', True).execute()),
-                '[<n>] up': Function(lambda n: Text(f'{n}k', True).execute()),
-                '[<n>] down': Function(lambda n: Text(f'{n}j', True).execute()),
-                '[<n>] ascend': Function(lambda n: Text(f'{n}-', True).execute()),
+                '[<n>] left': Function(lambda n: self._optional_repeat('h', n)),
+                '[<n>] right': Function(lambda n: self._optional_repeat('l', n)),
+                '[<n>] up': Function(lambda n: self._optional_repeat('k', n)),
+                '[<n>] down': Function(lambda n: self._optional_repeat('j', n)),
+                '[<n>] ascend': Function(lambda n: self._optional_repeat('-', n)),
                 '[<n>] descend': Function(lambda n: Text(f'{n}+', True).execute()),
-                '[<n>] find <char>': Function(lambda n, char: Text(f'{n}f{char}', True).execute()),
-                '[<n>] back find <char>': Function(lambda n, char: Text(f'{n}F{char}', True).execute()),
+                '[<n>] descend': Function(lambda n: self._optional_repeat('+', n)),
+                '[<n>] find <char>': Function(lambda n: self._optional_repeat('f', n)) + Text('%(char)s'),
+                '[<n>] back find <char>': Function(lambda n: self._optional_repeat('F', n)) + Text('%(char)s'),
                 '[<n>] till <char>': Function(lambda n, char: Text(f'{n}t{char}', True).execute()),
+                '[<n>] till <char>': Function(lambda n: self._optional_repeat('t', n)) + Text('%(char)s'),
                 '[<n>] back till <char>': Function(lambda n, char: Text(f'{n}T{char}', True).execute()),
-                '[<n>] biff': Function(lambda n: Text(f'{n},', True).execute()),
-                '[<n>] rift': Function(lambda n: Text(f'{n};', True).execute()),
-                '[<n>] sentence': Function(lambda n: Text(f'{n})', True).execute()),
-                '[<n>] back sentence': Function(lambda n: Text(f'{n}(', True).execute()),
+                '[<n>] back till <char>': Function(lambda n: self._optional_repeat('T', n)) + Text('%(char)s'),
+                '[<n>] biff': Function(lambda n: self._optional_repeat(',', n)),
+                '[<n>] rift': Function(lambda n: self._optional_repeat(';', n)),
+                '[<n>] cent': Function(lambda n: self._optional_repeat(')', n)),
+                '[<n>] back cent': Function(lambda n: self._optional_repeat('(', n)),
                 '[<n>] raft': Function(lambda n: Text(f'{n}' + '}', True).execute()),
-                '[<n>] back raft': Function(lambda n: Text(f'{n}' + '{', True).execute()),
-                'head': Key('g,g'),
-                'foot': Key('G'),
+                '[<n>] raft': Function(lambda n: self._optional_repeat('}', n)),
+                '[<n>] back raft': Function(lambda n: self._optional_repeat('{', n)),
+                'head': Text('gg'),
+                'foot': Text('G'),
                 'snap': Text('^'),
-                'start': Key('0'),
-                'end': Key('$'),
+                'start': Text('0'),
+                'end': Text('$'),
                 'match': Key('percent'),
-                'middle': Key('M'),
-                'word end': Key('e'),
-                'big end': Key('E'),
+                'middle': Text('M'),
+                'word end': Text('e'),
+                'big end': Text('E'),
 
                 # Text Objects
-                'inner': Key('i'),
-                'around': Key('a'),
-                'word': Key('w'),
-                'big word': Key('W'),
-                'back': Key('b'),
-                'big back': Key('B'),
-                'paragraph': Key('p'),
+                'inner': Text('i'),
+                'around': Text('a'),
+                'word': Text('w'),
+                'big word': Text('W'),
+                'back': Text('b'),
+                'big back': Text('B'),
+                'paragraph': Text('p'),
 
                 # Registers
-                'register [<char>]': Function(self._register),
+                'register [<char>]': Function(lambda char: Text(f'"{char}' if char else '"*', True).execute()),
 
                 # Editing
-                'select [<n>] (line | lines)': Key('escape,V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
-                'wipe': Key('escape,d,d'),
-                'whip': Key('escape,^,C'),
+                'select [<n>] (line | lines)': Key('V') + Function(lambda n: Text(f'{n - 1}j', True).execute() if n > 1 else False),
+                'wipe': Text('dd'),
+                'whip': Text('^C'),
                 'dart': Key('c-d'),
-                'delete [<n>] (line | lines)': Function(lambda n: Text(f'{n}dd', True).execute()),
-                'yank [<n>] (line | lines)': Function(lambda n: Text(f'{n}yy', True).execute()),
-                'dupe': Text('yyp'),
-                'cheap': Key('C'),
-                'sweep': Key('D'),
-                'after': Key('A'),
-                'little after': Key('a'),
-                'before': Key('I'),
-                'spock': Key('i,space,escape'),
+                'delete [<n>] (line | lines)': Function(lambda n: self._optional_repeat('dd', n)),
+                'yank [<n>] (line | lines)': Function(lambda n: self._optional_repeat('Y', n)),
+                'change line': Text('cc'),
+                'dupe': Text('Yp'),
+                'cheap': Text('C'),
+                'sweep': Text('D'),
+                'after': Text('A'),
+                'little after': Text('a'),
+                'before': Text('I'),
                 'sneak': Key('c-o'),
                 'recall': Key('c-r'),
                 'recall it': Key('c-r') + Text('"'),
                 'raw': Key('c-v'),
                 'where': Key('c-w'),
-                '[<n>] paste': Key('p:%(n)d'),
-                'clip yank': Text('"*y'),
-                '[<n>] clip paste': Text('"*') + Key('p:%(n)d'),
-                '[<n>] clip back paste': Text('"*') + Key('P:%(n)d'),
-                '[<n>] based': Key('P:%(n)d'),
-                '[<n>] pete': Key('.:%(n)d'),
-                '[<n>] (scratch | undo)': Key('escape') + Function(lambda n: Text(f'{n}u', True).execute()),
-                '[<n>] redo': Key('escape') + Function(lambda n: Text(f'{n}', True).execute()) + Key('c-r'),
-                '[<n>] slice': Function(lambda n: Text(f'{n}x', True).execute()),
-                '[<n>] splice': Function(lambda n: Text(f'{n}X', True).execute()),
-                '[<n>] bump': Function(lambda n: Text(f'{n}o', True).execute()),
-                '[<n>] nudge': Function(lambda n: Text(f'{n}O', True).execute()),
-                '[<n>] sit': Function(lambda n: Text(f'{n}*', True).execute()),
-                '[<n>] bit': Function(lambda n: Text(f'{n}#', True).execute()),
-                '[<n>] sub': Function(lambda n: Text(f'{n}s', True).execute()),
+                '[<n>] paste': Function(lambda n: self._optional_repeat('p', n)),
+                '[<n>] baste': Function(lambda n: self._optional_repeat('P', n)),
+                '[<n>] pete': Function(lambda n: self._optional_repeat('.', n)),
+                '[<n>] undo': Function(lambda n: self._optional_repeat('u', n)),
+                '[<n>] redo': Function(lambda n: self._optional_key_repeat('c-r', n)),
+                '[<n>] slice': Function(lambda n: self._optional_repeat('x', n)),
+                '[<n>] splice': Function(lambda n: self._optional_repeat('X', n)),
+                '[<n>] bump': Function(lambda n: self._optional_repeat('o', n)),
+                '[<n>] nudge': Function(lambda n: self._optional_repeat('O', n)),
+                '[<n>] sit': Function(lambda n: self._optional_repeat('*', n)),
+                '[<n>] bit': Function(lambda n: self._optional_repeat('#', n)),
+                '[<n>] sub': Function(lambda n: self._optional_repeat('s', n)),
                 'sort': Text(':sort') + Key('enter'),
                 'go increment': Key('g,c-a'),
                 'go decrement': Key('g,c-x'),
-                '[<n>] increment': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-a'),
-                '[<n>] decrement': Function(lambda n: Text(f'{n}', True).execute()) + Key('c-x'),
-                '[<n>] join': Function(lambda n: Text(f'{n}J', True).execute()),
-                '[<n>] go join': Function(lambda n: Text(f'{n}gJ', True).execute()),
+                '[<n>] increment': Function(lambda n: self._optional_key_repeat('c-a', n)),
+                '[<n>] decrement': Function(lambda n: self._optional_key_repeat('c-x', n)),
+                '[<n>] join': Function(lambda n: self._optional_repeat('J', n)),
+                '[<n>] go join': Function(lambda n: self._optional_repeat('gJ', n)),
+                '[<n>] lent': Function(lambda n: self._optional_repeat('<', n)),
+                '[<n>] rent': Function(lambda n: self._optional_repeat('>', n)),
+                'sent': Text(':left') + Key('enter'),
+                '[<n>] replace <char>': Function(lambda n: self._optional_repeat('r', n)) + Text('%(char)s'),
+                'go upper': Text('gU'),
+                'go lower': Text('gu'),
+                'wrap': Text('gq'),
+                'define': Text('gd'),
+                'record [<char>]': Function(lambda char: Text(f'q{char}' if char else 'qq', True).execute()),
+                'mac': Text('q'),
+                '[<n>] play [<char>]': Function(self._play_macro),
+                '[<n>] replay': Function(lambda n: self._optional_repeat('@@', n)),
 
                 # Navigation
-                'line <line>': Key('escape') + Text(':%(line)d') + Key('enter'),
-                'column <line>': Key('escape') + Text('%(line)d|'),
-                'go <line>': Text('%(line)dG'),
-                '[<n>] next': Function(lambda n: Text(f'{n}n', True).execute()),
-                '[<n>] previous': Function(lambda n: Text(f'{n}N', True).execute()),
+                'line <line>': Text('%(line)dG'),
+                'column <line>': Text('%(line)d|'),
+                '[<n>] next': Function(lambda n: self._optional_repeat('n', n)),
+                '[<n>] previous': Function(lambda n: self._optional_repeat('N', n)),
 
                 # File
                 'buff': Key('escape,space,b,p'),
@@ -165,8 +198,8 @@ class Grammar(BaseGrammar):
                 '[<n>] booze': Key('c-k:%(n)d'),
 
                 # Modifiers
-                '[<n>] (zap | axe)': Key('win:up,escape:%(n)d'),
-                '[<n>] (enter | slap)': Key('win:up,enter:%(n)d'),
+                '[<n>] axe': Key('win:up,escape:%(n)d'),
+                '[<n>] enter': Key('win:up,enter:%(n)d'),
                 '[<n>] clap': Key('enter:%(n)d,tab'),
                 '[<n>] tab': Key('tab:%(n)d'),
                 '[<n>] bat': Key('s-tab:%(n)d'),
@@ -256,37 +289,25 @@ class Grammar(BaseGrammar):
             name='vim_rule',
             mapping={
                 # Editing
-                'select all': Key('g,g,V,G'),
+                'select all': Text('ggVG'),
                 'select <line>': Text('%(line)dGV'),
                 'select <line> from <l>': Text('%(l)dGV%(line)dG'),
-                'delete all': Key('g,g,d,G'),
-                'change all': Key('g,g,c,G'),
+                'delete all': Text('ggdG'),
+                'change all': Text('ggcG'),
                 'delete <line>': Function(lambda line: Text(f':{line}d', True).execute()) + Key('enter'),
                 'delete <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('d', line, l, char)) + Key('c-o'),
                 'move <line>': Function(lambda line: Text(f':{line}m.', True).execute()) + Key('enter'),
                 'move <line> from <l>': Function(lambda line, l: self._line_in_register('m.', line, l)),
-                'yank all': Key('g,g,V,G,y'),
+                'yank all': Text('ggVGy'),
                 'yank <line>': Function(lambda line: Text(f':{line}y', True).execute()) + Key('enter'),
                 'yank <line> from <l> [in] [<char>]': Function(lambda line, l, char: self._line_in_register('y', line, l, char)),
-                'change line': Key('escape,c,c'),
-                '[<n>] lent': Function(lambda n: Text(f'{n}<', True).execute()),
-                '[<n>] rent': Function(lambda n: Text(f'{n}>', True).execute()),
-                'sent': Text(':left') + Key('enter'),
-                'replace <char>': Text('r%(char)s'),
-                'go upper': Key('g,U'),
-                'go lower': Key('g,u'),
-                'wrap': Key('g,q'),
-                'define': Key('g,d'),
-                'change go next': Key('c,g,n'),
-                'record [<char>]': Function(lambda char: Text(f'q{char}' if char else 'qq', True).execute()),
-                'mac': Text('q'),
-                '[<n>] play [<char>]': Function(lambda n, char: Text(f'{n}@{char}' if char else f'{n}@q', True).execute()),
-                '[<n>] replay': Function(lambda n: Text(f'{n}@@', True).execute()),
+                'change go next': Text('cgn'),
                 'said': Key('colon') + Text('s/'),
                 'said all': Key('colon,percent') + Text('s/'),
-                'said block': Key('colon') + Text('s/\%V'),
+                'said block': Key('colon,s,slash,backslash,percent,V'),
                 'norm': Key('colon') + Text('norm '),
                 'norm all': Key('colon,percent') + Text('norm '),
+                'successive': Text('Q'),
                 'global': Key('colon') + Text('g/'),
                 'show column': Key('g,c-g'),
 
@@ -304,47 +325,47 @@ class Grammar(BaseGrammar):
                 # Navigation
                 'search [<text>]': Key('slash/20') + Function(enter_optional_text),
                 'back search [<text>]': Key('?') + Function(enter_optional_text),
-                'zed zed': Key('escape,z,z'),
-                'zed top': Key('escape,z,t'),
-                'zed bottom': Key('escape,z,b'),
-                'run in': Key('escape,c-i'),
-                'run out': Key('escape,c-o'),
+                'zed zed': Text('zz'),
+                'zed top': Text('zt'),
+                'zed bottom': Text('zb'),
+                'run in': Key('c-i'),
+                'run out': Key('c-o'),
                 'win right': Key('escape,space,w,l'),
                 'win left': Key('escape,space,w,h'),
                 'mark [<char>]': Function(lambda char: Text(f'm{char}' if char else 'mm', True).execute()),
                 'bark [<char>]': Function(lambda char: Text(f'`{char}' if char else '`m', True).execute()),
 
                 # Surround
-                'select inner <char>': Key('escape,v,i,%(char)s'),
-                'select around <char>': Key('escape,v,a,%(char)s'),
-                'change inner <char>': Key('escape,c,i,%(char)s'),
-                'change around <char>': Key('escape,c,a,%(char)s'),
-                'delete inner <char>': Key('escape,d,i,%(char)s'),
-                'delete around <char>': Key('escape,d,a,%(char)s'),
-                'yank inner <char>': Key('escape,y,i,%(char)s'),
-                'yank around <char>': Key('escape,y,a,%(char)s'),
-                'surround [with] <char>': Key('S,%(char)s'),
-                'surround inner <object> [with] <char>': Key('escape,y,s,i,%(object)s,%(char)s'),
-                'surround around <object> [with] <char>': Key('escape,y,s,a,%(object)s,%(char)s'),
-                'surround [inner] [word] [with] <char>': Key('escape,y,s,i,w,%(char)s'),
-                'surround [inner] big word [with] <char>': Key('escape,y,s,i,W,%(char)s'),
-                'surround line [with] <char>': Key('escape,y,s,s,%(char)s'),
-                'change surrounding <object> [to] <char>': Key('escape,c,s,%(object)s,%(char)s'),
-                'delete surrounding <char>': Key('escape,d,s,%(char)s'),
+                'select inner <char>': Text('vi%(char)s'),
+                'select around <char>': Text('va%(char)s'),
+                'change inner <char>': Text('ci%(char)s'),
+                'change around <char>': Text('ca%(char)s'),
+                'delete inner <char>': Text('di%(char)s'),
+                'delete around <char>': Text('da%(char)s'),
+                'yank inner <char>': Text('yi%(char)s'),
+                'yank around <char>': Text('ya%(char)s'),
+                'surround [with] <char>': Text('S%(char)s'),
+                'surround inner <object> [with] <char>': Text('ysi%(object)s%(char)s'),
+                'surround around <object> [with] <char>': Text('ysa%(object)s%(char)s'),
+                'surround [inner] [word] [with] <char>': Text('ysiw%(char)s'),
+                'surround [inner] big word [with] <char>': Text('ysiW%(char)s'),
+                'surround line [with] <char>': Text('yss%(char)s'),
+                'change surrounding <object> [to] <char>': Text('cs%(object)s%(char)s'),
+                'delete surrounding <char>': Text('ds%(char)s'),
 
                 # Abolish
-                'go snake': Key('escape,c,r,s'),
-                'go camel': Key('escape,c,r,c'),
-                'go pascal': Key('escape,c,r,m'),
-                'go kebab': Key('escape,c,r,minus'),
-                'go dot case': Key('escape,c,r,.'),
-                'go upper snake': Key('escape,c,r,u'),
-                'go space case': Key('escape,c,r,space'),
-                'go title': Key('escape,c,r,t'),
+                'go snake': Key('c,r,s'),
+                'go camel': Key('c,r,c'),
+                'go pascal': Key('c,r,m'),
+                'go kebab': Key('c,r,minus'),
+                'go dot case': Key('c,r,.'),
+                'go upper snake': Key('c,r,u'),
+                'go space case': Key('c,r,space'),
+                'go title': Key('c,r,t'),
 
                 # Commentary
-                'comment': Key('escape,g,c'),
-                'comment [<n>] (line | lines)': Key('escape') + Function(lambda n: Text(f'{n}gcc', True).execute()),
+                'comment': Text('gc'),
+                'comment [<n>] (line | lines)': Function(lambda n: self._optional_repeat('gcc', n)),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
