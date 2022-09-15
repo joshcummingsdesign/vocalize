@@ -265,6 +265,10 @@ class Grammar(BaseGrammar):
                 'upper <text>': Function(lambda text: Text(text.upper(), True).execute()),
                 'sentence <text>': Function(lambda text: Text(uc_first(text), True).execute()),
                 'title <text>': Function(lambda text: Text(text.title(), True).execute()),
+
+                # Commentary
+                'comment': Text('gc'),
+                'comment [<n>] (line | lines)': Function(lambda n: self._optional_repeat('gcc', n)),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
@@ -362,10 +366,6 @@ class Grammar(BaseGrammar):
                 'go upper snake': Key('c,r,u'),
                 'go space case': Key('c,r,space'),
                 'go title': Key('c,r,t'),
-
-                # Commentary
-                'comment': Text('gc'),
-                'comment [<n>] (line | lines)': Function(lambda n: self._optional_repeat('gcc', n)),
             },
             extras=[
                 IntegerRef('n', 1, 1000),
