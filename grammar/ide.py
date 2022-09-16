@@ -28,6 +28,7 @@ class Grammar(BaseGrammar):
         return MappingRule(
             name='ide_rule',
             mapping={
+                'find in': Key('w-f'),
                 'find all': Key('ws-f'),
                 'reveal': Key('wa-f11'),
                 'git changes': Key('ws-g'),
