@@ -85,7 +85,7 @@ def character(name: str) -> Choice:
         'hash': '#',
         'dollar': '$',
         'mod': '%',
-        'chevron': '^',
+        'hat': '^',
         'amp': '&',
         'splat': '*',
         'pars': '(',
