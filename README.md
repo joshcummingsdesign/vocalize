@@ -11,6 +11,7 @@ Voice control for macOS with a Vim mindset.
 1. Create the virtual environment
 
    ```sh
+   conda activate base
    conda create -n vocalize -y
    conda activate vocalize
    conda config --env --set subdir osx-64
