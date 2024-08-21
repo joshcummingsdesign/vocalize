@@ -41,6 +41,7 @@ This project assumes you have the following keybindings configured:
 And the following apps installed:
 
 - [Rectangle](https://github.com/rxhanson/Rectangle)
+- [Homerow](https://github.com/nchudleigh/homerow)
 
 In addition, the following dotfiles are assumed:
 

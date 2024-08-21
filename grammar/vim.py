@@ -109,8 +109,8 @@ class Grammar(BaseGrammar):
                 '[<n>] bent': Function(lambda n: self._optional_repeat('(', n)),
                 '[<n>] raft': Function(lambda n: self._optional_repeat('}', n)),
                 '[<n>] laugh': Function(lambda n: self._optional_repeat('{', n)),
-                'top': Text('gg'),
-                'bottom': Text('G'),
+                'head': Text('gg'),
+                'foot': Text('G'),
                 'snap': Text('^'),
                 'first': Text('0'),
                 'last': Text('$'),
@@ -192,6 +192,8 @@ class Grammar(BaseGrammar):
                 'column <line>': Text('%(line)d|'),
                 '[<n>] next': Function(lambda n: self._optional_repeat('n', n)),
                 '[<n>] previous': Function(lambda n: self._optional_repeat('N', n)),
+                'jump word': Key('escape,space,j,w'),
+                'jump line': Key('escape,space,j,l'),
 
                 # File
                 'save': Key('escape,colon,w,enter'),
