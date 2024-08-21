@@ -48,7 +48,7 @@ class Grammar(BaseGrammar):
         if self._sleeping:
             self._sleeping = False
             self._grammar.set_exclusiveness(False)
-        print('Awake...')
+        print('Listening...')
 
     def _make_sleep_wake_rule(self) -> Rule:
         """

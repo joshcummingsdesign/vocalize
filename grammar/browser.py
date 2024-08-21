@@ -60,6 +60,7 @@ class Grammar(BaseGrammar):
                 'open [<text>]': Key('o') + Text('%(text)s'),
                 'open new [<text>]': Key('O') + Text('%(text)s'),
                 'jump': Key('f'),
+                'big jump': Key('F'),
                 'refresh': Key('w-r'),
                 'hard refresh': Key('ws-r'),
                 'earl': Key('w-l'),
