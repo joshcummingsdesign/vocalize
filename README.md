@@ -4,36 +4,43 @@ Voice control for macOS with a Vim mindset.
 
 ## Requirements
 
-- Python 3.6+
-- virtualenv
+- [miniconda](https://docs.anaconda.com/miniconda/)
 
 ## Getting Started
 
-Install Vocalize
+1. Create the virtual environment
 
-```sh
-./scripts/install.sh
-```
+   ```sh
+   conda create -n vocalize -y
+   conda activate vocalize
+   conda config --env --set subdir osx-64
+   conda install python=3.10.14 -y
+   ```
 
-Run vocalize (use an alias to make this easier)
+2. Install Vocalize
 
-```sh
-./scripts/start.sh
-```
+   ```sh
+   make install
+   ```
+
+3. Run vocalize (use an alias to make this easier)
+
+   ```sh
+   make start
+   ```
 
 ## Keybindings
 
 This project assumes you have the following keybindings configured:
 
 - Dictation: Control + Shift + D
-- Spotlight: Control + Space
 - Password Manager: Command + Option + \
-- Terminal Show/Hide: Command + Space
-- Clipboard Manager: Command + Shift + Space
+- Terminal Show/Hide: Command + Shift + Space
+- Clipboard Manager: Control + Space
 
 And the following apps installed:
 
-- Amethyst
+- [Rectangle](https://github.com/rxhanson/Rectangle)
 
 In addition, the following dotfiles are assumed:
 

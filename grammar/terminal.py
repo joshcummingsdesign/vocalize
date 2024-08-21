@@ -33,9 +33,10 @@ class Grammar(BaseGrammar):
             name='terminal_series_rule',
             mapping={
                 # Navigation
-                'der desktop': Text('cd ~/Desktop'),
-                'der projects': Text('cd ~/Projects'),
-                'der contribute': Text('cd ~/Contrib'),
+                'der desktop': Text('cd ~/Desktop') + Key('enter'),
+                'der downloads': Text('cd ~/Downloads') + Key('enter'),
+                'der projects': Text('cd ~/Projects/'),
+                'der contribute': Text('cd ~/Contrib/'),
                 'der [<text>]': Text('cd %(text)s'),
                 '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
@@ -55,13 +56,21 @@ class Grammar(BaseGrammar):
                 'swish': Text('ssh '),
                 'sync': Text('rsync -aziP '),
 
-                # WordPress
-                'dub': Text('wp '),
-
                 # Node
                 'node run [<text>]': Text('npm run %(text)s'),
                 'node install': Text('npm install') + Key('enter'),
                 'node version': Text('node --version') + Key('enter'),
+
+                # Python
+                'python version': Text('python --version') + Key('enter'),
+                'python virtual': Text('python -m venv venv'),
+                'activate': Text('source venv/bin/activate') + Key('enter'),
+                'deactivate': Text('deactivate') + Key('enter'),
+
+                # Miniconda
+                'con list': Text('conda env list') + Key('enter'),
+                'con activate [<text>]': Text('conda activate %(text)s'),
+                'con deactivate': Text('conda deactivate') + Key('enter'),
 
                 # Vim
                 'vim [<text>]': Text('vim %(text)s'),
@@ -87,19 +96,17 @@ class Grammar(BaseGrammar):
             name='terminal_rule',
             mapping={
                 # Window
-                'term': Key('w-space'),
+                'term': Key('ws-space'),
                 'term <n>': Key('c-k,%(n)d'),
-                'term hide': Key('w-space/20:2'),
                 'term new': Key('c-k,c'),
                 'term name <text>': Key('c-k,r') + Text('%(text)s') + Key('enter'),
-                'term switch <n>': Key('c-k,%(n)d'),
                 'term split': Key('c-k,v'),
                 'term list': Key('t,l,enter'),
                 'term attach <char>': Text('ta %(char)s') + Key('enter'),
                 'term detach': Key('c-k,d'),
-                '[<n>] term win left': Function(lambda n: repeat_key(n, 'c-k,h')),
-                '[<n>] term win right': Function(lambda n: repeat_key(n, 'c-k,l')),
-                'term win even': Key('c-k,enter'),
+                '[<n>] term left': Function(lambda n: repeat_key(n, 'c-k,h')),
+                '[<n>] term right': Function(lambda n: repeat_key(n, 'c-k,l')),
+                'term even': Key('c-k,enter'),
                 'exit': Key('c-d'),
                 'abort': Key('c-c'),
 
@@ -112,9 +119,6 @@ class Grammar(BaseGrammar):
 
                 # VS Code
                 'code it': Text('code .') + Key('enter'),
-
-                # PHPStorm
-                'storm it': Text('phpstorm .'),
 
                 # Git
                 'git add all': Text('gaa') + Key('enter'),
@@ -167,6 +171,8 @@ class Grammar(BaseGrammar):
                 'machine list node': Text('asdf list nodejs') + Key('enter'),
                 'machine list [<text>]': Text('asdf list ') + Function(enter_optional_text),
                 'machine install [<text>]': Text('asdf install %(text)s '),
+                'machine uninstall node': Text('asdf uninstall nodejs '),
+                'machine uninstall [<text>]': Text('asdf uninstall %(text)s '),
                 'machine global [<text>]': Text('asdf global %(text)s '),
             },
             extras=[

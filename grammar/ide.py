@@ -33,6 +33,6 @@ class Grammar(BaseGrammar):
                 'reveal': Key('wa-f11'),
                 'git changes': Key('ws-g'),
                 'new file': Key('c-n'),
-                'factor': Key('c-t'),
+                'factor': Key('f2'),
             }
         )

@@ -73,7 +73,7 @@ class Grammar(BaseGrammar):
             name='sleeping_rule',
             mapping={
                 '<text>': Function(lambda: False),
-                'wake up': Function(self._wake) + Function(start_state),
+                'listen': Function(self._wake) + Function(start_state),
             },
             extras=[
                 Dictation('text'),

@@ -66,7 +66,6 @@ class Grammar(BaseGrammar):
                 'unsafe': Text('thisisunsafe'),
                 'switch user': Key('ws-m/20,enter'),
                 'dev tools': Key('f12'),
-                'fire': Key('w-e'),
             },
             extras=[
                 Dictation('text'),

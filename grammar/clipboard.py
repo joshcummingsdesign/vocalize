@@ -28,7 +28,7 @@ class Grammar(BaseGrammar):
         return MappingRule(
             name='clipboard_rule',
             mapping={
-                'clip': Key('ws-space'),
+                'clip': Key('c-space'),
                 'clip <i>': Key('w-%(i)d'),
             },
             extras=[

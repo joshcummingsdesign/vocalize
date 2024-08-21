@@ -1,4 +1,4 @@
-from abc import ABC, abstractproperty
+from abc import ABC, abstractmethod
 from dragonfly import Grammar as DragonGrammar, MappingRule
 from rules import SeriesMappingRule
 from typing import Callable, TypeAlias, Union
@@ -32,7 +32,7 @@ class BaseGrammar(ABC):
     @since 0.1.0
     """
 
-    @abstractproperty
+    @abstractmethod
     def _name(self) -> str:
         """
         The grammar name
@@ -41,7 +41,7 @@ class BaseGrammar(ABC):
         """
         return ''
 
-    @abstractproperty
+    @abstractmethod
     def _rules(self) -> list[RuleFactory]:
         """
         A list of rule factories
