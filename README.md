@@ -4,7 +4,7 @@ Voice control for macOS with a Vim mindset.
 
 ## Requirements
 
-- [miniconda](https://docs.anaconda.com/miniconda/)
+- [Miniconda](https://docs.anaconda.com/miniconda/)
 
 ## Getting Started
 
