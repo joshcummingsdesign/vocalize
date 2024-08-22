@@ -54,3 +54,9 @@ See the exact dev environment:
 
 Although the project is configured in this specific way, it can be forked and
 configured to your liking.
+
+## Acknowledgments
+
+Huge thanks to [David Zurow](https://github.com/daanzu) for all the amazing contributions to the community.
+
+Also thanks to [Tavis Rudd](https://www.reddit.com/r/Python/comments/1atz8d/using_python_to_code_by_voice_tavis_rudd/?rdt=45621) for the inspiration and ideas.
