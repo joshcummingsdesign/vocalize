@@ -24,7 +24,7 @@ Voice control for macOS with a Vim mindset.
    make install
    ```
 
-3. Run vocalize (use an alias to make this easier)
+3. Run Vocalize (use an alias to make this easier)
 
    ```sh
    make start
