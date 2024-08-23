@@ -33,11 +33,11 @@ class Grammar(BaseGrammar):
             name='terminal_series_rule',
             mapping={
                 # Navigation
-                'der desktop': Text('cd ~/Desktop') + Key('enter'),
-                'der downloads': Text('cd ~/Downloads') + Key('enter'),
-                'der projects': Text('cd ~/Projects/'),
-                'der contribute': Text('cd ~/Contrib/'),
-                'der [<text>]': Text('cd %(text)s'),
+                'cd desktop': Text('cd ~/Desktop') + Key('enter'),
+                'cd downloads': Text('cd ~/Downloads') + Key('enter'),
+                'cd projects': Text('cd ~/Projects/'),
+                'cd contribute': Text('cd ~/Contrib/'),
+                'cd [<text>]': Text('cd %(text)s'),
                 '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
                 'list': Text('ls -lah') + Key('enter'),
@@ -47,14 +47,17 @@ class Grammar(BaseGrammar):
 
                 # Editing
                 'remove [<text>]': Text('rm -rf %(text)s'),
-                'der copy [<text>]': Text('cp -R %(text)s'),
-                'make der [<text>]': Text('mkdir %(text)s'),
+                'cp [<text>]': Text('cp -R %(text)s'),
+                'make der [<text>]': Text('mkdir ') + Function(enter_optional_text),
                 'into it': Text('$_'),
                 'try again': Key('escape,k'),
 
                 # SSH
                 'swish': Text('ssh '),
                 'sync': Text('rsync -aziP '),
+
+                # Notes
+                'notes': Text('vim ~/Documents/scratch.md') + Key('enter'),
 
                 # Node
                 'node run [<text>]': Text('npm run %(text)s'),
@@ -66,6 +69,14 @@ class Grammar(BaseGrammar):
                 'python virtual': Text('python -m venv venv'),
                 'activate': Text('source venv/bin/activate') + Key('enter'),
                 'deactivate': Text('deactivate') + Key('enter'),
+
+                # File extensions
+                'dot js': Text('.js'),
+                'dot pie': Text('.py'),
+                'dot html': Text('.html'),
+
+                # Ruby
+                'ruby version': Text('ruby --version') + Key('enter'),
 
                 # Miniconda
                 'con list': Text('conda env list') + Key('enter'),
@@ -129,7 +140,7 @@ class Grammar(BaseGrammar):
                 'git status': Text('gst') + Key('enter'),
                 'git log': Text('glg') + Key('enter'),
                 'git diff [<text>]': Text('git diff %(text)s') + Key('enter'),
-                'git branch new': Text('gco -b '),
+                'git check out branch': Text('gco -b '),
                 'git branch': Text('gb') + Key('enter'),
                 'git branch delete': Text('gb --delete '),
                 'git tag': Text('git tag -a '),
@@ -139,13 +150,12 @@ class Grammar(BaseGrammar):
                 'git tag delete origin': Text('git push origin :'),
                 'git merge <text>': Text('git merge %(text)s'),
                 'git fetch all': Text('gfa') + Key('enter'),
-                'git push origin': Text('gp -u origin '),
+                'git push upstream': Text('gp -u origin '),
                 'git check out [<text>]': Text('gco ') + Function(enter_optional_text),
-                'git reset hard [<text>]': Text('git reset --hard origin/%(text)s'),
+                'git reset [<text>]': Text('git reset --hard origin/%(text)s'),
                 'git stash': Text('git stash') + Key('enter'),
-                'git drop': Text('git stash drop') + Key('enter'),
-                'git apply': Text('git stash apply') + Key('enter'),
-                'git stash and drop': Text('git stash && git stash drop') + Key('enter'),
+                'git stash drop': Text('git stash drop') + Key('enter'),
+                'git stash apply': Text('git stash apply') + Key('enter'),
                 'git base [<text>]': Text('git rebase %(text)s'),
                 'git base continue': Text('git rebase --continue'),
                 'git eye base': Text('git rebase -i '),
