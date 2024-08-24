@@ -1,6 +1,6 @@
 from actions import repeat_text
 from contracts import BaseGrammar, Rule, RuleFactory
-from dragonfly import IntegerRef, Function, Key
+from dragonfly import IntegerRef, Function, Key, Text
 from extras import character
 from rules import SeriesMappingRule
 

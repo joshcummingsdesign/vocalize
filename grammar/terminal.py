@@ -38,7 +38,7 @@ class Grammar(BaseGrammar):
                 'cd projects': Text('cd ~/Projects/'),
                 'cd contribute': Text('cd ~/Contrib/'),
                 'cd [<text>]': Text('cd %(text)s'),
-                '[<n>] der back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
+                '[<n>] cd back': Text('cd ') + Function(lambda n: repeat_key(n, '.,.,slash')) + Key('enter'),
                 'home': Text('~/'),
                 'list': Text('ls -lah') + Key('enter'),
                 'yup': Key('c-r'),
@@ -62,6 +62,8 @@ class Grammar(BaseGrammar):
                 # Node
                 'node run [<text>]': Text('npm run %(text)s'),
                 'node install': Text('npm install') + Key('enter'),
+                'node install [<text>]': Text('npm install %(text)s'),
+                'node install dev [<text>]': Text('npm i -D %(text)s'),
                 'node version': Text('node --version') + Key('enter'),
 
                 # Python
@@ -69,11 +71,9 @@ class Grammar(BaseGrammar):
                 'python virtual': Text('python -m venv venv'),
                 'activate': Text('source venv/bin/activate') + Key('enter'),
                 'deactivate': Text('deactivate') + Key('enter'),
-
-                # File extensions
-                'dot js': Text('.js'),
-                'dot pie': Text('.py'),
-                'dot html': Text('.html'),
+                'pip install [<text>]': Text('pip install %(text)s'),
+                'pip install requirements': Text('pip install -r requirements.txt') + Key('enter'),
+                'pip freeze': Text('pip freeze > requirements.txt'),
 
                 # Ruby
                 'ruby version': Text('ruby --version') + Key('enter'),
@@ -85,6 +85,9 @@ class Grammar(BaseGrammar):
 
                 # Vim
                 'vim [<text>]': Text('vim %(text)s'),
+
+                # Make
+                'make [<text>]': Text('make %(text)s'),
             },
             extras=[
                 IntegerRef('n', 1, 10),
@@ -132,6 +135,7 @@ class Grammar(BaseGrammar):
                 'code it': Text('code .') + Key('enter'),
 
                 # Git
+                'git initialize': Text('git init') + Key('enter'),
                 'git add all': Text('gaa') + Key('enter'),
                 'git commit': Text('gca') + Key('enter'),
                 'git commit message': Text("gcam ''") + Key('left'),
@@ -150,7 +154,7 @@ class Grammar(BaseGrammar):
                 'git tag delete origin': Text('git push origin :'),
                 'git merge <text>': Text('git merge %(text)s'),
                 'git fetch all': Text('gfa') + Key('enter'),
-                'git push upstream': Text('gp -u origin '),
+                'git push upstream [<text>]': Text('gp -u origin ') + Function(enter_optional_text),
                 'git check out [<text>]': Text('gco ') + Function(enter_optional_text),
                 'git reset [<text>]': Text('git reset --hard origin/%(text)s'),
                 'git stash': Text('git stash') + Key('enter'),
@@ -162,8 +166,10 @@ class Grammar(BaseGrammar):
                 'git force push': Text('gp -f'),
                 'git force push origin <text>': Text('gp -u -f origin %(text)s'),
                 'git abort merge': Text('git merge --abort') + Key('enter'),
-                'git add origin': Text('git remote add origin '),
+                'git remote add': Text('git remote add origin '),
                 'git clone': Text('git clone '),
+                'feature': Text('feat: '),
+                'chore': Text('chore: '),
 
                 # Lando
                 'lando start': Text('lando start') + Key('enter'),
