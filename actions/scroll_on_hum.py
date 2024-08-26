@@ -87,7 +87,12 @@ def stop() -> Any:
     :returns: The timer.
     """
     print('Scrolling disabled...')
+    stream.stop()
+
+    if 'scroll' not in timers:
+        return None
+
     timer = timers.pop('scroll')
     timer.stop()
-    stream.stop()
+
     return timer
