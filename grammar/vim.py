@@ -441,6 +441,7 @@ class Grammar(BaseGrammar):
                 'far <text>': Function(lambda text: Text(to_snake(text) + ' = ', True).execute()),
                 'funk <text>': Function(lambda text: Text(to_snake(text) + '(', True).execute()),
                 'funk camel <text>': Function(lambda text: Text(to_camel(text) + '(', True).execute()),
+                'e num': Text('enum'),
 
                 # Quick Typing
                 'hips': Text('https://'),
